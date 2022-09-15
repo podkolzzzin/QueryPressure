@@ -1,34 +1,29 @@
-﻿using System.Collections.Concurrent;
-using QueryPressure.Core.Interfaces;
+﻿using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.LoadProfiles;
 
-// public class LimitedConcurrencyLoadProfileWithDelay : IProfile
-// {
-//     private readonly TimeSpan _delay;
-//     private readonly IProfile _internal;
-//     private readonly ConcurrentDictionary<Guid, DateTime> _dateTimes = new();
-//
-//     public LimitedConcurrencyLoadProfileWithDelay(int limit, TimeSpan delay)
-//     {
-//         _delay = delay;
-//         _internal = new LimitedConcurrencyLoadProfile(limit);
-//         _delays = new List<Task>(limit);
-//     }
-//     
-//     public async Task<bool> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
-//     {
-//         await _internal.WhenNextCanBeExecutedAsync(cancellationToken);
-//         bool shouldWait = _semaphore.CurrentCount >= _limit;
-//         _delays.Remove(await Task.WhenAny(_delays));
-//     }
-//
-//     public Task OnQueryExecutedAsync(CancellationToken cancellationToken)
-//     {
-//         _delays.Add(Task.Delay(delay, cancellationToken));
-//         _internal.OnQueryExecutedAsync(cancellationToken);
-//     }
-// }
+public class LimitedConcurrencyLoadProfileWithDelay : IProfile
+{
+    private readonly TimeSpan _delay;
+    private readonly IProfile _internal;
+
+    public LimitedConcurrencyLoadProfileWithDelay(int limit, TimeSpan delay)
+    {
+        _delay = delay;
+        _internal = new LimitedConcurrencyLoadProfile(limit);
+    }
+
+    public Task<bool> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
+    {
+        return _internal.WhenNextCanBeExecutedAsync(cancellationToken);
+    }
+
+    public async Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    {
+        await Task.Delay(_delay, cancellationToken);
+        await _internal.OnQueryExecutedAsync(cancellationToken);
+    }
+}
 
 public class LimitedConcurrencyLoadProfile : IProfile
 {
