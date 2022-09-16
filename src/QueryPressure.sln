@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure", "QueryPressure\QueryPressure.csproj", "{34BC8166-37D5-4A30-92AD-6D670FD69304}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.Tests", "QueryPressure.Tests\QueryPressure.Tests.csproj", "{B1822009-3A33-4AAD-900D-23D68556793E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.Core", "QueryPressure.Core\QueryPressure.Core.csproj", "{140BC4FE-3185-42BE-B95F-7C0C43A3FB77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34BC8166-37D5-4A30-92AD-6D670FD69304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34BC8166-37D5-4A30-92AD-6D670FD69304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34BC8166-37D5-4A30-92AD-6D670FD69304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34BC8166-37D5-4A30-92AD-6D670FD69304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1822009-3A33-4AAD-900D-23D68556793E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1822009-3A33-4AAD-900D-23D68556793E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1822009-3A33-4AAD-900D-23D68556793E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1822009-3A33-4AAD-900D-23D68556793E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{140BC4FE-3185-42BE-B95F-7C0C43A3FB77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{140BC4FE-3185-42BE-B95F-7C0C43A3FB77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{140BC4FE-3185-42BE-B95F-7C0C43A3FB77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{140BC4FE-3185-42BE-B95F-7C0C43A3FB77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
