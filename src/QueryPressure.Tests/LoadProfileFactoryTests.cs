@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using QueryPressure.Arguments;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.LoadProfiles;
@@ -20,9 +21,9 @@ public class LoadProfileFactoryTests
         _factory = new LoadProfilesFactory(new IProfileCreator[]
         {
             new SequentialLoadProfileCreator(),
-            new SequentialLoadProfileWithDelayCreator(),
+            new SequentialWithDelayLoadProfileCreator(),
             new LimitedConcurrencyLoadProfileCreator(),
-            new SequentialLoadProfileWithDelayCreator(),
+            new LimitedConcurrencyWithDelayLoadProfileCreator(),
             new TargetThroughputLoadProfileCreator()
         });
     }
@@ -50,5 +51,88 @@ profile:
     type: sequential";
 
         Assert.IsType<SequentialLoadProfile>(CreateProfile(yml));
+    }
+    
+    [Fact]
+    public void Create_LimitedConcurrencyLoadProfile_IsCreated()
+    {
+        var yml = @"
+profile:
+    type: limitedConcurrency
+    arguments: 
+        limit: 2";
+
+        Assert.IsType<LimitedConcurrencyLoadProfile>(CreateProfile(yml));
+    }
+    
+    [Fact]
+    public void Create_LimitedConcurrencyLoadProfile_ThrowsOnMissedArgument()
+    {
+        var yml = @"
+profile:
+    type: limitedConcurrency";
+
+        Assert.Throws<ArgumentException>(() => CreateProfile(yml));
+    }
+    
+    [Fact]
+    public void Create_LimitedConcurrencyLoadProfile_ThrowsOnInvalidArgument()
+    {
+        var yml = @"
+profile:
+    type: limitedConcurrency
+    arguments: 
+        limit: ololo";
+
+        Assert.Throws<ArgumentException>(() => CreateProfile(yml));
+    }
+    
+    [Fact]
+    public void Create_LimitedConcurrencyWithDelayLoadProfile_IsCreated()
+    {
+        var yml = @"
+profile:
+    type: limitedConcurrency
+    arguments: 
+        limit: 2
+        delay: 00:00:01";
+
+        Assert.IsType<LimitedConcurrencyLoadProfile>(CreateProfile(yml));
+    }
+    
+    [Fact]
+    public void Create_SequentialWithDelayLoadProfile_IsCreated()
+    {
+        var yml = @"
+profile:
+    type: sequentialWithDelay
+    arguments:
+        delay: 00:00:01";
+
+        Assert.IsType<SequentialWithDelayLoadProfile>(CreateProfile(yml));
+    }
+    
+    [Fact]
+    public void Create_TargetThroughputLoadProfile_IsCreated()
+    {
+        var yml = @"
+profile:
+    type: targetThroughput
+    arguments:
+        rps: 50";
+
+        Assert.IsType<TargetThroughputLoadProfile>(CreateProfile(yml));
+    }
+    
+    [Fact]
+    public void Create_LimitedConcurrencyWithDelayLoadProfile_ThrowsOnMissedArgument()
+    {
+        var yml = @"
+profile:
+    type: limitedConcurrencyWithDelay
+    arguments: 
+        limit: ololo";
+
+        Assert.Throws<ArgumentException>(() => CreateProfile(yml));
     }
 }

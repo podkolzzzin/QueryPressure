@@ -5,11 +5,11 @@ using QueryPressure.Interfaces;
 
 namespace QueryPressure.ProfileCreators;
 
-public class SequentialLoadProfileWithDelayCreator : IProfileCreator
+public class SequentialWithDelayLoadProfileCreator : IProfileCreator
 {
     public string ProfileTypeName => "sequentialWithDelay";
     
-    public IProfile Create(ProfileArguments profile) => new SequentialLoadProfileWithDelay(
+    public IProfile Create(ProfileArguments profile) => new SequentialWithDelayLoadProfile(
         profile.ExtractTimeSpanArgumentOrThrow("delay")
     );
 }

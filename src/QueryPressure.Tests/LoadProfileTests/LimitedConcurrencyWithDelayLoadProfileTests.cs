@@ -6,13 +6,13 @@ using Xunit;
 
 namespace QueryPressure.Tests.LoadProfileTests;
 
-public class LimitedConcurrencyLoadProfileWithDelayTests
+public class LimitedConcurrencyWithDelayLoadProfileTests
 {
     [Fact]
     public async Task WhenNextCanBeExecutedAsync_TheNextTaskAfterLimitExceeded_IsCompleted_OnlyAfterDelay()
     {
         var delay = TimeSpan.FromSeconds(1);
-        var profile = new LimitedConcurrencyLoadProfileWithDelay(2, delay);
+        var profile = new LimitedConcurrencyWithDelayLoadProfile(2, delay);
 
         var task1 = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
         var task2 = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);

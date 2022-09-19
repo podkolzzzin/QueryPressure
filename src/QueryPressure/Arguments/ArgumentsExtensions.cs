@@ -4,7 +4,7 @@ public static class ArgumentsExtensions
 {
   public static string ExtractStringArgumentOrThrow(this ProfileArguments arguments, string name)
   {
-    if (!arguments.Arguments.TryGetValue(name, out var val))
+    if (arguments.Arguments == null || !arguments.Arguments.TryGetValue(name, out var val))
       throw new ArgumentException($"There is no argument with named '{name}' in {arguments.Type}");
     return val;
   }

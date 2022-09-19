@@ -43,7 +43,7 @@ var shell = "querystress benchmark.yml";
 
 var executor = new QueryExecutor(
     new Executable(), 
-    new LimitedConcurrencyLoadProfileWithDelay(2, TimeSpan.FromMilliseconds(1_000)));
+    new LimitedConcurrencyWithDelayLoadProfile(2, TimeSpan.FromMilliseconds(1_000)));
 
 await executor.ExecuteAsync(CancellationToken.None);
 

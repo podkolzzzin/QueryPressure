@@ -2,16 +2,16 @@
 
 namespace QueryPressure.Core.LoadProfiles;
 
-public class LimitedConcurrencyLoadProfileWithDelay : IProfile
+public class LimitedConcurrencyWithDelayLoadProfile : IProfile
 {
-    private record LimitedConcurrencyLoadProfileWithDelayState(int QueryId) : IExecutionDescriptor;
+    private record LimitedConcurrencyWithDelayLoadProfileState(int QueryId) : IExecutionDescriptor;
     
     private readonly TimeSpan _delay;
     private readonly IProfile _internal;
     private readonly Task[] _tasks;
     private static readonly Task NeverCompletedTask = new TaskCompletionSource().Task;
 
-    public LimitedConcurrencyLoadProfileWithDelay(int limit, TimeSpan delay)
+    public LimitedConcurrencyWithDelayLoadProfile(int limit, TimeSpan delay)
     {
         _delay = delay;
         _internal = new LimitedConcurrencyLoadProfile(limit);
@@ -29,15 +29,15 @@ public class LimitedConcurrencyLoadProfileWithDelay : IProfile
             if (queryId >= 0)
             {
                 _tasks[queryId] = NeverCompletedTask;
-                return new LimitedConcurrencyLoadProfileWithDelayState(queryId);
+                return new LimitedConcurrencyWithDelayLoadProfileState(queryId);
             }   
         }
     }
 
     public async Task OnQueryExecutedAsync(IExecutionDescriptor state, CancellationToken cancellationToken)
     {
-        if (state is not LimitedConcurrencyLoadProfileWithDelayState s)
-            throw new InvalidOperationException($"The execution state should be {nameof(LimitedConcurrencyLoadProfileWithDelayState)}");
+        if (state is not LimitedConcurrencyWithDelayLoadProfileState s)
+            throw new InvalidOperationException($"The execution state should be {nameof(LimitedConcurrencyWithDelayLoadProfileState)}");
 
         _tasks[s.QueryId] = Task.Delay(_delay, cancellationToken);
         await _internal.OnQueryExecutedAsync(state, cancellationToken);

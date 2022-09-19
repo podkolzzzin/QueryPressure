@@ -5,11 +5,11 @@ using QueryPressure.Interfaces;
 
 namespace QueryPressure.ProfileCreators;
 
-public class LimitedConcurrencyLoadProfileWithDelayCreator : IProfileCreator
+public class LimitedConcurrencyWithDelayLoadProfileCreator : IProfileCreator
 {
     public string ProfileTypeName => "limitedConcurrencyWithDelay";
     
-    public IProfile Create(ProfileArguments profile) => new LimitedConcurrencyLoadProfileWithDelay(
+    public IProfile Create(ProfileArguments profile) => new LimitedConcurrencyWithDelayLoadProfile(
             profile.ExtractIntArgumentOrThrow("limit"),
             profile.ExtractTimeSpanArgumentOrThrow("delay")
         );
