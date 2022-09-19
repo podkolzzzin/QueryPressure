@@ -10,15 +10,12 @@ public class LimitedConcurrencyLoadProfile : IProfile
     {
         _semaphore = new SemaphoreSlim(limit);
     }
-    public async Task<IExecutionDescriptor> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
+    public async Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
     {
-            
         await _semaphore.WaitAsync(cancellationToken);
-
-        return ExecutionDescriptor.Empty;
     }
 
-    public Task OnQueryExecutedAsync(IExecutionDescriptor _, CancellationToken cancellationToken)
+    public Task OnQueryExecutedAsync(CancellationToken cancellationToken)
     {
         _semaphore.Release();
         return Task.CompletedTask;

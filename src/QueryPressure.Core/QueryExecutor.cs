@@ -19,10 +19,10 @@ public class QueryExecutor
         var sw = Stopwatch.StartNew();
         while (!cancellationToken.IsCancellationRequested)
         {
-            var descriptor = await _loadProfile.WhenNextCanBeExecutedAsync(cancellationToken);
+            await _loadProfile.WhenNextCanBeExecutedAsync(cancellationToken);
             var _ = _executable.ExecuteAsync(cancellationToken).ContinueWith(async _ =>
             {
-                await _loadProfile.OnQueryExecutedAsync(descriptor, cancellationToken);
+                await _loadProfile.OnQueryExecutedAsync(cancellationToken);
             }, cancellationToken);
             Console.WriteLine(sw.ElapsedMilliseconds);
         }

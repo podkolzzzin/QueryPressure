@@ -1,10 +1,10 @@
+using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
-using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.LoadProfiles;
 using Xunit;
 
-namespace QueryPressure.Tests.LoadProfileTests;
+namespace QueryPressure.Tests;
 
 public class SequentialLoadProfileTests
 {

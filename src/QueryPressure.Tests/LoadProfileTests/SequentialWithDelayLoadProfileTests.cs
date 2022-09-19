@@ -36,10 +36,10 @@ public class SequentialWithDelayLoadProfileTests
         await Task.Delay(15);
         Assert.False(task.IsCompleted);
 
-        await profile.OnQueryExecutedAsync(ExecutionDescriptor.Empty, CancellationToken.None);
+        await profile.OnQueryExecutedAsync(CancellationToken.None);
         Assert.False(task.IsCompleted);
 
-        await Task.Delay(15);
+        await Task.Delay(20);
         Assert.True(task.IsCompletedSuccessfully);
     }
     
