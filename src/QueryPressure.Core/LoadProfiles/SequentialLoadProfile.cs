@@ -6,16 +6,16 @@ public class SequentialLoadProfile : IProfile
 {
     private TaskCompletionSource? _taskCompletionSource;
     
-    public async Task<bool> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
+    public async Task<IExecutionDescriptor> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
     {
         if (_taskCompletionSource != null)
             await _taskCompletionSource.Task;
 
         _taskCompletionSource = new();
-        return !cancellationToken.IsCancellationRequested;
+        return ExecutionDescriptor.Empty;
     }
 
-    public Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    public Task OnQueryExecutedAsync(IExecutionDescriptor _, CancellationToken cancellationToken)
     {
         if (_taskCompletionSource == null)
             throw new InvalidOperationException(

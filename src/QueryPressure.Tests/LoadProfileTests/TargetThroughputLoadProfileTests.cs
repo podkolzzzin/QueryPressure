@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using QueryPressure.Core.LoadProfiles;
 using Xunit;
 
-namespace QueryPressure.Tests;
+namespace QueryPressure.Tests.LoadProfileTests;
 
 public class TargetThroughputLoadProfileTests
 {

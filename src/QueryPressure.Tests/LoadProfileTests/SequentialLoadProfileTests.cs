@@ -1,10 +1,10 @@
-using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
+using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.LoadProfiles;
 using Xunit;
 
-namespace QueryPressure.Tests;
+namespace QueryPressure.Tests.LoadProfileTests;
 
 public class SequentialLoadProfileTests
 {
@@ -26,7 +26,7 @@ public class SequentialLoadProfileTests
         await Task.Delay(10); 
         Assert.False(task.IsCompleted);
         
-        await profile.OnQueryExecutedAsync(CancellationToken.None);
+        await profile.OnQueryExecutedAsync(ExecutionDescriptor.Empty, CancellationToken.None);
         
         await Task.Delay(10);
         Assert.True(task.IsCompletedSuccessfully);

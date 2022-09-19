@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.LoadProfiles;
 using Xunit;
 
-namespace QueryPressure.Tests;
+namespace QueryPressure.Tests.LoadProfileTests;
 
 /*
  * while (true) 
@@ -35,7 +36,7 @@ public class SequentialLoadProfileWithDelayTests
         await Task.Delay(15);
         Assert.False(task.IsCompleted);
 
-        await profile.OnQueryExecutedAsync(CancellationToken.None);
+        await profile.OnQueryExecutedAsync(ExecutionDescriptor.Empty, CancellationToken.None);
         Assert.False(task.IsCompleted);
 
         await Task.Delay(15);

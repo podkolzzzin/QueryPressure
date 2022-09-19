@@ -14,7 +14,7 @@ public class SequentialLoadProfileWithDelay : IProfile
         _profile = new SequentialLoadProfile();
     }
     
-    public async Task<bool> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
+    public async Task<IExecutionDescriptor> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
     {
         var result = await _profile.WhenNextCanBeExecutedAsync(cancellationToken);
         var now = DateTime.Now;
@@ -24,9 +24,9 @@ public class SequentialLoadProfileWithDelay : IProfile
         return result;
     }
 
-    public async Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    public async Task OnQueryExecutedAsync(IExecutionDescriptor _, CancellationToken cancellationToken)
     {
-        await _profile.OnQueryExecutedAsync(cancellationToken);
+        await _profile.OnQueryExecutedAsync(_, cancellationToken);
         _nextExecution = DateTime.Now + _delay;
     }
 }

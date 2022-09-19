@@ -1,9 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.LoadProfiles;
 using Xunit;
 
-namespace QueryPressure.Tests;
+namespace QueryPressure.Tests.LoadProfileTests;
 
 public class LimitedConcurrencyLoadProfileTests
 {
@@ -36,7 +37,7 @@ public class LimitedConcurrencyLoadProfileTests
         Assert.False(task3.IsCompleted);
 
         
-        await profile.OnQueryExecutedAsync(CancellationToken.None);
+        await profile.OnQueryExecutedAsync(ExecutionDescriptor.Empty, CancellationToken.None);
         await Task.Delay(10);
         Assert.True(task3.IsCompletedSuccessfully);
     }
