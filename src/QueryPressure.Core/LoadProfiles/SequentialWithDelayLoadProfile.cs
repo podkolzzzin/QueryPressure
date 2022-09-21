@@ -2,13 +2,13 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.LoadProfiles;
 
-public class SequentialLoadProfileWithDelay : IProfile
+public class SequentialWithDelayLoadProfile : IProfile
 {
     private readonly TimeSpan _delay;
     private readonly IProfile _profile;
     private DateTime? _nextExecution;
     
-    public SequentialLoadProfileWithDelay(TimeSpan delay)
+    public SequentialWithDelayLoadProfile(TimeSpan delay)
     {
         _delay = delay;
         _profile = new SequentialLoadProfile();

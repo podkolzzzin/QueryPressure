@@ -12,7 +12,7 @@ public class TargetThroughputLoadProfile : IProfile
         _delay = TimeSpan.FromMilliseconds(1000f / targetRPS);
     }
     
-    public async Task<bool> WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
+    public async Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
     {
         var now = DateTime.Now;
         if (_nextExecution == null || now > _nextExecution)
@@ -25,8 +25,6 @@ public class TargetThroughputLoadProfile : IProfile
             _nextExecution += _delay;
             await Task.Delay(delta, cancellationToken);
         }
-
-        return !cancellationToken.IsCancellationRequested;
     }
 
     public Task OnQueryExecutedAsync(CancellationToken cancellationToken) => Task.CompletedTask;

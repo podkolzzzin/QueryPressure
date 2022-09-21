@@ -1,9 +1,10 @@
+using QueryPressure.Arguments;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.Interfaces;
 
-namespace QueryPressure.Core.Factories;
+namespace QueryPressure.Factories;
 
-internal class LoadProfilesFactory
+public class LoadProfilesFactory
 {
     private readonly IDictionary<string, IProfileCreator> _creators;
 
@@ -12,7 +13,7 @@ internal class LoadProfilesFactory
         _creators = creators.ToDictionary(x => x.ProfileTypeName);
     }
     
-    public IProfile CreateProfile(Arguments.Arguments arguments)
+    public IProfile CreateProfile(ApplicationArguments arguments)
     {
         var profile = arguments.Profile;
         

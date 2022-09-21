@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core;
@@ -15,12 +16,15 @@ public class QueryExecutor
 
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        while (await _loadProfile.WhenNextCanBeExecutedAsync(cancellationToken))
+        var sw = Stopwatch.StartNew();
+        while (!cancellationToken.IsCancellationRequested)
         {
-            var _ = _executable.ExecuteAsync(cancellationToken).ContinueWith(async x =>
+            await _loadProfile.WhenNextCanBeExecutedAsync(cancellationToken);
+            var _ = _executable.ExecuteAsync(cancellationToken).ContinueWith(async _ =>
             {
                 await _loadProfile.OnQueryExecutedAsync(cancellationToken);
             }, cancellationToken);
+            Console.WriteLine(sw.ElapsedMilliseconds);
         }
     }
 }

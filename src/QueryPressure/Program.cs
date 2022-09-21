@@ -1,10 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using QueryPressure.Arguments;
-using QueryPressure.Core.Factories;
+using QueryPressure.Core;
+using QueryPressure.Core.Interfaces;
+using QueryPressure.Core.LoadProfiles;
+using QueryPressure.Factories;
+using QueryPressure.Interfaces;
 using QueryPressure.ProfileCreators;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
+
+
+
+
 
 Console.WriteLine("Hello, World!");
 var file = @"
@@ -34,26 +39,18 @@ profile:
     arguments:
         limit: 10";
 
-//var shell = "querystress benchmark.yml";
+var shell = "querystress benchmark.yml";
 
-var @params = Deserialize(file);
+var executor = new QueryExecutor(
+    new Executable(), 
+    new LimitedConcurrencyWithDelayLoadProfile(2, TimeSpan.FromMilliseconds(1_000)));
 
-Console.WriteLine(@params);
+await executor.ExecuteAsync(CancellationToken.None);
 
-var factory = new LoadProfilesFactory(new[]
+class Executable : IExecutable
 {
-    new LimitedConcurrencyLoadProfileCreator()
-});
-
-var model = factory.CreateProfile(@params);
-
-Console.ReadLine();
-
-Arguments Deserialize(string fileContent)
-{
-    var deserializer = new DeserializerBuilder()
-        .WithNamingConvention(CamelCaseNamingConvention.Instance)
-        .Build();
-
-    return deserializer.Deserialize<Arguments>(fileContent);
+    public Task ExecuteAsync(CancellationToken cancellationToken)
+    {
+        return Task.Delay(500, cancellationToken);
+    }
 }

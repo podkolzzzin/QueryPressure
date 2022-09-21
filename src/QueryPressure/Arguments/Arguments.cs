@@ -1,6 +1,8 @@
+using System.Runtime.CompilerServices;
+
 namespace QueryPressure.Arguments;
 
-public class Arguments
+public class ApplicationArguments
 {
     public ProfileArguments Profile { get; set; }
 }
