@@ -20,6 +20,8 @@ Features
       1. Sequential
          1. With Delay
       2. Target Throughput
+         1. Increasing load
+            1. Delta/Time
       3. Limited Concurrency
          1. With Delay
 7. Reporting
