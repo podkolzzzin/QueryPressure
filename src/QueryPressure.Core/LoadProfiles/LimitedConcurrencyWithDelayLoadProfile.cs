@@ -5,12 +5,12 @@ namespace QueryPressure.Core.LoadProfiles;
 public class LimitedConcurrencyWithDelayLoadProfile : IProfile
 {
     private readonly TimeSpan _delay;
-    private readonly IProfile _internal;
+    private readonly LimitedConcurrencyLoadProfile _internal;
 
     public LimitedConcurrencyWithDelayLoadProfile(int limit, TimeSpan delay)
     {
         _delay = delay;
-        _internal = new LimitedConcurrencyLoadProfile(limit);
+        _internal = new (limit);
     }
 
     public Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)

@@ -2,6 +2,7 @@
 
 using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;
+using QueryPressure.Core.Limits;
 using QueryPressure.Core.LoadProfiles;
 using QueryPressure.Factories;
 using QueryPressure.Interfaces;
@@ -12,6 +13,27 @@ using QueryPressure.ProfileCreators;
 
 
 Console.WriteLine("Hello, World!");
+// var file = @"
+// profile:
+//     type: limitedConcurrency
+//     arguments:
+//         limit: 10
+// limit:
+//     type: queryCount
+//     arguments:
+//         limit: 100
+// connection:
+//     type: Postgres
+//     connectionString: ${POSTGRES_STRING}
+// execution:
+//     type: query
+//     arguments:
+//         sql: 'SELECT * FROM sys.allobjects'
+// reports:
+//     type: csv
+//     arguments:
+//         output: file.csv
+// ";
 var file = @"
 profile:
     type: limitedConcurrency
@@ -20,30 +42,15 @@ profile:
 limit:
     type: queryCount
     arguments:
-        limit: 100
-connection:
-    type: Postgres
-    connectionString: ${POSTGRES_STRING}
-execution:
-    type: query
-    arguments:
-        sql: 'SELECT * FROM sys.allobjects'
-reports:
-    type: csv
-    arguments:
-        output: file.csv
-";
-file = @"
-profile:
-    type: limitedConcurrency
-    arguments:
-        limit: 10";
+        limit: 100";
 
 var shell = "querystress benchmark.yml";
 
+
 var executor = new QueryExecutor(
     new Executable(), 
-    new LimitedConcurrencyWithDelayLoadProfile(2, TimeSpan.FromMilliseconds(1_000)));
+    new LimitedConcurrencyWithDelayLoadProfile(2, TimeSpan.FromMilliseconds(1_000)),
+    new QueryCountLimit(10));
 
 await executor.ExecuteAsync(CancellationToken.None);
 

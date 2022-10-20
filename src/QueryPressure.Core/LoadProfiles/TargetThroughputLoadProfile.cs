@@ -26,6 +26,4 @@ public class TargetThroughputLoadProfile : IProfile
             await Task.Delay(delta, cancellationToken);
         }
     }
-
-    public Task OnQueryExecutedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

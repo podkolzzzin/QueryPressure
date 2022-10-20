@@ -2,7 +2,6 @@ using System.Runtime.CompilerServices;
 
 namespace QueryPressure.Arguments;
 
-public class ApplicationArguments
+public class ApplicationArguments : Dictionary<string, ArgumentsSection>
 {
-    public ProfileArguments Profile { get; set; }
 }

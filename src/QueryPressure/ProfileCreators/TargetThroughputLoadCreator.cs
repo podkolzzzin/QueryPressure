@@ -5,11 +5,11 @@ using QueryPressure.Interfaces;
 
 namespace QueryPressure.ProfileCreators;
 
-public class TargetThroughputLoadProfileCreator : IProfileCreator
+public class TargetThroughputLoadCreator : ICreator<IProfile>
 {
-    public string ProfileTypeName => "targetThroughput";
+    public string Type => "targetThroughput";
     
-    public IProfile Create(ProfileArguments profile) => new TargetThroughputLoadProfile(
+    public IProfile Create(ArgumentsSection profile) => new TargetThroughputLoadProfile(
         profile.ExtractIntArgumentOrThrow("rps")
     );
 }

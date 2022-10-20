@@ -2,7 +2,7 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.LoadProfiles;
 
-public class SequentialLoadProfile : IProfile
+public class SequentialLoadProfile : IProfile, IExecutionHook
 {
     private TaskCompletionSource? _taskCompletionSource;
     
