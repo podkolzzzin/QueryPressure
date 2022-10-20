@@ -1,8 +1,8 @@
-using QueryPressure.Arguments;
+using QueryPressure.App.Arguments;
+using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
-using QueryPressure.Interfaces;
 
-namespace QueryPressure.Factories;
+namespace QueryPressure.App.Factories;
 
 public class SettingsFactory<T> where T : ISetting
 {
@@ -15,7 +15,7 @@ public class SettingsFactory<T> where T : ISetting
         _creators = creators.ToDictionary(x => x.Type);
     }
     
-    public T CreateProfile(ApplicationArguments arguments)
+    public T Create(ApplicationArguments arguments)
     {
         if (!arguments.TryGetValue(_settingType, out var section))
         {

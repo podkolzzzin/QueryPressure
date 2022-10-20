@@ -1,6 +1,4 @@
-using System.Runtime.CompilerServices;
-
-namespace QueryPressure.Arguments;
+namespace QueryPressure.App.Arguments;
 
 public class ApplicationArguments : Dictionary<string, ArgumentsSection>
 {

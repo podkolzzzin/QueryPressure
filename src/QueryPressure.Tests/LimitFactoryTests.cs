@@ -1,9 +1,8 @@
-﻿using QueryPressure.Core.Interfaces;
+﻿using QueryPressure.App.Factories;
+using QueryPressure.App.Interfaces;
+using QueryPressure.App.LimitCreators;
+using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.Limits;
-using QueryPressure.Core.LoadProfiles;
-using QueryPressure.Factories;
-using QueryPressure.Interfaces;
-using QueryPressure.LimitCreators;
 using Xunit;
 
 namespace QueryPressure.Tests;
