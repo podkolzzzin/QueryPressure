@@ -40,7 +40,7 @@ limit:
     arguments:
         limit: 100";
 
-var shell = "querystress benchmark.yml";
+var shell = "querystress benchmark.yml script.sql";
 
 
 var executor = new QueryExecutor(
