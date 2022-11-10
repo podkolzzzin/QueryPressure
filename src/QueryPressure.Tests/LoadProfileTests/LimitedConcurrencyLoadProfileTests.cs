@@ -37,7 +37,7 @@ public class LimitedConcurrencyLoadProfileTests
         Assert.False(task3.IsCompleted);
 
         
-        await profile.OnQueryExecutedAsync(CancellationToken.None);
+        await profile.OnQueryExecutedAsync(new(default, default, default), CancellationToken.None);
         await Task.Delay(10);
         Assert.True(task3.IsCompletedSuccessfully);
     }

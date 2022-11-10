@@ -4,7 +4,7 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.App.Factories;
 
-public class SettingsFactory<T> where T : ISetting
+public class SettingsFactory<T> : ISettingsFactory<T> where T : ISetting
 {
     private readonly string _settingType;
     private readonly IDictionary<string, ICreator<T>> _creators;

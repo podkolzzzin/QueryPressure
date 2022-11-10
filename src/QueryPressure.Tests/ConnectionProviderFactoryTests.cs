@@ -16,7 +16,7 @@ public class ConnectionProviderFactoryTests
   {
     _factory = new SettingsFactory<IConnectionProvider>("connection", new ICreator<IConnectionProvider>[]
     {
-      new PostgesConnectionProviderCreator()
+      new PostgresConnectionProviderCreator()
     });
   }
 

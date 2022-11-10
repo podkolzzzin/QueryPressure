@@ -26,7 +26,7 @@ public class SequentialLoadProfileTests
         await Task.Delay(10); 
         Assert.False(task.IsCompleted);
         
-        await profile.OnQueryExecutedAsync(CancellationToken.None);
+        await profile.OnQueryExecutedAsync(new (default, default, default), CancellationToken.None);
         
         await Task.Delay(10);
         Assert.True(task.IsCompletedSuccessfully);

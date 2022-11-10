@@ -12,8 +12,8 @@ public class FileScriptSource : IScriptSource
 
   }
 
-  public IScript GetScript()
+  public async Task<IScript> GetScriptAsync(CancellationToken cancellationToken)
   {
-    return new TextScript(File.ReadAllText(_path));
+    return new TextScript(await File.ReadAllTextAsync(_path, cancellationToken));
   }
 }

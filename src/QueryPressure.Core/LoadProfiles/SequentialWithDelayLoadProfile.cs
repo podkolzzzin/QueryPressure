@@ -22,9 +22,9 @@ public class SequentialWithDelayLoadProfile : IProfile, IExecutionHook
             await Task.Delay(_nextExecution.Value - now, cancellationToken);
     }
 
-    public async Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    public async Task OnQueryExecutedAsync(ExecutionResult _, CancellationToken cancellationToken)
     {
-        await _profile.OnQueryExecutedAsync(cancellationToken);
+        await _profile.OnQueryExecutedAsync(_, cancellationToken);
         _nextExecution = DateTime.Now + _delay;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace QueryPressure.Core.LoadProfiles; 
 
-public class LimitedConcurrencyWithDelayLoadProfile : IProfile
+public class LimitedConcurrencyWithDelayLoadProfile : IProfile, IExecutionHook
 {
     private readonly TimeSpan _delay;
     private readonly LimitedConcurrencyLoadProfile _internal;
@@ -17,10 +17,10 @@ public class LimitedConcurrencyWithDelayLoadProfile : IProfile
     {
         return _internal.WhenNextCanBeExecutedAsync(cancellationToken);
     }
-
-    public async Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    
+    public async Task OnQueryExecutedAsync(ExecutionResult result, CancellationToken cancellationToken)
     {
         await Task.Delay(_delay, cancellationToken);
-        await _internal.OnQueryExecutedAsync(cancellationToken);
+        await _internal.OnQueryExecutedAsync(result, cancellationToken);
     }
 }

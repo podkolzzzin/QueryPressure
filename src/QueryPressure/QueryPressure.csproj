@@ -14,11 +14,23 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.4.0" />
       <PackageReference Include="YamlDotNet" Version="12.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\QueryPressure.App\QueryPressure.App.csproj" />
       <ProjectReference Include="..\QueryPressure.Core\QueryPressure.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="sample.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

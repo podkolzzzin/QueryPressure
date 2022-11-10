@@ -14,7 +14,7 @@ public class SequentialLoadProfile : IProfile, IExecutionHook
         _taskCompletionSource = new();
     }
 
-    public Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    public Task OnQueryExecutedAsync(ExecutionResult _, CancellationToken cancellationToken)
     {
         if (_taskCompletionSource == null)
             throw new InvalidOperationException(

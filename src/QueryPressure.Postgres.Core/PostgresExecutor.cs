@@ -1,0 +1,30 @@
+﻿using Npgsql;
+using QueryPressure.Core.Interfaces;
+using QueryPressure.Core.ScriptSources;
+
+namespace QueryPressure.Postgres.Core;
+
+internal class PostgresExecutor : IExecutable
+{
+  private readonly IConnectionsHolder<NpgsqlConnection> _connections;
+  private readonly TextScript _script;
+  public PostgresExecutor(IScript script, IConnectionsHolder<NpgsqlConnection> connections)
+  {
+    if (script is not TextScript textScript)
+      throw new ApplicationException("The only supported script type is TextScript");
+    _connections = connections;
+    _script = textScript;
+  }
+  public void Dispose()
+  {
+    _connections.Dispose();
+  }
+  public async Task ExecuteAsync(CancellationToken cancellationToken)
+  {
+    using var holder = _connections.UseConnection();
+    await using var cmd = holder.Connection.CreateCommand();
+    cmd.CommandText = _script.Text;
+    await using var reader = await cmd.ExecuteReaderAsync(cancellationToken);
+    await reader.ReadAsync(cancellationToken);
+  }
+}

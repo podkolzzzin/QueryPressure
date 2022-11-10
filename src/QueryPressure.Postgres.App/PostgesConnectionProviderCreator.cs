@@ -5,7 +5,7 @@ using QueryPressure.Postgres.Core;
 
 namespace QueryPressure.Postgres.App;
 
-public class PostgesConnectionProviderCreator : ICreator<IConnectionProvider>
+public class PostgresConnectionProviderCreator : ICreator<IConnectionProvider>
 {
   public string Type => "postgres";
   public IConnectionProvider Create(ArgumentsSection argumentsSection)

@@ -17,7 +17,7 @@ public class QueryCountLimit : ILimit, IExecutionHook
   
   public CancellationToken Token => _source.Token;
   
-  public Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+  public Task OnQueryExecutedAsync(ExecutionResult _, CancellationToken cancellationToken)
   {
     _currentCount++;
     if (_currentCount > _count)
