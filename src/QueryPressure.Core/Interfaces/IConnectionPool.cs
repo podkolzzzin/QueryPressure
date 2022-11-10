@@ -1,6 +1,6 @@
 ﻿namespace QueryPressure.Core.Interfaces;
 
-public interface IConnectionsHolder<T> : IDisposable
+public interface IConnectionPool<T> : IDisposable
 {
   IConnectionHolder<T> UseConnection();
 }

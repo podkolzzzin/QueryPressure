@@ -3,14 +3,14 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core;
 
-public class ConnectionsProvider<T> : IConnectionsHolder<T>
+public class ConnectionPool<T> : IConnectionPool<T>
 {
   private class ConnectionHolder : IConnectionHolder<T>
   {
-    private readonly ConnectionsProvider<T> _service;
+    private readonly ConnectionPool<T> _service;
     public T Connection { get; }
 
-    public ConnectionHolder(T connection, ConnectionsProvider<T> service)
+    public ConnectionHolder(T connection, ConnectionPool<T> service)
     {
       _service = service;
       Connection = connection;
@@ -24,7 +24,7 @@ public class ConnectionsProvider<T> : IConnectionsHolder<T>
 
   private readonly ConcurrentBag<T> _connections;
 
-  public ConnectionsProvider(IEnumerable<T> connections)
+  public ConnectionPool(IEnumerable<T> connections)
   {
     _connections = new ConcurrentBag<T>(connections);
   }

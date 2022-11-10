@@ -1,30 +1,18 @@
-﻿using Microsoft.Extensions.ObjectPool;
-using Npgsql;
+﻿using Npgsql;
 using QueryPressure.Core;
-using QueryPressure.Core.Interfaces;
-using QueryPressure.Core.Requirements;
 
 namespace QueryPressure.Postgres.Core;
 
-public class PostgresConnectionProvider : IConnectionProvider
+public class PostgresConnectionProvider : ConnectionProviderBase<NpgsqlConnection>
 {
-  private readonly string _connectionString;
-  
-  public PostgresConnectionProvider(string connectionString)
+  public PostgresConnectionProvider(string connectionString) : base(connectionString)
   {
-    _connectionString = connectionString;
   }
 
-  public async Task<IExecutable> CreateExecutorAsync(IScriptSource scriptSource, ConnectionRequirement connectionRequirement, CancellationToken cancellationToken)
+  protected override async Task<NpgsqlConnection> CreateOpenConnectionAsync(string connectionString, CancellationToken cancellationToken)
   {
-    var script = await scriptSource.GetScriptAsync(cancellationToken);
-    var connections = new NpgsqlConnection[connectionRequirement.ConnectionCount];
-    for (int i = 0; i < connections.Length; i++)
-    {
-      connections[i] = new NpgsqlConnection(_connectionString);
-      await connections[i].OpenAsync(cancellationToken);
-    }
-    
-    return new PostgresExecutor(script, new ConnectionsProvider<NpgsqlConnection>(connections));
+    var connection = new NpgsqlConnection(connectionString);
+    await connection.OpenAsync(cancellationToken);
+    return connection;
   }
 }
