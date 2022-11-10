@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.Postgres.Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.Postgres.App", "QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj", "{0B0824EA-FB04-4A57-826C-1C378003CF07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.MySql.App", "QueryPressure.MySql.App\QueryPressure.MySql.App.csproj", "{33A7D2B1-F3D0-41B5-A4E4-5224D799F37B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.MySql.Core", "QueryPressure.MySql.Core\QueryPressure.MySql.Core.csproj", "{B38C102F-048B-43F6-9709-35A0485476F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,13 @@ Global
 		{0B0824EA-FB04-4A57-826C-1C378003CF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B0824EA-FB04-4A57-826C-1C378003CF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B0824EA-FB04-4A57-826C-1C378003CF07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A7D2B1-F3D0-41B5-A4E4-5224D799F37B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A7D2B1-F3D0-41B5-A4E4-5224D799F37B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A7D2B1-F3D0-41B5-A4E4-5224D799F37B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A7D2B1-F3D0-41B5-A4E4-5224D799F37B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38C102F-048B-43F6-9709-35A0485476F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38C102F-048B-43F6-9709-35A0485476F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38C102F-048B-43F6-9709-35A0485476F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38C102F-048B-43F6-9709-35A0485476F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

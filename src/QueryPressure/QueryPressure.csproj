@@ -15,20 +15,28 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.4.0" />
+      <PackageReference Include="Mono.Cecil" Version="0.11.4" />
       <PackageReference Include="YamlDotNet" Version="12.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\QueryPressure.App\QueryPressure.App.csproj" />
       <ProjectReference Include="..\QueryPressure.Core\QueryPressure.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
       <ProjectReference Include="..\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="sample.yml">
+      <None Update="sample.postgres.yml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="script.sql">
+      <None Update="script.postgres.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="sample.mysql.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.mysql.sql">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
