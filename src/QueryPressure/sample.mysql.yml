@@ -9,4 +9,4 @@ limit:
 connection:
   type: mysql
   arguments:
-    connectionString: Host=localhost;Database=information_schema;User Id=root;
+    connectionString: Host=localhost;Database=query_pressure_db;User Id=root;SSL Mode=None
