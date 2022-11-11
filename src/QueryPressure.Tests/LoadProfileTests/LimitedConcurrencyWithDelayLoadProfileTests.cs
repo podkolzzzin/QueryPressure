@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.LoadProfiles;
 using Xunit;
 
@@ -25,8 +26,8 @@ public class LimitedConcurrencyLoadProfileWithDelayTests
         await Task.Delay(15);
         Assert.All(tasks, t => Assert.False(t.IsCompleted));
 
-        _ = profile.OnQueryExecutedAsync(CancellationToken.None);
-        _ = profile.OnQueryExecutedAsync(CancellationToken.None);
+        _ = profile.OnQueryExecutedAsync(ExecutionResult.Empty, CancellationToken.None);
+        _ = profile.OnQueryExecutedAsync(ExecutionResult.Empty, CancellationToken.None);
         Assert.All(tasks, t => Assert.False(t.IsCompleted));
 
         await Task.Delay(1.5 * delay);
@@ -52,8 +53,8 @@ public class LimitedConcurrencyLoadProfileWithDelayTests
 
         int startTimestamp = Environment.TickCount;
 
-        _ = profile.OnQueryExecutedAsync(CancellationToken.None);
-        _ = profile.OnQueryExecutedAsync(CancellationToken.None);
+        _ = profile.OnQueryExecutedAsync(ExecutionResult.Empty, CancellationToken.None);
+        _ = profile.OnQueryExecutedAsync(ExecutionResult.Empty, CancellationToken.None);
 
         await Task.WhenAll(tasks);
 
@@ -76,7 +77,7 @@ public class LimitedConcurrencyLoadProfileWithDelayTests
         var task = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
         Assert.False(task.Wait(delay * 4));
 
-        _ = profile.OnQueryExecutedAsync(CancellationToken.None);
+        _ = profile.OnQueryExecutedAsync(ExecutionResult.Empty, CancellationToken.None);
         Assert.True(task.Wait(delay * 2));
     }
 }

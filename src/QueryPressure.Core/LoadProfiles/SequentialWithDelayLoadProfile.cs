@@ -2,16 +2,16 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.LoadProfiles;
 
-public class SequentialWithDelayLoadProfile : IProfile
+public class SequentialWithDelayLoadProfile : IProfile, IExecutionHook
 {
     private readonly TimeSpan _delay;
-    private readonly IProfile _profile;
+    private readonly SequentialLoadProfile _profile;
     private DateTime? _nextExecution;
     
     public SequentialWithDelayLoadProfile(TimeSpan delay)
     {
         _delay = delay;
-        _profile = new SequentialLoadProfile();
+        _profile = new ();
     }
     
     public async Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
@@ -22,9 +22,9 @@ public class SequentialWithDelayLoadProfile : IProfile
             await Task.Delay(_nextExecution.Value - now, cancellationToken);
     }
 
-    public async Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    public async Task OnQueryExecutedAsync(ExecutionResult _, CancellationToken cancellationToken)
     {
-        await _profile.OnQueryExecutedAsync(cancellationToken);
+        await _profile.OnQueryExecutedAsync(_, cancellationToken);
         _nextExecution = DateTime.Now + _delay;
     }
 }

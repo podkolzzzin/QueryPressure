@@ -1,7 +1,6 @@
 namespace QueryPressure.Core.Interfaces;
 
-public interface IProfile
+public interface IProfile : ISetting
 {
     Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken);
-    Task OnQueryExecutedAsync(CancellationToken cancellationToken);
 }

@@ -2,7 +2,7 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.LoadProfiles;
 
-public class SequentialLoadProfile : IProfile
+public class SequentialLoadProfile : IProfile, IExecutionHook
 {
     private TaskCompletionSource? _taskCompletionSource;
     
@@ -14,7 +14,7 @@ public class SequentialLoadProfile : IProfile
         _taskCompletionSource = new();
     }
 
-    public Task OnQueryExecutedAsync(CancellationToken cancellationToken)
+    public Task OnQueryExecutedAsync(ExecutionResult _, CancellationToken cancellationToken)
     {
         if (_taskCompletionSource == null)
             throw new InvalidOperationException(

@@ -1,46 +1,27 @@
 ﻿using System;
-using System.Threading.Tasks;
-using QueryPressure.Arguments;
+using QueryPressure.App.Factories;
+using QueryPressure.App.Interfaces;
+using QueryPressure.App.ProfileCreators;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.LoadProfiles;
-using QueryPressure.Factories;
-using QueryPressure.Interfaces;
-using QueryPressure.ProfileCreators;
 using Xunit;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace QueryPressure.Tests;
 
 public class LoadProfileFactoryTests
 {
-    private readonly LoadProfilesFactory _factory;
+    private readonly SettingsFactory<IProfile> _factory;
     
     public LoadProfileFactoryTests()
     {
-        _factory = new LoadProfilesFactory(new IProfileCreator[]
+        _factory = new SettingsFactory<IProfile>("profile", new ICreator<IProfile>[]
         {
-            new SequentialLoadProfileCreator(),
-            new SequentialWithDelayLoadProfileCreator(),
-            new LimitedConcurrencyLoadProfileCreator(),
-            new LimitedConcurrencyWithDelayLoadProfileCreator(),
-            new TargetThroughputLoadProfileCreator()
+            new SequentialLoadCreator(),
+            new SequentialWithDelayLoadCreator(),
+            new LimitedConcurrencyLoadCreator(),
+            new LimitedConcurrencyWithDelayLoadCreator(),
+            new TargetThroughputLoadCreator()
         });
-    }
-
-    private IProfile CreateProfile(string yml)
-    {
-        var args = Deserialize(yml);
-        return _factory.CreateProfile(args);
-    }
-    
-    private static ApplicationArguments Deserialize(string fileContent)
-    {
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .Build();
-
-        return deserializer.Deserialize<ApplicationArguments>(fileContent);
     }
 
     [Fact]
@@ -50,7 +31,7 @@ public class LoadProfileFactoryTests
 profile:
     type: sequential";
 
-        Assert.IsType<SequentialLoadProfile>(CreateProfile(yml));
+        Assert.IsType<SequentialLoadProfile>(TestUtils.Create(_factory, yml));
     }
     
     [Fact]
@@ -62,7 +43,7 @@ profile:
     arguments: 
         limit: 2";
 
-        Assert.IsType<LimitedConcurrencyLoadProfile>(CreateProfile(yml));
+        Assert.IsType<LimitedConcurrencyLoadProfile>(TestUtils.Create(_factory, yml));
     }
     
     [Fact]
@@ -72,7 +53,7 @@ profile:
 profile:
     type: limitedConcurrency";
 
-        Assert.Throws<ArgumentException>(() => CreateProfile(yml));
+        Assert.Throws<ArgumentException>(() => TestUtils.Create(_factory, yml));
     }
     
     [Fact]
@@ -84,7 +65,7 @@ profile:
     arguments: 
         limit: ololo";
 
-        Assert.Throws<ArgumentException>(() => CreateProfile(yml));
+        Assert.Throws<ArgumentException>(() => TestUtils.Create(_factory, yml));
     }
     
     [Fact]
@@ -97,7 +78,7 @@ profile:
         limit: 2
         delay: 00:00:01";
 
-        Assert.IsType<LimitedConcurrencyLoadProfile>(CreateProfile(yml));
+        Assert.IsType<LimitedConcurrencyLoadProfile>(TestUtils.Create(_factory, yml));
     }
     
     [Fact]
@@ -109,7 +90,7 @@ profile:
     arguments:
         delay: 00:00:01";
 
-        Assert.IsType<SequentialWithDelayLoadProfile>(CreateProfile(yml));
+        Assert.IsType<SequentialWithDelayLoadProfile>(TestUtils.Create(_factory, yml));
     }
     
     [Fact]
@@ -121,7 +102,7 @@ profile:
     arguments:
         rps: 50";
 
-        Assert.IsType<TargetThroughputLoadProfile>(CreateProfile(yml));
+        Assert.IsType<TargetThroughputLoadProfile>(TestUtils.Create(_factory, yml));
     }
     
     [Fact]
@@ -133,6 +114,6 @@ profile:
     arguments: 
         limit: ololo";
 
-        Assert.Throws<ArgumentException>(() => CreateProfile(yml));
+        Assert.Throws<ArgumentException>(() => TestUtils.Create(_factory, yml));
     }
 }
