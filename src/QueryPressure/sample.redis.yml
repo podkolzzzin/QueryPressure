@@ -1,0 +1,12 @@
+﻿profile:
+  type: limitedConcurrency
+  arguments:
+    limit: 2
+limit:
+  type: queryCount
+  arguments:
+    limit: 4
+connection:
+  type: redis
+  arguments:
+    connectionString: localhost
