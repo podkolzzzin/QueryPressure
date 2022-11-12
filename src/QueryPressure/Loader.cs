@@ -61,7 +61,9 @@ internal class Loader
   {
     var configExtenstions = new[] { ".yml", ".yaml" };
     var configFiles = args.Where(x => configExtenstions.Contains(Path.GetExtension(x)));
-    var scriptFile = args.Single(x => Path.GetExtension(x) == ".sql");
+
+    var scriptExtensions = new[] { ".sql", ".json" };
+    var scriptFile = args.Single(x => scriptExtensions.Contains(Path.GetExtension(x)));
 
     var result = new ApplicationArguments();
     foreach (var configFile in configFiles)
