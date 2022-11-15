@@ -13,6 +13,6 @@ public class PostgresConnectionProviderCreator : ICreator<IConnectionProvider>
   public IConnectionProvider Create(ArgumentsSection argumentsSection)
   {
     var connectionString = argumentsSection.ExtractStringArgumentOrThrow("connectionString");
-    return new PostgresConnectionProvider(connectionString);
+    return new PostgresDbConnectionProvider(connectionString);
   }
 }

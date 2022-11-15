@@ -1,21 +1,22 @@
+﻿using System.Data;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.Requirements;
 
 namespace QueryPressure.Core;
 
-public abstract class ConnectionProviderBase<T> : IConnectionProvider
+public abstract class DbConnectionProviderBase<T> : IConnectionProvider where T : IDbConnection
 {
   private readonly string _connectionString;
-
-  public ConnectionProviderBase(string connectionString)
+  
+  public DbConnectionProviderBase(string connectionString)
   {
     _connectionString = connectionString;
   }
 
   protected abstract Task<T> CreateOpenConnectionAsync(string connectionString, CancellationToken cancellationToken);
 
-  protected abstract IExecutable CreateExecutor(IScript script, IConnectionPool<T> pool);
-
+  protected virtual IExecutable CreateExecutor(IScript script, IConnectionPool<T> pool) => new DbExecutableBase<T>(script, pool);
+  
   public async Task<IExecutable> CreateExecutorAsync(IScriptSource scriptSource, ConnectionRequirement connectionRequirement, CancellationToken cancellationToken)
   {
     var script = await scriptSource.GetScriptAsync(cancellationToken);
