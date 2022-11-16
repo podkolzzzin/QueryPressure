@@ -2,15 +2,11 @@
 using QueryPressure.App;
 using QueryPressure.App.Arguments;
 using QueryPressure.Core;
-using QueryPressure.Postgres.App;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 internal class Loader
 {
-  public Loader()
-  {
-  }
 
   public IContainer Load(string[] args)
   {
@@ -19,7 +15,6 @@ internal class Loader
 
     builder.RegisterInstance(appArgs).AsSelf();
     builder.RegisterModule<AppModule>();
-    builder.RegisterModule<PostgresAppModule>();
     LoadPlugins(builder);
         
     return builder.Build();
@@ -59,9 +54,10 @@ internal class Loader
 
   private ApplicationArguments Merge(string[] args)
   {
-    var configExtenstions = new[] { ".yml", ".yaml" };
-    var configFiles = args.Where(x => configExtenstions.Contains(Path.GetExtension(x)));
-    var scriptFile = args.Single(x => Path.GetExtension(x) == ".sql");
+    var configExtensions = new[] { ".yml", ".yaml" };
+
+    var configFiles = args.Where(x => configExtensions.Contains(Path.GetExtension(x)));
+    var scriptFile = args.Single(x => !configExtensions.Contains(Path.GetExtension(x)));
 
     var result = new ApplicationArguments();
     foreach (var configFile in configFiles)

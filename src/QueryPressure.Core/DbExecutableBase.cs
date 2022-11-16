@@ -5,12 +5,12 @@ using QueryPressure.Core.ScriptSources;
 
 namespace QueryPressure.Core;
 
-public class ExecutableBase<TConnection> : IExecutable where TConnection : IDbConnection
+public class DbExecutableBase<TConnection> : IExecutable where TConnection : IDbConnection
 {
   private readonly IConnectionPool<TConnection> _connections;
   private readonly TextScript _script;
   
-  public ExecutableBase(IScript script, IConnectionPool<TConnection> connections)
+  public DbExecutableBase(IScript script, IConnectionPool<TConnection> connections)
   {
     if (script is not TextScript textScript)
       throw new ApplicationException("The only supported script type is TextScript");

@@ -3,7 +3,7 @@ using QueryPressure.Core;
 
 namespace QueryPressure.SqlServer.Core
 {
-  public class SqlServerConnectionProvider : ConnectionProviderBase<SqlConnection>
+  public class SqlServerConnectionProvider : DbConnectionProviderBase<SqlConnection>
   {
 
     public SqlServerConnectionProvider(string connectionString) : base(connectionString)

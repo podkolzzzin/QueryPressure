@@ -13,7 +13,7 @@ namespace QueryPressure.MySql.App
     public IConnectionProvider Create(ArgumentsSection argumentsSection)
     {
       var connectionString = argumentsSection.ExtractStringArgumentOrThrow("connectionString");
-      return new MySqlConnectionProvider(connectionString);
+      return new MySqlDbConnectionProvider(connectionString);
     }
   }
 }

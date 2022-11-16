@@ -3,9 +3,9 @@ using QueryPressure.Core;
 
 namespace QueryPressure.Postgres.Core;
 
-public class PostgresConnectionProvider : ConnectionProviderBase<NpgsqlConnection>
+public class PostgresDbConnectionProvider : DbConnectionProviderBase<NpgsqlConnection>
 {
-  public PostgresConnectionProvider(string connectionString) : base(connectionString)
+  public PostgresDbConnectionProvider(string connectionString) : base(connectionString)
   {
   }
 

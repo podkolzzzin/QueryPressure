@@ -3,9 +3,9 @@ using QueryPressure.Core;
 
 namespace QueryPressure.MySql.Core
 {
-  public class MySqlConnectionProvider : ConnectionProviderBase<MySqlConnection>
+  public class MySqlDbConnectionProvider : DbConnectionProviderBase<MySqlConnection>
   {
-    public MySqlConnectionProvider(string connectionString) : base(connectionString)
+    public MySqlDbConnectionProvider(string connectionString) : base(connectionString)
     {
     }
 

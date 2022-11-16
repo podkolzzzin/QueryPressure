@@ -1,18 +1,19 @@
-﻿using QueryPressure.App.Arguments;
+using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;
-using QueryPressure.Postgres.Core;
+using QueryPressure.Redis.Core;
 
 [assembly: QueryPressurePlugin]
-namespace QueryPressure.Postgres.App;
+namespace QueryPressure.Redis.App;
 
-public class PostgresConnectionProviderCreator : ICreator<IConnectionProvider>
+public sealed class RedisConnectionProviderCreator: ICreator<IConnectionProvider>
 {
-  public string Type => "postgres";
+  public string Type => "redis";
+
   public IConnectionProvider Create(ArgumentsSection argumentsSection)
   {
     var connectionString = argumentsSection.ExtractStringArgumentOrThrow("connectionString");
-    return new PostgresDbConnectionProvider(connectionString);
+    return new RedisConnectionProvider(connectionString);
   }
 }

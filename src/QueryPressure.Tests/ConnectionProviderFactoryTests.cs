@@ -30,6 +30,6 @@ connection:
      connectionString: Host=localhost;Database=postgres;User Id=postgres;Password=postgres;";
 
     var provider = TestUtils.Create(_factory, yml);
-    Assert.IsType<PostgresConnectionProvider>(provider);
+    Assert.IsType<PostgresDbConnectionProvider>(provider);
   }
 }
