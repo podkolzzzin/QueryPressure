@@ -5,11 +5,11 @@ namespace QueryPressure.Core;
 
 public abstract class ConnectionProviderBase<T> : IConnectionProvider
 {
-  private readonly string _connectionString;
+  protected string ConnectionString { get; }
 
-  public ConnectionProviderBase(string connectionString)
+  protected ConnectionProviderBase(string connectionString)
   {
-    _connectionString = connectionString;
+    ConnectionString = connectionString;
   }
 
   protected abstract Task<T> CreateOpenConnectionAsync(string connectionString, CancellationToken cancellationToken);
@@ -22,7 +22,7 @@ public abstract class ConnectionProviderBase<T> : IConnectionProvider
     var connections = new T[connectionRequirement.ConnectionCount];
     for (int i = 0; i < connections.Length; i++)
     {
-      connections[i] = await CreateOpenConnectionAsync(_connectionString, cancellationToken);
+      connections[i] = await CreateOpenConnectionAsync(ConnectionString, cancellationToken);
     }
 
     return CreateExecutor(script, new ConnectionPool<T>(connections));
