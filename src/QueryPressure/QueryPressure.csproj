@@ -24,6 +24,7 @@
       <ProjectReference Include="..\QueryPressure.Core\QueryPressure.Core.csproj" />
       <ProjectReference Include="..\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
       <ProjectReference Include="..\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.SqlServer.App\QueryPressure.SqlServer.App.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -37,6 +38,12 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="script.mysql.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.sqlserver.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="sample.sqlserver.yml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

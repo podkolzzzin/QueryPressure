@@ -1,0 +1,12 @@
+﻿profile:
+  type: limitedConcurrency
+  arguments:
+    limit: 2
+limit:
+  type: queryCount
+  arguments:
+    limit: 4
+connection:
+  type: sqlserver
+  arguments:
+    connectionString: Data Source=localhost,1433;Initial Catalog=master;User ID=sa;Password=Pass@word;TrustServerCertificate=True;
