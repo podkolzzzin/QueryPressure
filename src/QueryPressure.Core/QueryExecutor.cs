@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 using QueryPressure.Core.Interfaces;
+using QueryPressure.Core.Limits;
 
 namespace QueryPressure.Core;
 
@@ -47,10 +48,14 @@ public class QueryExecutor
 
                 var queryStartTime = DateTime.Now;
                 var stopwatch = Stopwatch.StartNew();
-                var _ = _executable.ExecuteAsync(token).ContinueWith(async _ =>
+                var _ = _executable.ExecuteAsync(token).ContinueWith(async executionTask =>
                 {
+                    if (executionTask.IsFaulted && _limit is TillNErrorsLimit errorsLimit)
+                        errorsLimit.OnErrorOccured();
+
                     if (token.IsCancellationRequested)
                         return;
+
                     stopwatch.Stop();
                     var queryEndTime = DateTime.Now;
                     var result = new ExecutionResult(queryStartTime, queryEndTime, stopwatch.Elapsed);
@@ -58,7 +63,7 @@ public class QueryExecutor
                 }, token);
             }
         }
-        catch (OperationCanceledException) {}
+        catch (OperationCanceledException) { }
 
         foreach (var metric in _metrics)
         {
