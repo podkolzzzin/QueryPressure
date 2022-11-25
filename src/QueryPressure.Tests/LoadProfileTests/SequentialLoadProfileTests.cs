@@ -8,27 +8,27 @@ namespace QueryPressure.Tests.LoadProfileTests;
 
 public class SequentialLoadProfileTests
 {
-    [Fact]
-    public void WhenNextCanBeExecutedAsync_FirstCall_ReturnsCompletedTask()
-    {
-        var profile = new SequentialLoadProfile();
-        var task = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
-        Assert.True(task.IsCompletedSuccessfully);
-    }
-    
-    [Fact]
-    public async Task WhenNextCanBeExecutedAsync_SecondCall_CompletesOnlyAfter_WhenQueryExecuted_Called()
-    {
-        var profile = new SequentialLoadProfile();
-        var _ = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
-        var task = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
+  [Fact]
+  public void WhenNextCanBeExecutedAsync_FirstCall_ReturnsCompletedTask()
+  {
+    var profile = new SequentialLoadProfile();
+    var task = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
+    Assert.True(task.IsCompletedSuccessfully);
+  }
 
-        await Task.Delay(10); 
-        Assert.False(task.IsCompleted);
-        
-        await profile.OnQueryExecutedAsync(new (default, default, default), CancellationToken.None);
-        
-        await Task.Delay(10);
-        Assert.True(task.IsCompletedSuccessfully);
-    }
+  [Fact]
+  public async Task WhenNextCanBeExecutedAsync_SecondCall_CompletesOnlyAfter_WhenQueryExecuted_Called()
+  {
+    var profile = new SequentialLoadProfile();
+    var _ = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
+    var task = profile.WhenNextCanBeExecutedAsync(CancellationToken.None);
+
+    await Task.Delay(10);
+    Assert.False(task.IsCompleted);
+
+    await profile.OnQueryExecutedAsync(new(default, default, default), CancellationToken.None);
+
+    await Task.Delay(10);
+    Assert.True(task.IsCompletedSuccessfully);
+  }
 }

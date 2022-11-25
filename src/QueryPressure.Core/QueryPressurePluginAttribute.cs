@@ -1,6 +1,6 @@
-﻿namespace QueryPressure.Core;
+namespace QueryPressure.Core;
 
 public class QueryPressurePluginAttribute : Attribute
 {
-  
+
 }

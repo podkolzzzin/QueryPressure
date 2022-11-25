@@ -1,4 +1,4 @@
-﻿using QueryPressure.App.Arguments;
+using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;

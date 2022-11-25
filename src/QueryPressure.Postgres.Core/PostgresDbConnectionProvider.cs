@@ -1,4 +1,4 @@
-﻿using Npgsql;
+using Npgsql;
 using QueryPressure.Core;
 
 namespace QueryPressure.Postgres.Core;

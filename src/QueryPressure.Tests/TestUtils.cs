@@ -1,4 +1,4 @@
-﻿using QueryPressure.App.Arguments;
+using QueryPressure.App.Arguments;
 using QueryPressure.App.Factories;
 using QueryPressure.Core.Interfaces;
 using YamlDotNet.Serialization;
@@ -13,7 +13,7 @@ public static class TestUtils
     var args = Deserialize(yml);
     return factory.Create(args);
   }
-    
+
   private static ApplicationArguments Deserialize(string fileContent)
   {
     var deserializer = new DeserializerBuilder()

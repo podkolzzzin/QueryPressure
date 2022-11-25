@@ -7,7 +7,7 @@ using QueryPressure.Redis.Core;
 [assembly: QueryPressurePlugin]
 namespace QueryPressure.Redis.App;
 
-public sealed class RedisConnectionProviderCreator: ICreator<IConnectionProvider>
+public sealed class RedisConnectionProviderCreator : ICreator<IConnectionProvider>
 {
   public string Type => "redis";
 

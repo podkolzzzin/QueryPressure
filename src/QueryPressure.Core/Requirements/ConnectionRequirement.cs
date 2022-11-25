@@ -1,4 +1,4 @@
-﻿using QueryPressure.Core.Interfaces;
+using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.Requirements;
 
@@ -8,9 +8,9 @@ public class ConnectionRequirement : IRequirement
 
   public ConnectionRequirement() : this(1)
   {
-    
+
   }
-  
+
   public ConnectionRequirement(int connectionCount)
   {
     ConnectionCount = connectionCount;
@@ -25,7 +25,7 @@ public class ConnectionRequirement : IRequirement
 
     if (other is not ConnectionRequirement otherC)
       throw new ArgumentException("Cannot compare ConnectionRequirement with other type.");
-    
+
     return ConnectionCount.CompareTo(otherC.ConnectionCount);
   }
 }

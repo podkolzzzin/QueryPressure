@@ -1,4 +1,4 @@
-﻿using QueryPressure.Core.Interfaces;
+using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.Limits;
 
@@ -8,15 +8,15 @@ public class QueryCountLimit : ILimit, IExecutionHook
   private readonly CancellationTokenSource _source;
 
   private int _currentCount;
-  
+
   public QueryCountLimit(int count)
   {
     _count = count;
     _source = new();
   }
-  
+
   public CancellationToken Token => _source.Token;
-  
+
   public Task OnQueryExecutedAsync(ExecutionResult _, CancellationToken cancellationToken)
   {
     _currentCount++;
@@ -24,7 +24,7 @@ public class QueryCountLimit : ILimit, IExecutionHook
     {
       _source.Cancel();
     }
-    
+
     return Task.CompletedTask;
   }
 }

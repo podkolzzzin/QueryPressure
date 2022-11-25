@@ -4,7 +4,7 @@ namespace QueryPressure.App.Interfaces;
 
 public interface ICreator<out T>
 {
-    string Type { get; }
+  string Type { get; }
 
-    T Create(ArgumentsSection argumentsSection);
+  T Create(ArgumentsSection argumentsSection);
 }

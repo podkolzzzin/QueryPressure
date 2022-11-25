@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 using QueryPressure.App;
 using QueryPressure.App.Arguments;
 using QueryPressure.Core;
@@ -16,10 +16,10 @@ internal class Loader
     builder.RegisterInstance(appArgs).AsSelf();
     builder.RegisterModule<AppModule>();
     LoadPlugins(builder);
-        
+
     return builder.Build();
   }
-  
+
   private void LoadPlugins(ContainerBuilder builder)
   {
     var dir = new FileInfo(GetType().Assembly.Location).Directory;
@@ -68,10 +68,12 @@ internal class Loader
         result.Add(applicationArgument.Key, applicationArgument.Value);
       }
     }
-    
-    result.Add("script", new ArgumentsSection() {
+
+    result.Add("script", new ArgumentsSection()
+    {
       Type = "file",
-      Arguments = new() {
+      Arguments = new()
+      {
         ["path"] = scriptFile
       }
     });

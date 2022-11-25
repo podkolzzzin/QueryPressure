@@ -8,7 +8,7 @@ public static class ArgumentsExtensions
       throw new ArgumentException($"There is no argument with named '{name}' in {argumentsSection.Type}");
     return val;
   }
-    
+
   public static int ExtractIntArgumentOrThrow(this ArgumentsSection argumentsSection, string name)
   {
     var val = ExtractStringArgumentOrThrow(argumentsSection, name);
@@ -17,7 +17,7 @@ public static class ArgumentsExtensions
         $"The value presented as an argument named '{name}' is not a valid integer. The value is '{val}'");
     return result;
   }
-    
+
   public static TimeSpan ExtractTimeSpanArgumentOrThrow(this ArgumentsSection argumentsSection, string name)
   {
     var val = ExtractStringArgumentOrThrow(argumentsSection, name);

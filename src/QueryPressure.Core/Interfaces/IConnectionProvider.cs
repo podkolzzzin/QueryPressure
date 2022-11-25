@@ -1,4 +1,4 @@
-﻿using QueryPressure.Core.Requirements;
+using QueryPressure.Core.Requirements;
 
 namespace QueryPressure.Core.Interfaces;
 

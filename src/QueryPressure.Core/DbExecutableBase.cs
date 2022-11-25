@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Data.Common;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.Core.ScriptSources;
@@ -9,7 +9,7 @@ public class DbExecutableBase<TConnection> : IExecutable where TConnection : IDb
 {
   private readonly IConnectionPool<TConnection> _connections;
   private readonly TextScript _script;
-  
+
   public DbExecutableBase(IScript script, IConnectionPool<TConnection> connections)
   {
     if (script is not TextScript textScript)
@@ -20,7 +20,7 @@ public class DbExecutableBase<TConnection> : IExecutable where TConnection : IDb
 
 
   public void Dispose() => _connections.Dispose();
-  
+
   public async Task ExecuteAsync(CancellationToken cancellationToken)
   {
     using var holder = _connections.UseConnection();
