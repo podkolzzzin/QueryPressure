@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core;

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using QueryPressure.App.Factories;
 using QueryPressure.App.Interfaces;
 using QueryPressure.App.LimitCreators;
@@ -11,7 +11,7 @@ namespace QueryPressure.Tests;
 public class LimitFactoryTests
 {
   private readonly SettingsFactory<ILimit> _factory;
-    
+
   public LimitFactoryTests()
   {
     _factory = new SettingsFactory<ILimit>("limit", new ICreator<ILimit>[]
@@ -22,7 +22,7 @@ public class LimitFactoryTests
       new TillNErrorLimitCreator()
     });
   }
-    
+
   [Fact]
   public void Create_QueryCountLimit_IsCreated()
   {
@@ -34,7 +34,7 @@ limit:
 
     Assert.IsType<QueryCountLimit>(TestUtils.Create(_factory, yml));
   }
-    
+
   [Fact]
   public void Create_TimeLimit_IsCreated()
   {

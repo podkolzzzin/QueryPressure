@@ -1,4 +1,4 @@
-﻿using QueryPressure.App.Arguments;
+using QueryPressure.App.Arguments;
 using QueryPressure.App.Factories;
 using QueryPressure.App.Interfaces;
 using QueryPressure.App.ScriptSourceCreators;
@@ -23,14 +23,17 @@ public class ScriptSourceFactoryTests
   [Fact]
   public void Create_FileScriptSource_IsCreated()
   {
-    var section = new ArgumentsSection() {
+    var section = new ArgumentsSection()
+    {
       Type = "file",
-      Arguments = new() {
+      Arguments = new()
+      {
         ["path"] = "file.sql"
       }
     };
 
-    Assert.IsType<FileScriptSource>(_factory.Create(new ApplicationArguments() {
+    Assert.IsType<FileScriptSource>(_factory.Create(new ApplicationArguments()
+    {
       ["script"] = section
     }));
   }

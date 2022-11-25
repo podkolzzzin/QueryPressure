@@ -1,29 +1,29 @@
-﻿using QueryPressure.Core.Interfaces;
+using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core.LoadProfiles;
 
 public class TargetThroughputLoadProfile : IProfile
 {
-    private readonly TimeSpan _delay;
-    private DateTime? _nextExecution;
-    
-    public TargetThroughputLoadProfile(int targetRPS)
+  private readonly TimeSpan _delay;
+  private DateTime? _nextExecution;
+
+  public TargetThroughputLoadProfile(int targetRPS)
+  {
+    _delay = TimeSpan.FromMilliseconds(1000f / targetRPS);
+  }
+
+  public async Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
+  {
+    var now = DateTime.Now;
+    if (_nextExecution == null || now > _nextExecution)
     {
-        _delay = TimeSpan.FromMilliseconds(1000f / targetRPS);
+      _nextExecution = now + _delay;
     }
-    
-    public async Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
+    else
     {
-        var now = DateTime.Now;
-        if (_nextExecution == null || now > _nextExecution)
-        {
-            _nextExecution = now + _delay;
-        }
-        else
-        {
-            var delta = _nextExecution.Value - now;
-            _nextExecution += _delay;
-            await Task.Delay(delta, cancellationToken);
-        }
+      var delta = _nextExecution.Value - now;
+      _nextExecution += _delay;
+      await Task.Delay(delta, cancellationToken);
     }
+  }
 }

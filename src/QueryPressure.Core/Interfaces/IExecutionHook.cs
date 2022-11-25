@@ -1,4 +1,4 @@
-﻿namespace QueryPressure.Core.Interfaces;
+namespace QueryPressure.Core.Interfaces;
 
 public record ExecutionResult(DateTime QueryStartTime, DateTime QueryEndTime, TimeSpan Duration, Exception? Exception)
 {

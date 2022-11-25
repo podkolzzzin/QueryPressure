@@ -1,4 +1,4 @@
-﻿using QueryPressure.App.Arguments;
+using QueryPressure.App.Arguments;
 using QueryPressure.App.Factories;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core;
@@ -13,8 +13,8 @@ public class ScenarioBuilder : IScenarioBuilder
   {
     private long _count, _ticks;
 
-    public TimeSpan Value => new (_ticks / _count);
-    
+    public TimeSpan Value => new(_ticks / _count);
+
     public Task OnQueryExecutedAsync(ExecutionResult result, CancellationToken cancellationToken)
     {
       Interlocked.Increment(ref _count);
@@ -27,12 +27,12 @@ public class ScenarioBuilder : IScenarioBuilder
       Console.WriteLine("Avg: " + Value);
     }
   }
-  
+
   private readonly ISettingsFactory<IProfile> _profilesFactory;
   private readonly ISettingsFactory<ILimit> _limitsFactory;
   private readonly ISettingsFactory<IConnectionProvider> _connectionProviderFactory;
   private readonly ISettingsFactory<IScriptSource> _scriptSourceFactory;
-  
+
   public ScenarioBuilder(
     ISettingsFactory<IProfile> profilesFactory,
     ISettingsFactory<ILimit> limitsFactory,
@@ -59,7 +59,7 @@ public class ScenarioBuilder : IScenarioBuilder
       .Concat(scriptSource.Requirements);
 
     var requirementsService = new RequirementService(requirements);
-    
+
     var executor = await connectionProvider.CreateExecutorAsync(scriptSource, requirementsService.GetRequirement<ConnectionRequirement>(), cancellationToken);
     return new QueryExecutor(executor, profile, limit, new IMetricProvider[] {
       new AverageMetric()

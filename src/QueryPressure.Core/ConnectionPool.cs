@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Core;
@@ -15,7 +15,7 @@ public class ConnectionPool<T> : IConnectionPool<T>
       _service = service;
       Connection = connection;
     }
-    
+
     public void Dispose()
     {
       _service.FinalizeConnection(Connection);
@@ -28,7 +28,7 @@ public class ConnectionPool<T> : IConnectionPool<T>
   {
     _connections = new ConcurrentBag<T>(connections);
   }
-  
+
   public IConnectionHolder<T> UseConnection()
   {
     if (!_connections.TryTake(out var result))
@@ -37,7 +37,7 @@ public class ConnectionPool<T> : IConnectionPool<T>
   }
 
   private void FinalizeConnection(T connection) => _connections.Add(connection);
-  
+
   public void Dispose()
   {
     while (!_connections.IsEmpty)
