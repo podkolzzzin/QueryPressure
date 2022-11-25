@@ -50,15 +50,12 @@ public class QueryExecutor
                 var stopwatch = Stopwatch.StartNew();
                 var _ = _executable.ExecuteAsync(token).ContinueWith(async executionTask =>
                 {
-                    if (executionTask.IsFaulted && _limit is TillNErrorsLimit errorsLimit)
-                        errorsLimit.OnErrorOccured();
-
                     if (token.IsCancellationRequested)
                         return;
 
                     stopwatch.Stop();
                     var queryEndTime = DateTime.Now;
-                    var result = new ExecutionResult(queryStartTime, queryEndTime, stopwatch.Elapsed);
+                    var result = new ExecutionResult(queryStartTime, queryEndTime, stopwatch.Elapsed, executionTask.Exception);
                     await Task.WhenAll(_hooks.Select(x => x.OnQueryExecutedAsync(result, token)));
                 }, token);
             }
