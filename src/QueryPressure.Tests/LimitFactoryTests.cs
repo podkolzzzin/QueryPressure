@@ -17,7 +17,9 @@ public class LimitFactoryTests
     _factory = new SettingsFactory<ILimit>("limit", new ICreator<ILimit>[]
     {
       new QueryCountLimitCreator(),
-      new TimeLimitCreator()
+      new TimeLimitCreator(),
+      new TillFirstErrorLimitCreator(),
+      new TillNErrorLimitCreator()
     });
   }
 
@@ -43,5 +45,27 @@ limit:
         limit: 10:00:00";
 
     Assert.IsType<TimeLimit>(TestUtils.Create(_factory, yml));
+  }
+
+  [Fact]
+  public void Create_TillFirstErrorLimit_IsCreated()
+  {
+    var yml = @"
+limit:
+    type: tillFirstError";
+
+    Assert.IsType<TillNErrorsLimit>(TestUtils.Create(_factory, yml));
+  }
+
+  [Fact]
+  public void Create_TillNErrorsLimit_IsCreated()
+  {
+    var yml = @"
+limit:
+    type: tillNErrors
+    arguments:
+        errorCount: 5";
+
+    Assert.IsType<TillNErrorsLimit>(TestUtils.Create(_factory, yml));
   }
 }

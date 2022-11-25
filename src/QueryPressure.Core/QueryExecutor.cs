@@ -47,13 +47,13 @@ public class QueryExecutor
 
         var queryStartTime = DateTime.Now;
         var stopwatch = Stopwatch.StartNew();
-        var _ = _executable.ExecuteAsync(token).ContinueWith(async _ =>
+        var _ = _executable.ExecuteAsync(token).ContinueWith(async executionTask =>
         {
           if (token.IsCancellationRequested)
             return;
           stopwatch.Stop();
           var queryEndTime = DateTime.Now;
-          var result = new ExecutionResult(queryStartTime, queryEndTime, stopwatch.Elapsed);
+          var result = new ExecutionResult(queryStartTime, queryEndTime, stopwatch.Elapsed, executionTask.Exception);
           await Task.WhenAll(_hooks.Select(x => x.OnQueryExecutedAsync(result, token)));
         }, token);
       }
