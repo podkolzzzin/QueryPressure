@@ -31,7 +31,7 @@ The tool for load testing of...
     - Limitations:
         - ✔️ Time
         - ✔️ Number queries
-        - ❌ Till first error
+        - ✔️ Till first error
     - Load characteristics:
         - ✔️ Sequential
             - ✔️ With Delay
