@@ -14,6 +14,7 @@ The tool for load testing of...
     - ✔️ MySQL/MariaDB
     - ❌ CosmosDB
     - ❌ Mongo
+    - ❌ Elastic Search
     - ✔️ Redis
     - ✔️ Expandable with plugins
 6. Cross-platform support
