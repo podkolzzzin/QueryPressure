@@ -2,5 +2,5 @@ namespace QueryPressure.Core.Interfaces;
 
 public interface IMetricProvider
 {
-  void PrintResult();
+  Task<IEnumerable<IMetric>> CalculateAsync(IExecutionResultStore store, CancellationToken cancellationToken);
 }
