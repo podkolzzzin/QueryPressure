@@ -22,6 +22,7 @@
     <ItemGroup>
       <ProjectReference Include="..\QueryPressure.App\QueryPressure.App.csproj" />
       <ProjectReference Include="..\QueryPressure.Core\QueryPressure.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.MongoDB.App\QueryPressure.MongoDB.App.csproj" />
       <ProjectReference Include="..\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
       <ProjectReference Include="..\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
       <ProjectReference Include="..\QueryPressure.SqlServer.App\QueryPressure.SqlServer.App.csproj" />
@@ -29,7 +30,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Update="sample.mongodb.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
       <None Update="sample.postgres.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.mongodb.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="script.postgres.sql">

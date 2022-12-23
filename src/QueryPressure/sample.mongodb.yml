@@ -1,0 +1,13 @@
+﻿profile:
+  type: limitedConcurrency
+  arguments:
+    limit: 2
+limit:
+  type: queryCount
+  arguments:
+    limit: 4
+connection:
+  type: mongodb
+  arguments:
+    connectionString: mongodb://admin:admin@localhost:27017/testDb
+    collectionName: items
