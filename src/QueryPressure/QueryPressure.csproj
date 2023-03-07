@@ -40,9 +40,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="script.mongodb.json">
-      <None Update="sample.mongodb.yml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="sample.mongodb.yml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="script.mongodb.json">
