@@ -23,10 +23,10 @@ public class QueryExecutor
       hooks.Add(hookProfile);
     if (limit is IExecutionHook hookLimit)
       hooks.Add(hookLimit);
-    
+
     hooks.Add(store);
     hooks.AddRange(otherHooks);
-    
+
     _hooks = hooks.ToImmutable();
   }
 

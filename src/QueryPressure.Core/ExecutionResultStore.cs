@@ -6,7 +6,7 @@ namespace QueryPressure.Core;
 public class ExecutionResultStore : IExecutionResultStore
 {
   private readonly LinkedList<ExecutionResult> _results = new();
-  
+
   public Task OnQueryExecutedAsync(ExecutionResult result, CancellationToken cancellationToken)
   {
     _results.AddLast(result);
@@ -16,7 +16,7 @@ public class ExecutionResultStore : IExecutionResultStore
   {
     return _results.GetEnumerator();
   }
-  
+
   IEnumerator IEnumerable.GetEnumerator()
   {
     return GetEnumerator();

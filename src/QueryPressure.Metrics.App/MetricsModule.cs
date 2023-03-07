@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;
@@ -15,7 +15,7 @@ public class MetricsModule : Module
     builder.RegisterType<AverageMetricProvider>()
       .As<IMetricProvider>()
       .SingleInstance();
-    
+
     builder.RegisterType<StatisticalMetricsProvider>()
       .As<IMetricProvider>()
       .SingleInstance();

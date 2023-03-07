@@ -13,7 +13,7 @@ public class ConsoleMetricsVisualizer : IMetricsVisualizer
       _view = view;
 
     }
-    
+
     public override string ToString()
     {
       return _view;

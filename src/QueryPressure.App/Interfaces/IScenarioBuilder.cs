@@ -8,7 +8,7 @@ public interface IScenarioBuilder
 {
   Task<QueryExecutor> BuildAsync(
     ApplicationArguments arguments,
-    IExecutionResultStore store, 
+    IExecutionResultStore store,
     IEnumerable<IExecutionHook> otherHooks,
     CancellationToken cancellationToken);
 }

@@ -18,5 +18,5 @@ public interface IMetricsVisualizer
 
 public interface IVisualization
 {
-  
+
 }

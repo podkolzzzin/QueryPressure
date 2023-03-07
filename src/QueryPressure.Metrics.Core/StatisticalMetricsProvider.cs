@@ -12,7 +12,7 @@ public class StatisticalMetricsProvider : IMetricProvider
     var sorted = store.OrderBy(x => x.Duration)
       .Select(x => x.Duration.TotalMilliseconds)
       .ToList();
-    
+
     var quartiles = Quartiles.FromSorted(sorted);
     var moments = Moments.Create(sorted);
 
