@@ -10,14 +10,12 @@ public class QueryExecutor
   private readonly IProfile _loadProfile;
   private readonly ILimit _limit;
   private readonly ImmutableArray<IExecutionHook> _hooks;
-  private readonly ImmutableArray<IMetricProvider> _metrics;
 
-  public QueryExecutor(IExecutable executable, IProfile loadProfile, ILimit limit, IMetricProvider[] metricProviders)
+  public QueryExecutor(IExecutable executable, IProfile loadProfile, ILimit limit, IExecutionResultStore store, IEnumerable<IExecutionHook> otherHooks)
   {
     _executable = executable;
     _loadProfile = loadProfile;
     _limit = limit;
-    _metrics = ImmutableArray.Create(metricProviders);
 
     var hooks = ImmutableArray.CreateBuilder<IExecutionHook>();
 
@@ -25,7 +23,9 @@ public class QueryExecutor
       hooks.Add(hookProfile);
     if (limit is IExecutionHook hookLimit)
       hooks.Add(hookLimit);
-    hooks.AddRange(metricProviders.OfType<IExecutionHook>());
+
+    hooks.Add(store);
+    hooks.AddRange(otherHooks);
 
     _hooks = hooks.ToImmutable();
   }
@@ -59,10 +59,5 @@ public class QueryExecutor
       }
     }
     catch (OperationCanceledException) { }
-
-    foreach (var metric in _metrics)
-    {
-      metric.PrintResult();
-    }
   }
 }

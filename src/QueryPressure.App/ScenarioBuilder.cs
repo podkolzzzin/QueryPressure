@@ -9,25 +9,6 @@ namespace QueryPressure.App;
 
 public class ScenarioBuilder : IScenarioBuilder
 {
-  private class AverageMetric : IMetricProvider, IExecutionHook
-  {
-    private long _count, _ticks;
-
-    public TimeSpan Value => new(_ticks / _count);
-
-    public Task OnQueryExecutedAsync(ExecutionResult result, CancellationToken cancellationToken)
-    {
-      Interlocked.Increment(ref _count);
-      Interlocked.Add(ref _ticks, result.Duration.Ticks);
-
-      return Task.CompletedTask;
-    }
-    public void PrintResult()
-    {
-      Console.WriteLine("Avg: " + Value);
-    }
-  }
-
   private readonly ISettingsFactory<IProfile> _profilesFactory;
   private readonly ISettingsFactory<ILimit> _limitsFactory;
   private readonly ISettingsFactory<IConnectionProvider> _connectionProviderFactory;
@@ -46,7 +27,7 @@ public class ScenarioBuilder : IScenarioBuilder
 
   }
 
-  public async Task<QueryExecutor> BuildAsync(ApplicationArguments arguments, CancellationToken cancellationToken)
+  public async Task<QueryExecutor> BuildAsync(ApplicationArguments arguments, IExecutionResultStore store, IEnumerable<IExecutionHook> otherHooks, CancellationToken cancellationToken)
   {
     var profile = _profilesFactory.Create(arguments);
     var limit = _limitsFactory.Create(arguments);
@@ -61,8 +42,6 @@ public class ScenarioBuilder : IScenarioBuilder
     var requirementsService = new RequirementService(requirements);
 
     var executor = await connectionProvider.CreateExecutorAsync(scriptSource, requirementsService.GetRequirement<ConnectionRequirement>(), cancellationToken);
-    return new QueryExecutor(executor, profile, limit, new IMetricProvider[] {
-      new AverageMetric()
-    });
+    return new QueryExecutor(executor, profile, limit, store, otherHooks);
   }
 }

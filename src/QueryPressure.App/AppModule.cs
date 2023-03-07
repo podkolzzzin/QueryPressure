@@ -1,6 +1,7 @@
 using Autofac;
 using QueryPressure.App.Factories;
 using QueryPressure.App.Interfaces;
+using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.App;
@@ -31,5 +32,14 @@ public class AppModule : Autofac.Module
 
     builder.RegisterType<ScenarioBuilder>()
       .As<IScenarioBuilder>();
+
+    builder.RegisterType<ExecutionResultStore>()
+      .As<IExecutionResultStore>();
+
+    builder.RegisterType<MetricsCalculator>()
+      .As<IMetricsCalculator>();
+
+    builder.RegisterType<ConsoleMetricsVisualizer>()
+      .Keyed<IMetricsVisualizer>("Console");
   }
 }

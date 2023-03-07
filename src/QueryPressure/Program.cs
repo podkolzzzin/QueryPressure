@@ -3,7 +3,10 @@
 using Autofac;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
+using QueryPressure.Core;
+using QueryPressure.Core.Interfaces;
 
+var token = CancellationToken.None;
 var loader = new Loader();
 
 var container = loader.Load(args);
@@ -11,6 +14,26 @@ var container = loader.Load(args);
 var builder = container.Resolve<IScenarioBuilder>();
 var appArgs = container.Resolve<ApplicationArguments>();
 
-var executor = await builder.BuildAsync(appArgs, default);
+var store = container.Resolve<IExecutionResultStore>();
+var liveMetrics = container.Resolve<ILiveMetricProvider[]>();
+var executor = await builder.BuildAsync(appArgs, store, liveMetrics, token);
 
-await executor.ExecuteAsync(default);
+var visualizer = container.ResolveKeyed<IMetricsVisualizer>("Console");
+var executionTask = executor.ExecuteAsync(token);
+while (!executionTask.IsCompleted)
+{
+  await Task.WhenAny(executionTask, Task.Delay(200));
+  var liveVisualization = await visualizer.VisualizeAsync(liveMetrics.SelectMany(x => x.GetMetrics()), token);
+  Console.Clear();
+  Console.WriteLine(liveVisualization);
+}
+
+Console.WriteLine("=======================");
+
+var calculator = container.Resolve<IMetricsCalculator>();
+var metrics = await calculator.CalculateAsync(store, token); // IEnumerable<IMetric>
+
+
+var visualization = await visualizer.VisualizeAsync(metrics, token);
+
+Console.WriteLine(visualization);

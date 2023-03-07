@@ -1,11 +1,11 @@
 ﻿profile:
-  type: limitedConcurrency
+  type: targetThroughput
   arguments:
-    limit: 2
+    rps: 20
 limit:
   type: queryCount
   arguments:
-    limit: 4
+    limit: 400
 connection:
   type: mysql
   arguments:
