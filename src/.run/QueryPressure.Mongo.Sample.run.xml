@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="QueryPressure.Mongo.Sample" type="DotNetProject" factoryName=".NET Project">
     <option name="EXE_PATH" value="$PROJECT_DIR$/QueryPressure/bin/Debug/net6.0/QueryPressure.exe" />
-    <option name="PROGRAM_PARAMETERS" value="sample.mongodb.yml script.mongodb.json" />
+    <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/QueryPressure/Examples/mongodb/sample.mongodb.yml $PROJECT_DIR$/QueryPressure/Examples/mongodb/script.mongodb.json" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/QueryPressure/bin/Debug/net6.0" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
