@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\QueryPressure.App\QueryPressure.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Metrics.App\QueryPressure.Metrics.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Metrics.Core\QueryPressure.Metrics.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.MongoDB.App\QueryPressure.MongoDB.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.MongoDB.Core\QueryPressure.MongoDB.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.MySql.Core\QueryPressure.MySql.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Postgres.Core\QueryPressure.Postgres.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.Redis.App\QueryPressure.Redis.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Redis.Core\QueryPressure.Redis.Core.csproj" />
+      <ProjectReference Include="..\QueryPressure.SqlServer.App\QueryPressure.SqlServer.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.SqlServer.Core\QueryPressure.SqlServer.Core.csproj" />
+    </ItemGroup>
+
+</Project>
