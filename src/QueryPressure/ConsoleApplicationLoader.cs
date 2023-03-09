@@ -1,55 +1,27 @@
 using Autofac;
 using QueryPressure.App;
 using QueryPressure.App.Arguments;
-using QueryPressure.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-internal class Loader
+internal class ConsoleApplicationLoader : ApplicationLoader
 {
-
-  public IContainer Load(string[] args)
+  private readonly string[] _args;
+  public ConsoleApplicationLoader(string[] args)
   {
-    var builder = new ContainerBuilder();
-    var appArgs = Merge(args);
+    _args = args;
+  }
+  
+  public override ContainerBuilder Load(ContainerBuilder builder)
+  {
+    base.Load(builder);
+    
+    var appArgs = Merge(_args);
 
     builder.RegisterInstance(appArgs).AsSelf();
     builder.RegisterModule<AppModule>();
-    LoadPlugins(builder);
 
-    return builder.Build();
-  }
-
-  private void LoadPlugins(ContainerBuilder builder)
-  {
-    var dir = new FileInfo(GetType().Assembly.Location).Directory;
-    var dlls = dir.GetFiles("*.dll");
-    var asms = AppDomain.CurrentDomain.GetAssemblies();
-    foreach (var dll in dlls.Where(x => IsSuitable(x.FullName)))
-    {
-      var defaultContext = System.Runtime.Loader.AssemblyLoadContext.Default; // (!!!) Important
-      var loaded = asms.FirstOrDefault(x => x.Location.ToLowerInvariant() == dll.FullName.ToLowerInvariant());
-      if (loaded == null)
-      {
-        loaded = defaultContext.LoadFromAssemblyPath(dll.FullName);
-      }
-      builder.RegisterAssemblyModules(loaded);
-    }
-  }
-  private bool IsSuitable(string path)
-  {
-    try
-    {
-      var type = typeof(QueryPressurePluginAttribute);
-      var asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(path); // (!!!) Important
-      return asm
-        .CustomAttributes
-        .Any(attribute => attribute.AttributeType.Name == type.Name && attribute.AttributeType.Namespace == type.Namespace);
-    }
-    catch
-    {
-      return false;
-    }
+    return builder;
   }
 
   private ApplicationArguments Merge(string[] args)
