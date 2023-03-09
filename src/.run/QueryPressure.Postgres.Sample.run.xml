@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="QueryPressure.Postgres.Sample" type="DotNetProject" factoryName=".NET Project">
     <option name="EXE_PATH" value="$PROJECT_DIR$/QueryPressure/bin/Debug/net6.0/QueryPressure.exe" />
-    <option name="PROGRAM_PARAMETERS" value="sample.postgres.yml script.postgres.sql" />
+    <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/../examples/postgres/sample.postgres.yml $PROJECT_DIR$/../examples/postgres/script.postgres.sql" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/QueryPressure/bin/Debug/net6.0" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
