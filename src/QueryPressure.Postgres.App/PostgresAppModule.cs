@@ -10,7 +10,7 @@ public class PostgresAppModule : Module
   {
     builder.RegisterType<PostgresConnectionProviderCreator>()
       .AsImplementedInterfaces();
-    
+
     builder.RegisterInstance(new ProviderInfo("Postgres"))
       .As<IProviderInfo>();
   }

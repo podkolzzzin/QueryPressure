@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 using QueryPressure.App;
 
 public class ApiApplicationLoader : ApplicationLoader

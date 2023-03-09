@@ -8,7 +8,7 @@ namespace QueryPressure.App.ProfileCreators;
 public class SequentialWithDelayLoadCreator : IProfileCreator
 {
   public string Type => "sequentialWithDelay";
-  
+
   public ArgumentDescriptor[] Arguments => new[] {
     new ArgumentDescriptor("delay", "TimeSpan")
   };

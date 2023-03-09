@@ -28,8 +28,10 @@ app.MapGet("/providers", (IProviderInfo[] providers) => providers.Select(x => x.
 app.MapPost("/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
   await manager.GetProvider(request.Provider).TestConnectionAsync(request.ConnectionString));
 
-app.MapGet("/profiles", (IProfileCreator[] creators) => creators.Select(x => new {
-  x.Arguments, x.Type
+app.MapGet("/profiles", (IProfileCreator[] creators) => creators.Select(x => new
+{
+  x.Arguments,
+  x.Type
 }));
 
 app.MapPost("/execution", (ExecutionRequest request, ProviderManager manager) =>

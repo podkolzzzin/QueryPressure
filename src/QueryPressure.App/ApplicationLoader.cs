@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 using QueryPressure.Core;
 
 namespace QueryPressure.App;
@@ -11,7 +11,7 @@ public class ApplicationLoader
     builder.RegisterModule<AppModule>();
     return builder;
   }
-  
+
   private bool IsSuitable(string path)
   {
     try
@@ -27,7 +27,7 @@ public class ApplicationLoader
       return false;
     }
   }
-  
+
   private void LoadPlugins(ContainerBuilder builder)
   {
     var dir = new FileInfo(GetType().Assembly.Location).Directory;

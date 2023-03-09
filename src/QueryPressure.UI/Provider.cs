@@ -1,4 +1,4 @@
-﻿using QueryPressure.App.Arguments;
+using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 
@@ -9,9 +9,9 @@ public class Provider
   private readonly ILiveMetricProvider[] _liveMetricProviders;
   private readonly IScenarioBuilder _builder;
   public Provider(
-    ICreator<IConnectionProvider> creator, 
-    IExecutionResultStore store, 
-    ILiveMetricProvider[] liveMetricProviders, 
+    ICreator<IConnectionProvider> creator,
+    IExecutionResultStore store,
+    ILiveMetricProvider[] liveMetricProviders,
     IScenarioBuilder builder)
   {
     _creator = creator;
@@ -19,11 +19,13 @@ public class Provider
     _liveMetricProviders = liveMetricProviders;
     _builder = builder;
   }
-  
+
   public async Task<IServerInfo> TestConnectionAsync(string connectionString)
   {
-    var provider = _creator.Create(new ArgumentsSection() {
-      Arguments = new Dictionary<string, string>() {
+    var provider = _creator.Create(new ArgumentsSection()
+    {
+      Arguments = new Dictionary<string, string>()
+      {
         ["connectionString"] = connectionString // TODO: put constant connectionString somewhere
       }
     });
@@ -31,18 +33,22 @@ public class Provider
   }
   public async Task<Guid> StartExecutionAsync(ExecutionRequest request)
   {
-    var appArgs = new ApplicationArguments() {
-      ["connection"] = new() {
+    var appArgs = new ApplicationArguments()
+    {
+      ["connection"] = new()
+      {
         Type = request.Provider,
-        Arguments = new() {
+        Arguments = new()
+        {
           ["connectionString"] = request.ConnectionString,
         }
       },
-      ["provider"] = new() {
+      ["provider"] = new()
+      {
       }
     };
     var executor = await _builder.BuildAsync(appArgs, _store, _liveMetricProviders, default);
-    
+
     return Store(executor.ExecuteAsync(default));//TODO: put somewhere 
   }
   private Guid Store(Task executeAsync)

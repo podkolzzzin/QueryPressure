@@ -11,11 +11,11 @@ internal class ConsoleApplicationLoader : ApplicationLoader
   {
     _args = args;
   }
-  
+
   public override ContainerBuilder Load(ContainerBuilder builder)
   {
     base.Load(builder);
-    
+
     var appArgs = Merge(_args);
 
     builder.RegisterInstance(appArgs).AsSelf();

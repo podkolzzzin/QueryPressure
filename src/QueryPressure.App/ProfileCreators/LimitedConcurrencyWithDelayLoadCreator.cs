@@ -8,7 +8,7 @@ namespace QueryPressure.App.ProfileCreators;
 public class LimitedConcurrencyWithDelayLoadCreator : IProfileCreator
 {
   public string Type => "limitedConcurrencyWithDelay";
-  
+
   public ArgumentDescriptor[] Arguments => new[] {
     new ArgumentDescriptor("limit", "int"),
     new ArgumentDescriptor("delay", "TimeSpan")

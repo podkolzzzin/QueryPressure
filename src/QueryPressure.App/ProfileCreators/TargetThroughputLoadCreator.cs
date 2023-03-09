@@ -8,7 +8,7 @@ namespace QueryPressure.App.ProfileCreators;
 public class TargetThroughputLoadCreator : IProfileCreator
 {
   public string Type => "targetThroughput";
-  
+
   public ArgumentDescriptor[] Arguments => new[] {
     new ArgumentDescriptor("rps", "int")
   };

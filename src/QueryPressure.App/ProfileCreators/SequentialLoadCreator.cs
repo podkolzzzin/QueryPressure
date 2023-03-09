@@ -8,8 +8,8 @@ namespace QueryPressure.App.ProfileCreators;
 public class SequentialLoadCreator : IProfileCreator
 {
   public string Type => "sequential";
-  
-  
+
+
 
   public IProfile Create(ArgumentsSection profile) => new SequentialLoadProfile();
   public ArgumentDescriptor[] Arguments => Array.Empty<ArgumentDescriptor>();
