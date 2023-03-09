@@ -10,8 +10,8 @@ public class LimitedConcurrencyWithDelayLoadCreator : IProfileCreator
   public string Type => "limitedConcurrencyWithDelay";
 
   public ArgumentDescriptor[] Arguments => new[] {
-    new ArgumentDescriptor("limit", "int"),
-    new ArgumentDescriptor("delay", "TimeSpan")
+    new ArgumentDescriptor("limit", ArgumentType.INT),
+    new ArgumentDescriptor("delay", ArgumentType.TIME_SPAN)
   };
 
   public IProfile Create(ArgumentsSection profile) => new LimitedConcurrencyWithDelayLoadProfile(

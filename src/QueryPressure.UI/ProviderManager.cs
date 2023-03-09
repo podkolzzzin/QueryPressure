@@ -1,5 +1,4 @@
 using Autofac;
-using Autofac.Core;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 
@@ -14,6 +13,6 @@ public class ProviderManager
 
   public Provider GetProvider(string providerName)
   {
-    return _providers[providerName];
+    return _providers[providerName.ToLower()];
   }
 }
