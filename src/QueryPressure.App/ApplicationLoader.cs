@@ -8,6 +8,7 @@ public class ApplicationLoader
   public virtual ContainerBuilder Load(ContainerBuilder builder)
   {
     LoadPlugins(builder);
+    builder.RegisterModule<AppModule>();
     return builder;
   }
   

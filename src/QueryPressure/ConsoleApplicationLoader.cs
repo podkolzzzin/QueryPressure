@@ -19,8 +19,6 @@ internal class ConsoleApplicationLoader : ApplicationLoader
     var appArgs = Merge(_args);
 
     builder.RegisterInstance(appArgs).AsSelf();
-    builder.RegisterModule<AppModule>();
-
     return builder;
   }
 

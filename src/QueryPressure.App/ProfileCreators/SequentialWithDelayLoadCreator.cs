@@ -5,9 +5,13 @@ using QueryPressure.Core.LoadProfiles;
 
 namespace QueryPressure.App.ProfileCreators;
 
-public class SequentialWithDelayLoadCreator : ICreator<IProfile>
+public class SequentialWithDelayLoadCreator : IProfileCreator
 {
   public string Type => "sequentialWithDelay";
+  
+  public ArgumentDescriptor[] Arguments => new[] {
+    new ArgumentDescriptor("delay", "TimeSpan")
+  };
 
   public IProfile Create(ArgumentsSection profile) => new SequentialWithDelayLoadProfile(
       profile.ExtractTimeSpanArgumentOrThrow("delay")

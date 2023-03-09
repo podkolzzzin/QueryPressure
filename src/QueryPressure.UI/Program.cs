@@ -24,19 +24,19 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
-app.MapPost("/connection/test", async (ConnectionRequest request, ICreator<IConnectionProvider>[] creators) =>
-{
-  var creator = creators.Single(x => x.Type == request.Provider);
-  var provider = creator.Create(new ArgumentsSection() {
-    Type = request.Provider,
-    Arguments = new Dictionary<string, string>() {
-      ["connectionString"] = request.ConnectionString // TODO: put constant connectionString somewhere
-    }
-  });
-  return await provider.GetServerInfoAsync(default);
-});
+
+app.MapPost("/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
+  await manager.GetProvider(request.Provider).TestConnectionAsync(request.ConnectionString));
+
+app.MapGet("/profiles", (IProfileCreator[] creators) => creators.Select(x => new {
+  x.Arguments, x.Type
+}));
+
+app.MapPost("/execution", (ExecutionRequest request, ProviderManager manager) =>
+  manager.GetProvider(request.Provider).StartExecutionAsync(request));
 
 app.Run();
 
 public record ConnectionRequest(string ConnectionString, string Provider);
 
+public record ExecutionRequest(string ConnectionString, string Provider, string Script, ArgumentsSection Profile, ArgumentsSection Limit);
