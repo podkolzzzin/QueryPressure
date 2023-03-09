@@ -53,43 +53,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.MongoDB.App",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.UI", "QueryPressure.UI\QueryPressure.UI.csproj", "{54848272-BC4A-4C86-BE62-C806624F7357}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{DC9E3A2F-8EEB-41E5-AF21-D4EE801FA98A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongodb", "mongodb", "{0CAF5D69-7B77-42DF-A7AB-3D97A0270C70}"
-	ProjectSection(SolutionItems) = preProject
-		..\examples\mongodb\docker-compose.mongodb.yml = ..\examples\mongodb\docker-compose.mongodb.yml
-		..\examples\mongodb\sample.mongodb.yml = ..\examples\mongodb\sample.mongodb.yml
-		..\examples\mongodb\script.mongodb.json = ..\examples\mongodb\script.mongodb.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mysql", "mysql", "{B59AE707-D560-40B7-B0E9-1B0E5FC9FCE7}"
-	ProjectSection(SolutionItems) = preProject
-		..\examples\mysql\docker-compse.mysql.yml = ..\examples\mysql\docker-compse.mysql.yml
-		..\examples\mysql\sample.mysql.yml = ..\examples\mysql\sample.mysql.yml
-		..\examples\mysql\script.mysql.sql = ..\examples\mysql\script.mysql.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis", "redis", "{F9538299-01AD-4CD6-B8CD-91AF2A4EE1CC}"
-	ProjectSection(SolutionItems) = preProject
-		..\examples\redis\docker-compose.redis.yml = ..\examples\redis\docker-compose.redis.yml
-		..\examples\redis\sample.redis.yml = ..\examples\redis\sample.redis.yml
-		..\examples\redis\script.redis.lua = ..\examples\redis\script.redis.lua
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres", "postgres", "{C75FE3F4-98EC-474F-AC6C-59C7ADCC6EE0}"
-	ProjectSection(SolutionItems) = preProject
-		..\examples\postgres\docker-compose.postgres.yml = ..\examples\postgres\docker-compose.postgres.yml
-		..\examples\postgres\sample.postgres.yml = ..\examples\postgres\sample.postgres.yml
-		..\examples\postgres\script.postgres.sql = ..\examples\postgres\script.postgres.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sqlserver", "sqlserver", "{B36A1CB0-4E84-47AA-A495-48903CFA18FC}"
-	ProjectSection(SolutionItems) = preProject
-		..\examples\sqlserver\docker-compse.sqlserver.yml = ..\examples\sqlserver\docker-compse.sqlserver.yml
-		..\examples\sqlserver\sample.sqlserver.yml = ..\examples\sqlserver\sample.sqlserver.yml
-		..\examples\sqlserver\script.sqlserver.sql = ..\examples\sqlserver\script.sqlserver.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -204,11 +167,6 @@ Global
 		{26783B1B-F475-4426-9026-42D43E11A18F} = {ABF63B8F-C981-4ABB-94CA-DC8B06F689AD}
 		{BC684FF9-5D13-47A0-A3A4-EB341410C56B} = {ABF63B8F-C981-4ABB-94CA-DC8B06F689AD}
 		{ABF63B8F-C981-4ABB-94CA-DC8B06F689AD} = {CD10134A-2A5F-4B75-B0CE-A5DF0A3D5C65}
-		{0CAF5D69-7B77-42DF-A7AB-3D97A0270C70} = {DC9E3A2F-8EEB-41E5-AF21-D4EE801FA98A}
-		{B59AE707-D560-40B7-B0E9-1B0E5FC9FCE7} = {DC9E3A2F-8EEB-41E5-AF21-D4EE801FA98A}
-		{F9538299-01AD-4CD6-B8CD-91AF2A4EE1CC} = {DC9E3A2F-8EEB-41E5-AF21-D4EE801FA98A}
-		{C75FE3F4-98EC-474F-AC6C-59C7ADCC6EE0} = {DC9E3A2F-8EEB-41E5-AF21-D4EE801FA98A}
-		{B36A1CB0-4E84-47AA-A495-48903CFA18FC} = {DC9E3A2F-8EEB-41E5-AF21-D4EE801FA98A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B298503-55F3-4399-B28B-10094D440CCB}
