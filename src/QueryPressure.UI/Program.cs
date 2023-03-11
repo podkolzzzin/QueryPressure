@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
+using QueryPressure.UI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,4 +48,4 @@ app.Run();
 
 public record ConnectionRequest(string ConnectionString, string Provider);
 
-public record ExecutionRequest(string ConnectionString, string Provider, string Script, ArgumentsSection Profile, ArgumentsSection Limit);
+public record ExecutionRequest(string ConnectionString, string Provider, string Script, ArgumentsSectionArray Profile, ArgumentsSectionArray Limit);

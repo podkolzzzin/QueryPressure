@@ -1,5 +1,6 @@
 using Microsoft.Data.SqlClient;
 using QueryPressure.Core;
+using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.SqlServer.Core
 {
@@ -14,6 +15,15 @@ namespace QueryPressure.SqlServer.Core
       var connection = new SqlConnection(connectionString);
       await connection.OpenAsync(cancellationToken);
       return connection;
+    }
+
+    override public async Task<IServerInfo> GetServerInfoAsync(CancellationToken cancellationToken)
+    {
+      await using SqlConnection? connection = await CreateOpenConnectionAsync(ConnectionString, cancellationToken);
+      await using SqlCommand? cmd = connection.CreateCommand();
+      cmd.CommandText = "SELECT @@VERSION";
+      object? result = await cmd.ExecuteScalarAsync(cancellationToken);
+      return new ServerInfo(result.ToString());
     }
   }
 }
