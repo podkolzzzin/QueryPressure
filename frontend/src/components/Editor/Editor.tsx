@@ -15,7 +15,7 @@ function Editor() {
 
     useEffect(() => {
         initEditor();
-    });
+    }, []);
 
     return (
       <div ref={ref} className="h-100" style={{minHeight: '400px'}}></div>
