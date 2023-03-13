@@ -1,6 +1,8 @@
 import './App.css';
 
 import {ExecutionApi} from "@api/ExecutionApi";
+import {LimitsApi} from "@api/LimitsApi";
+import {ProfilesApi} from "@api/ProfilesApi";
 import {ProvidersApi} from "@api/ProvidersApi";
 import ConnectionString, {ValidationMessage} from "@components/ConnectionString";
 import Editor from "@components/Editor";
@@ -10,11 +12,9 @@ import StatusBar from "@components/StatusBar";
 import {LimitModel} from "@models/LimitModel";
 import {ProfileModel} from "@models/ProfileModel";
 import {ConnectionService} from "@services/ConnectionService";
+import {EditorService} from "@services/EditorService";
 import {ProviderService} from "@services/ProviderService";
-import * as monaco from "monaco-editor";
 import React, {BaseSyntheticEvent, useEffect, useState} from "react";
-import {ProfilesApi} from "@api/ProfilesApi";
-import {LimitsApi} from "@api/LimitsApi";
 
 
 function App() {
@@ -50,7 +50,7 @@ function App() {
     ExecutionApi.run({
       provider: selectedProvider,
       connectionString: connectionString,
-      script: monaco.editor.getEditors()[0].getValue(),
+      script: EditorService.getValue(),
       profile: selectedProfile,
       limit: selectedLimit
     }).then(() => {
