@@ -3,16 +3,10 @@ import React, {useState} from "react";
 
 import {ConnectionStringProps} from "./ConnectionString.models";
 
-function ConnectionString(props: ConnectionStringProps) {
+export function ConnectionString({validationMessage, changed, test}: ConnectionStringProps) {
   const [connectionStringShown, setConnectionStringState] = useState<boolean>(false);
-
-  function getInputType(): "text" | "password" {
-    return connectionStringShown ? "text" : "password";
-  }
-
-  function getValidationClass() {
-    return props.validationMessage!.isGood ? 'valid-feedback text-truncate w-100' : 'invalid-feedback text-truncate w-100';
-  }
+  const inputType = connectionStringShown ? "text" : "password";
+  const validityString = validationMessage?.isGood ? "valid" : "invalid";
 
   return (
     <div className="mb-3">
@@ -20,11 +14,11 @@ function ConnectionString(props: ConnectionStringProps) {
         <label htmlFor="connectionString" className="form-label">Connection string</label>
       </div>
       <div className="input-group is-invalid is-valid">
-        <input type={getInputType()} className="form-control" id="connectionString"
-               onChange={(event) => props.changed(event.target.value)}
+        <input type={inputType} className="form-control" id="connectionString"
+               onChange={(event) => changed(event.target.value)}
                required/>
         <button className="btn btn-outline-secondary" type="button"
-                onClick={() => props.test()}>
+                onClick={() => test()}>
           Test
         </button>
         <button className="btn btn-outline-secondary" type="button" title="Show password"
@@ -33,13 +27,11 @@ function ConnectionString(props: ConnectionStringProps) {
           {connectionStringShown && <EyeSlashIcon/>}
         </button>
       </div>
-      {props.validationMessage &&
-          <div className={getValidationClass()} title={props.validationMessage.message}>
-            {props.validationMessage.message}
+      {validationMessage &&
+          <div className={`${validityString}-feedback text-truncate w-100`} title={validationMessage.message}>
+            {validationMessage.message}
           </div>
       }
     </div>
   );
 }
-
-export default ConnectionString;

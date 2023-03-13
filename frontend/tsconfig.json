@@ -22,6 +22,12 @@
       "@models/*": [
         "./src/models/*"
       ],
+      "@models": [
+        "./src/models"
+      ],
+      "@components": [
+        "./src/components"
+      ],
       "@components/*": [
         "./src/components/*"
       ],

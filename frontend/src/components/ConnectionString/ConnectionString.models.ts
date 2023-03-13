@@ -1,7 +1,4 @@
-export interface ValidationMessage {
-  isGood: boolean;
-  message: string;
-}
+import {ValidationMessage} from "@models/ValidationMessage";
 
 export interface ConnectionStringProps {
   validationMessage: ValidationMessage | null;

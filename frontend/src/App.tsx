@@ -4,13 +4,14 @@ import {ExecutionApi} from "@api/ExecutionApi";
 import {LimitsApi} from "@api/LimitsApi";
 import {ProfilesApi} from "@api/ProfilesApi";
 import {ProvidersApi} from "@api/ProvidersApi";
-import ConnectionString, {ValidationMessage} from "@components/ConnectionString";
-import Editor from "@components/Editor";
-import Limit from "@components/Limit";
-import Profile from "@components/Profile";
-import StatusBar from "@components/StatusBar";
-import {LimitModel} from "@models/LimitModel";
-import {ProfileModel} from "@models/ProfileModel";
+import {
+  ConnectionString,
+  Editor,
+  Limit,
+  Profile,
+  StatusBar
+} from "@components";
+import {LimitModel, ProfileModel, ValidationMessage} from "@models";
 import {ConnectionService} from "@services/ConnectionService";
 import {EditorService} from "@services/EditorService";
 import {ProviderService} from "@services/ProviderService";
