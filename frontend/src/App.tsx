@@ -1,22 +1,10 @@
 import './App.css';
 
-import {ExecutionApi} from "@api/ExecutionApi";
-import {LimitsApi} from "@api/LimitsApi";
-import {ProfilesApi} from "@api/ProfilesApi";
-import {ProvidersApi} from "@api/ProvidersApi";
-import {
-  ConnectionString,
-  Editor,
-  Limit,
-  Profile,
-  StatusBar
-} from "@components";
+import {ExecutionApi, LimitsApi, ProfilesApi, ProvidersApi} from "@api";
+import {ConnectionString, Editor, Limit, Profile, StatusBar} from "@components";
 import {LimitModel, ProfileModel, ValidationMessage} from "@models";
-import {ConnectionService} from "@services/ConnectionService";
-import {EditorService} from "@services/EditorService";
-import {ProviderService} from "@services/ProviderService";
+import {ConnectionService, EditorService, ProviderService} from "@services";
 import React, {BaseSyntheticEvent, useEffect, useState} from "react";
-
 
 function App() {
   const [connectionString, setConnectionString] = useState<string | null>(null);

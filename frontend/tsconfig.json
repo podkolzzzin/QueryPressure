@@ -31,11 +31,17 @@
       "@components/*": [
         "./src/components/*"
       ],
+      "@services": [
+        "./src/services"
+      ],
       "@services/*": [
         "./src/services/*"
       ],
       "@utils/*": [
         "./src/utils/*"
+      ],
+      "@api": [
+        "./src/api"
       ],
       "@api/*": [
         "./src/api/*"
