@@ -34,6 +34,12 @@ app.MapGet("/profiles", (IProfileCreator[] creators) => creators.Select(x => new
   x.Type
 }));
 
+app.MapGet("/limits", (ILimitCreator[] creators) => creators.Select(x => new
+{
+  x.Arguments,
+  x.Type
+}));
+
 app.MapPost("/execution", (ExecutionRequest request, ProviderManager manager) =>
   manager.GetProvider(request.Provider).StartExecutionAsync(request));
 

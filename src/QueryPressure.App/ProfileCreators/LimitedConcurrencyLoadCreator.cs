@@ -9,7 +9,7 @@ public class LimitedConcurrencyLoadCreator : IProfileCreator
 {
   public string Type => "limitedConcurrency";
 
-  public ArgumentDescriptor[] Arguments => new[] { new ArgumentDescriptor("limit", "int") };
+  public ArgumentDescriptor[] Arguments => new[] { new ArgumentDescriptor("limit", ArgumentType.INT) };
 
   public IProfile Create(ArgumentsSection profile)
   {
