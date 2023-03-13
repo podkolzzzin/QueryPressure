@@ -24,24 +24,24 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-app.MapGet("/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
+app.MapGet("/api/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
 
-app.MapPost("/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
+app.MapPost("/api/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
   await manager.GetProvider(request.Provider).TestConnectionAsync(request.ConnectionString));
 
-app.MapGet("/profiles", (IProfileCreator[] creators) => creators.Select(x => new
+app.MapGet("/api/profiles", (IProfileCreator[] creators) => creators.Select(x => new
 {
   x.Arguments,
   x.Type
 }));
 
-app.MapGet("/limits", (ILimitCreator[] creators) => creators.Select(x => new
+app.MapGet("/api/limits", (ILimitCreator[] creators) => creators.Select(x => new
 {
   x.Arguments,
   x.Type
 }));
 
-app.MapPost("/execution", (ExecutionRequest request, ProviderManager manager) =>
+app.MapPost("/api/execution", (ExecutionRequest request, ProviderManager manager) =>
   manager.GetProvider(request.Provider).StartExecutionAsync(request));
 
 app.Run();

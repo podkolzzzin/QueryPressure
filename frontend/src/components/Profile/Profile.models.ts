@@ -1,7 +1,7 @@
-import {ProfileModel} from "../models/ProfileModel";
+import {ProfileModel} from "@models/ProfileModel";
 
 export interface ProfileProps {
   profiles: ProfileModel[];
-  selectedProfile: ProfileModel;
+  selectedProfile: ProfileModel | null
   selectProfile: (profileType: string) => void;
 }

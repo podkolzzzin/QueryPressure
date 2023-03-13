@@ -1,24 +1,30 @@
 import './App.css';
+
+import {ExecutionApi} from "@api/ExecutionApi";
+import {ProvidersApi} from "@api/ProvidersApi";
+import ConnectionString, {ValidationMessage} from "@components/ConnectionString";
+import Editor from "@components/Editor";
+import Limit from "@components/Limit";
+import Profile from "@components/Profile";
+import StatusBar from "@components/StatusBar";
+import {LimitModel} from "@models/LimitModel";
+import {ProfileModel} from "@models/ProfileModel";
+import {ConnectionService} from "@services/ConnectionService";
+import {ProviderService} from "@services/ProviderService";
 import * as monaco from "monaco-editor";
-
-import React, {useEffect, useState} from "react";
-
-import StatusBar from "./StatusBar/StatusBar";
-import Editor from "./Editor/Editor";
-import Profile from "./Profile/Profile";
-import Limit from "./Limit/Limit";
-import ConnectionString from "./ConnectionString/ConnectionString";
-import {ValidationMessage} from "./ConnectionString/ConnectionStringProps";
-import {LimitModel} from "./models/LimitModel";
-import {ProfileModel} from "./models/ProfileModel";
+import React, {BaseSyntheticEvent, useEffect, useState} from "react";
+import {ProfilesApi} from "@api/ProfilesApi";
+import {LimitsApi} from "@api/LimitsApi";
 
 
 function App() {
-  const [connectionString, setConnectionString] = useState<string>("");
-  const [connectionStringValidationMessage, setConnectionStringValidationMessage] = useState<ValidationMessage>(null!);
-  const [selectedProvider, setSelectedProvider] = useState<string>(null!);
-  const [selectedProfile, setSelectedProfile] = useState<ProfileModel>(null!);
-  const [selectedLimit, setSelectedLimit] = useState<LimitModel>(null!);
+  const [connectionString, setConnectionString] = useState<string | null>(null);
+  const [connectionStringValidationMessage, setConnectionStringValidationMessage] = useState<ValidationMessage | null>(null);
+
+  const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<ProfileModel | null>(null);
+  const [selectedLimit, setSelectedLimit] = useState<LimitModel | null>(null);
+
   const [providers, setProviders] = useState<string[]>([]);
   const [profiles, setProfiles] = useState<ProfileModel[]>([]);
   const [limits, setLimits] = useState<LimitModel[]>([]);
@@ -33,90 +39,49 @@ function App() {
     setSelectedLimit(limit);
   }
 
-  function execute() {
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-          provider: selectedProvider,
-          connectionString: connectionString,
-          script: monaco.editor.getEditors()[0].getValue(),
-          profile: selectedProfile,
-          limit: selectedLimit
-        }
-      )
-    };
-
-    fetch('/api/execution', options)
-      .then(r=> r.json());
+  function selectProvider(provider: string) {
+    setSelectedProvider(provider);
+    ProviderService.saveCurrent(provider);
   }
 
-  function testConnectionString()
-  {
-    if (!selectedProvider){
-      setConnectionStringValidationMessage({
-        isGood: false,
-        message: "Pls select provider first."
-      })
-      return;
-    }
+  function execute(event: BaseSyntheticEvent) {
+    event.preventDefault();
 
-    if (!connectionString){
-      setConnectionStringValidationMessage({
-        isGood: false,
-        message: "Connection string is empty."
-      })
-      return;
-    }
+    ExecutionApi.run({
+      provider: selectedProvider,
+      connectionString: connectionString,
+      script: monaco.editor.getEditors()[0].getValue(),
+      profile: selectedProfile,
+      limit: selectedLimit
+    }).then(() => {
+      /* TODO: processing result */
+    });
+  }
 
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-          provider: selectedProvider,
-          connectionString: connectionString
-        }
-      )
-    };
-
-    fetch('/api/connection/test', options)
-      .then(r=> r.json())
-      .then(response => {
-        setConnectionStringValidationMessage({
-          isGood: true,
-          message: 'Ok: ' + response.serverVersion
-        });
-      })
-      .catch(err => {
-        setConnectionStringValidationMessage({
-          isGood: false,
-          message: err.message
-        });
-      })
+  function testConnectionString() {
+    ConnectionService.test(selectedProvider, connectionString)
+      .then(message => setConnectionStringValidationMessage(message));
   }
 
   function loadProviders(): void {
-    fetch('/api/providers')
-      .then(r=> r.json())
-      .then(providers => {
-        setProviders(providers);
-      })
+    ProvidersApi
+      .getAll()
+      .then(providers => setProviders(providers));
+
+    const currentProvider = ProviderService.getCurrent();
+    setSelectedProvider(currentProvider);
   }
 
   function loadProfiles(): void {
-    fetch('/api/profiles')
-      .then(r=> r.json())
-      .then(profiles => {
-        setProfiles(profiles);
-      })
+    ProfilesApi
+      .getAll()
+      .then(profiles => setProfiles(profiles));
   }
 
   function loadLimits(): void {
-    fetch('/api/limits')
-      .then(r=> r.json())
-      .then(limits => {
-        setLimits(limits);
-      })
+    LimitsApi
+      .getAll()
+      .then(limits => setLimits(limits));
   }
 
   useEffect(() => {
@@ -126,38 +91,54 @@ function App() {
   }, []);
 
   return (
-    <div className="d-flex w-100 bg-black bg-opacity-10 vh-100">
-      <div className="p-3 d-flex min-h-100 flex-column w-25 justify-content-between bg-white m-3" style={{borderRadius: 15 + 'px'}}>
-        <div className="configuration-section">
-          <h3>Configuration</h3>
-          <div className="mb-3">
-            <span>Provider: {selectedProvider === "" ? "Not selected." : selectedProvider}</span>
+    <div className="container-fluid px-0 px-xl-5">
+      <div className="row justify-content-center gx-3 min-vh-100">
+        <div className="col-xl-4 col-xxl-3 py-0 py-xl-5">
+          <div className="card h-100">
+            <div className="card-body">
+              <form className="d-flex flex-column justify-content-between h-100" onSubmit={execute}>
+                <div className="configuration-section">
+                  <h5 className="card-title">Configuration</h5>
+                  <div className="mb-3">
+                    <span>Provider: {selectedProvider ?? "Not selected."}</span>
+                  </div>
+
+                  <ConnectionString changed={setConnectionString}
+                                    test={testConnectionString}
+                                    validationMessage={connectionStringValidationMessage}/>
+
+                  <Profile profiles={profiles}
+                           selectedProfile={selectedProfile}
+                           selectProfile={selectProfile}/>
+
+                  <Limit limits={limits}
+                         selectedLimit={selectedLimit}
+                         selectLimit={selectLimit}/>
+                </div>
+
+                <button type="submit" className="btn btn-primary w-100">Execute</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div className="col-xl-7 col-xxl-8 py-0 py-xl-5">
+          <div className="card h-100">
+            <div className="card-body d-flex flex-column">
+              <h5 className="card-title">Code editor</h5>
+              <div className="mb-2 h-100">
+                <Editor/>
+              </div>
+              <StatusBar status="Ready"
+                         providers={providers}
+                         selectedProvider={selectedProvider}
+                         selectProvider={(provider) => selectProvider(provider)}/>
+            </div>
           </div>
 
-          <ConnectionString changed={setConnectionString}
-            test={testConnectionString}
-            validationMessage={connectionStringValidationMessage}/>
-
-          <Profile profiles={profiles}
-                   selectedProfile={selectedProfile}
-                   selectProfile={selectProfile}/>
-
-          <Limit limits={limits}
-                 selectedLimit={selectedLimit}
-                 selectLimit={selectLimit}/>
         </div>
-
-        <button type="button" className="btn btn-primary" onClick={execute}>Execute</button>
-      </div>
-      <div className="w-100 d-flex flex-column m-3 bg-white p-3" style={{borderRadius: 15 + 'px'}}>
-        <h3>Code editor</h3>
-        <Editor/>
-        <StatusBar status="Ready."
-                   providers={providers}
-                   selectProvider={(provider) => setSelectedProvider(provider)}/>
       </div>
     </div>
-  )
+  );
 }
 
 export default App;

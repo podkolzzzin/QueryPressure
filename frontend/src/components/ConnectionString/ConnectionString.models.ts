@@ -4,7 +4,7 @@ export interface ValidationMessage {
 }
 
 export interface ConnectionStringProps {
-  validationMessage: ValidationMessage;
+  validationMessage: ValidationMessage | null;
   changed: (connectionString: string) => void;
   test: () => void;
 }

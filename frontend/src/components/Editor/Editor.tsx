@@ -7,7 +7,7 @@ function Editor() {
             monaco.editor.create((ref.current as HTMLElement), {
                 value: 'SELECT * FROM [dbo].[AspNetUsers]',
                 language: 'sql',
-            })
+            });
         }
     }
 
@@ -18,8 +18,8 @@ function Editor() {
     });
 
     return (
-      <div ref={ref} className="h-100"></div>
-    )
+      <div ref={ref} className="h-100" style={{minHeight: '400px'}}></div>
+    );
 }
 
 export default Editor;
