@@ -48,4 +48,4 @@ app.Run();
 
 public record ConnectionRequest(string ConnectionString, string Provider);
 
-public record ExecutionRequest(string ConnectionString, string Provider, string Script, ArgumentsSectionArray Profile, ArgumentsSectionArray Limit);
+public record ExecutionRequest(string ConnectionString, string Provider, string Script, FlatArgumentsSection Profile, FlatArgumentsSection Limit);

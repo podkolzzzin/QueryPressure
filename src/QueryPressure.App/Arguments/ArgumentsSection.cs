@@ -6,7 +6,7 @@ public class ArgumentsSection
   public Dictionary<string, string>? Arguments { get; set; }
 }
 
-public class ArgumentsSectionArray
+public class FlatArgumentsSection
 {
   public string? Type { get; set; }
   public List<ArgumentFlat>? Arguments { get; set; }
