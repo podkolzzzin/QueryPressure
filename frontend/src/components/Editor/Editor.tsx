@@ -1,7 +1,7 @@
 import {EditorService} from "@services/EditorService";
-import {useEffect, useRef} from "react";
+import {memo, useEffect, useRef} from "react";
 
-export function Editor() {
+export const Editor = memo(function Editor() {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -11,4 +11,4 @@ export function Editor() {
     return (
       <div ref={ref} className="h-100" style={{minHeight: '400px'}}></div>
     );
-}
+});
