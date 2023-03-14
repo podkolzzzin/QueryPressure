@@ -1,37 +1,22 @@
 import './App.css';
 
-import {ExecutionApi, LimitsApi, ProfilesApi, ProvidersApi} from "@api";
+import {ExecutionApi} from "@api";
 import {ConnectionString, Editor, Limit, Profile, StatusBar} from "@components";
-import {LimitModel, ProfileModel, ValidationMessage} from "@models";
-import {ConnectionService, EditorService, ProviderService} from "@services";
-import React, {BaseSyntheticEvent, useEffect, useState} from "react";
+import {EditorService} from "@services";
+import React, {BaseSyntheticEvent} from "react";
+
+import {useConnectionString, useLimit, useProfile, useProvider} from "@/hooks";
 
 function App() {
-  const [connectionString, setConnectionString] = useState<string | null>(null);
-  const [connectionStringValidationMessage, setConnectionStringValidationMessage] = useState<ValidationMessage | null>(null);
-
-  const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
-  const [selectedProfile, setSelectedProfile] = useState<ProfileModel | null>(null);
-  const [selectedLimit, setSelectedLimit] = useState<LimitModel | null>(null);
-
-  const [providers, setProviders] = useState<string[]>([]);
-  const [profiles, setProfiles] = useState<ProfileModel[]>([]);
-  const [limits, setLimits] = useState<LimitModel[]>([]);
-
-  function selectProfile(profileType: string) {
-    const profile: ProfileModel = profiles.find(p => p.type === profileType)!;
-    setSelectedProfile(profile);
-  }
-
-  function selectLimit(limitType: string) {
-    const limit: LimitModel = limits.find(p => p.type === limitType)!;
-    setSelectedLimit(limit);
-  }
-
-  function selectProvider(provider: string) {
-    setSelectedProvider(provider);
-    ProviderService.saveCurrent(provider);
-  }
+  const {profiles, selectedProfile, selectProfile} = useProfile();
+  const {limits, selectedLimit, selectLimit} = useLimit();
+  const {providers, selectedProvider, selectProvider} = useProvider();
+  const {
+    connectionString,
+    connectionStringValidationMessage,
+    setConnectionString,
+    testConnectionString,
+  } = useConnectionString(selectedProvider);
 
   function execute(event: BaseSyntheticEvent) {
     event.preventDefault();
@@ -46,38 +31,6 @@ function App() {
       /* TODO: processing result */
     });
   }
-
-  function testConnectionString() {
-    ConnectionService.test(selectedProvider, connectionString)
-      .then(message => setConnectionStringValidationMessage(message));
-  }
-
-  function loadProviders(): void {
-    ProvidersApi
-      .getAll()
-      .then(providers => setProviders(providers));
-
-    const currentProvider = ProviderService.getCurrent();
-    setSelectedProvider(currentProvider);
-  }
-
-  function loadProfiles(): void {
-    ProfilesApi
-      .getAll()
-      .then(profiles => setProfiles(profiles));
-  }
-
-  function loadLimits(): void {
-    LimitsApi
-      .getAll()
-      .then(limits => setLimits(limits));
-  }
-
-  useEffect(() => {
-    loadProviders();
-    loadProfiles();
-    loadLimits();
-  }, []);
 
   return (
     <div className="container-fluid px-0 px-xl-5">

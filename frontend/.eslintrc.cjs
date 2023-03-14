@@ -29,7 +29,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
   ],
-  plugins: ['simple-import-sort'],
+  plugins: ['simple-import-sort', 'react-hooks'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
@@ -37,6 +37,8 @@ module.exports = {
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
     semi: ['warn', 'always'],
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
 };
