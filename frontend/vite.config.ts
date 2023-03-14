@@ -23,6 +23,8 @@ export default defineConfig({
       {find: '@models', replacement: path.resolve(__dirname, 'src', 'models')},
       {find: '@api', replacement: path.resolve(__dirname, 'src', 'api')},
       {find: '@services', replacement: path.resolve(__dirname, 'src', 'services')},
+      {find: '@containers', replacement: path.resolve(__dirname, 'src', 'containers')},
+      {find: '@hooks', replacement: path.resolve(__dirname, 'src', 'hooks')},
     ]
   }
 });

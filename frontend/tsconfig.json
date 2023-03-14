@@ -31,6 +31,12 @@
       "@components/*": [
         "./src/components/*"
       ],
+      "@containers": [
+        "./src/containers"
+      ],
+      "@containers/*": [
+        "./src/containers/*"
+      ],
       "@services": [
         "./src/services"
       ],
@@ -48,6 +54,12 @@
       ],
       "@assets/*": [
         "./src/assets/*"
+      ],
+      "@hooks": [
+        "./src/hooks"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
       ]
     }
   },

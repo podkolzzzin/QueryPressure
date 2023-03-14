@@ -1,7 +1,7 @@
 import {EditorService} from "@services/EditorService";
 import {memo, useEffect, useRef} from "react";
 
-export const Editor = memo(function Editor() {
+export const MonacoEditor = memo(function Editor() {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

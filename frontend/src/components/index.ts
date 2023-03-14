@@ -1,7 +1,7 @@
 import {ConnectionString} from "./ConnectionString";
-import {Editor} from "./Editor";
 import {Limit} from "./Limit";
+import {MonacoEditor} from "./MonacoEditor";
 import {Profile} from "./Profile";
 import {StatusBar} from "./StatusBar";
 
-export {ConnectionString, Editor, Limit, Profile, StatusBar};
+export {ConnectionString, MonacoEditor, Limit, Profile, StatusBar};
