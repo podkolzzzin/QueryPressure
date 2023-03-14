@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start API + Front" type="CompoundRunConfigurationType">
+    <toRun name="QueryPressure.UI: http" type="LaunchSettings" />
+    <toRun name="run dev" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>
