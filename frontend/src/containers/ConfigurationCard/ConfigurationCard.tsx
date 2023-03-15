@@ -1,10 +1,9 @@
-import {ExecutionApi} from "@api";
-import {ConnectionString, Limit, Profile} from "@components";
-import {useConnectionString, useLimit, useProfile} from "@hooks";
-import {EditorService} from "@services";
-import React, {BaseSyntheticEvent} from "react";
+import React, {BaseSyntheticEvent} from 'react';
+import {ExecutionApi} from '@api';
+import {ConnectionString, Limit, Profile} from '@components';
+import {useConnectionString, useLimit, useProfile} from '@hooks';
 
-export function ConfigurationCard({selectedProvider}: { selectedProvider: string | null }) {
+export function ConfigurationCard({selectedProvider, script}: { selectedProvider: string | null, script: string }) {
   const {profiles, selectedProfile, selectProfile} = useProfile();
   const {limits, selectedLimit, selectLimit} = useLimit();
   const {
@@ -20,7 +19,7 @@ export function ConfigurationCard({selectedProvider}: { selectedProvider: string
     ExecutionApi.run({
       provider: selectedProvider,
       connectionString: connectionString,
-      script: EditorService.getValue(),
+      script: script,
       profile: selectedProfile,
       limit: selectedLimit
     }).then(() => {
@@ -35,7 +34,7 @@ export function ConfigurationCard({selectedProvider}: { selectedProvider: string
           <div className="configuration-section">
             <h5 className="card-title">Configuration</h5>
             <div className="mb-3">
-              <span>Provider: {selectedProvider ?? "Not selected."}</span>
+              <span>Provider: {selectedProvider ?? 'Not selected.'}</span>
             </div>
 
             <ConnectionString changed={setConnectionString}
