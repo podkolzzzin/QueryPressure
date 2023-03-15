@@ -1,13 +1,17 @@
 import React from 'react';
 import {StatusBar} from '@components';
+import {EditorCardProps} from '@containers/EditorCard/EditorCard.models';
 import Editor from '@monaco-editor/react';
 
-export function EditorCard(
-  {
-    providers, selectedProvider, selectProvider, setScript
-  }: { providers: string[], selectedProvider: string | null, selectProvider: (provider: string) => void, setScript: (script: string) => void }) {
+export function EditorCard({providers, selectedProvider, selectProvider, setScript}: EditorCardProps) {
   function handleEditorChange(value: string | undefined) {
     value && setScript(value);
+  }
+
+  function handleEditorMount(editor: any) {
+    const value = 'SELECT * FROM [dbo].[AspNetUsers]';
+    editor.setValue(value);
+    handleEditorChange(value);
   }
 
   return (
@@ -18,11 +22,12 @@ export function EditorCard(
           {/*TODO: get default value based on selected provider (from backend)*/}
           <Editor
             defaultLanguage='sql'
-            defaultValue='SELECT * FROM [dbo].[AspNetUsers]'
+            defaultValue=''
             options={{
               minimap: {enabled: false}
             }}
             onChange={handleEditorChange}
+            onMount={handleEditorMount}
           />
         </div>
         <StatusBar status="Ready"
