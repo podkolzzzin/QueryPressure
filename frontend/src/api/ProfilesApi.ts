@@ -1,4 +1,4 @@
-import {ProfileModel} from "@/models";
+import {ProfileModel} from '@models';
 
 export const ProfilesApi = {
   getAll(): Promise<ProfileModel[]> {

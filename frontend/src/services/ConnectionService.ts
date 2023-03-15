@@ -1,6 +1,6 @@
-import {ConnectionApi} from "@api/ConnectionApi";
-import {ValidationMessage} from "@components/ConnectionString";
-import {ConnectionValidationService} from "@services/ConnectionValidationService";
+import {ConnectionApi} from '@api/ConnectionApi';
+import {ValidationMessage} from '@models';
+import {ConnectionValidationService} from '@services/ConnectionValidationService';
 
 export const ConnectionService = {
   test(selectedProvider: string | null, connectionString: string | null): Promise<ValidationMessage> {

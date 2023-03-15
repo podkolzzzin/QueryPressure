@@ -1,4 +1,4 @@
-import {LimitModel, ProfileModel} from "@/models";
+import {LimitModel, ProfileModel} from '@models';
 
 export interface ExecutionRequestModel {
   provider: string | null;

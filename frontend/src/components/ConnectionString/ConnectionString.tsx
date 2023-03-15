@@ -1,12 +1,12 @@
-import {EyeIcon, EyeSlashIcon} from "@assets/Icons";
-import React, {useState} from "react";
+import React, {useState} from 'react';
+import {EyeIcon, EyeSlashIcon} from '@assets/Icons';
 
-import {ConnectionStringProps} from "./ConnectionString.models";
+import {ConnectionStringProps} from './ConnectionString.models';
 
 export function ConnectionString({validationMessage, changed, test}: ConnectionStringProps) {
   const [connectionStringShown, setConnectionStringState] = useState<boolean>(false);
-  const inputType = connectionStringShown ? "text" : "password";
-  const validityString = validationMessage?.isGood ? "valid" : "invalid";
+  const inputType = connectionStringShown ? 'text' : 'password';
+  const validityString = validationMessage?.isGood ? 'valid' : 'invalid';
 
   return (
     <div className="mb-3">

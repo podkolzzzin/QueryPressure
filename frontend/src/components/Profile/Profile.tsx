@@ -1,7 +1,7 @@
-import {getInputType} from "@utils/GetInputType";
-import React from "react";
+import React from 'react';
+import {getInputType} from '@utils/GetInputType';
 
-import {ProfileProps} from "./Profile.models";
+import {ProfileProps} from './Profile.models';
 
 export function Profile({profiles, selectProfile, selectedProfile}: ProfileProps) {
 
@@ -23,9 +23,9 @@ export function Profile({profiles, selectProfile, selectedProfile}: ProfileProps
           selectedProfile &&
           selectedProfile.arguments.map(arg =>
             (
-              <div className="mb-3" key={"profile-argument-" + arg.name}>
-                <label htmlFor={"profile-argument-" + arg.name} className="form-label">Profile - {arg.name}</label>
-                <input type={getInputType(arg.type)} className="form-control" id={"profile-argument-" + arg.name}
+              <div className="mb-3" key={'profile-argument-' + arg.name}>
+                <label htmlFor={'profile-argument-' + arg.name} className="form-label">Profile - {arg.name}</label>
+                <input type={getInputType(arg.type)} className="form-control" id={'profile-argument-' + arg.name}
                        onChange={(event) => arg.value = event.target.value}
                        required/>
               </div>

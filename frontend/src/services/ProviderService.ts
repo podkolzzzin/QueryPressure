@@ -1,4 +1,4 @@
-import {LocalStorageService} from "@services/LocalStorageService";
+import {LocalStorageService} from '@services/LocalStorageService';
 
 const currentProviderKey = 'currentProvider';
 export const ProviderService = {

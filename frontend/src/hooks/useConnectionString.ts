@@ -1,6 +1,6 @@
-import {ValidationMessage} from "@models";
-import {ConnectionService} from "@services";
-import {useState} from "react";
+import {useState} from 'react';
+import {ValidationMessage} from '@models';
+import {ConnectionService} from '@services';
 
 export function useConnectionString(selectedProvider: string | null) {
   const [connectionString, setConnectionString] = useState<string | null>(null);

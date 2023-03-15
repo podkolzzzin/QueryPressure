@@ -1,4 +1,4 @@
-import {LimitModel} from "@/models";
+import {LimitModel} from '@models';
 
 export const LimitsApi = {
   getAll(): Promise<LimitModel[]> {

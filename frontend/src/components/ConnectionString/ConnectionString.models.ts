@@ -1,4 +1,4 @@
-import {ValidationMessage} from "@models/ValidationMessage";
+import {ValidationMessage} from '@models/ValidationMessage';
 
 export interface ConnectionStringProps {
   validationMessage: ValidationMessage | null;

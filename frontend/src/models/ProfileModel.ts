@@ -1,4 +1,4 @@
-import {ArgumentSection} from "./ArgumentSection";
+import {ArgumentSection} from './ArgumentSection';
 
 export interface ProfileModel {
   type: string;

@@ -1,7 +1,7 @@
-import './App.css';
+import React from 'react';
+import {Layout} from '@containers';
 
-import {Layout} from "@containers";
-import React from "react";
+import './App.css';
 
 function App() {
   return (

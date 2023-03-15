@@ -34,11 +34,22 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    'simple-import-sort/imports': 'warn',
+    'simple-import-sort/imports': [
+      'warn',
+      {
+        'groups': [
+          // Packages. `react` related packages come first.
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ['^react', '^@?\\w'],
+          // Absolute imports and Relative imports.
+          ['^(utils|services|hooks|hoc|types|models|contexts|dictionary|components|containers|assets|api)(/.*|$)', '^\\.']
+        ]
+      }],
     'simple-import-sort/exports': 'warn',
-    semi: ['warn', 'always'],
+    'semi': ['warn', 'always'],
     '@typescript-eslint/no-non-null-assertion': 'off',
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'quotes': ['warn', 'single']
   },
 };

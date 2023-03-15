@@ -1,6 +1,6 @@
-import {LimitsApi} from "@api";
-import {LimitModel} from "@models";
-import {useEffect, useState} from "react";
+import {useEffect, useState} from 'react';
+import {LimitsApi} from '@api';
+import {LimitModel} from '@models';
 
 export function useLimit() {
   const [limits, setLimits] = useState<LimitModel[]>([]);

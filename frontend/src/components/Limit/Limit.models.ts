@@ -1,4 +1,4 @@
-import {LimitModel} from "@models/LimitModel";
+import {LimitModel} from '@models/LimitModel';
 
 export interface LimitProps {
   limits: LimitModel[];

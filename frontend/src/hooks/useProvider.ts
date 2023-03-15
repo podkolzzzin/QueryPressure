@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {ProviderService} from "@services";
-import {ProvidersApi} from "@api";
+import {useEffect, useState} from 'react';
+import {ProvidersApi} from '@api';
+import {ProviderService} from '@services';
 
 export function useProvider() {
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null);

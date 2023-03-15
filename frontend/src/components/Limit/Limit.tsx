@@ -1,7 +1,7 @@
-import {getInputType} from "@utils/GetInputType";
-import React from "react";
+import React from 'react';
+import {getInputType} from '@utils/GetInputType';
 
-import {LimitProps} from "./Limit.models";
+import {LimitProps} from './Limit.models';
 
 export function Limit({limits, selectLimit, selectedLimit}: LimitProps) {
   return (
@@ -22,9 +22,9 @@ export function Limit({limits, selectLimit, selectedLimit}: LimitProps) {
           selectedLimit &&
           selectedLimit.arguments.map(arg =>
             (
-              <div className="mb-3" key={"limit-argument-" + arg.name}>
-                <label htmlFor={"limit-argument-" + arg.name} className="form-label">Limit - {arg.name}</label>
-                <input type={getInputType(arg.type)} className="form-control" id={"limit-argument-" + arg.name}
+              <div className="mb-3" key={'limit-argument-' + arg.name}>
+                <label htmlFor={'limit-argument-' + arg.name} className="form-label">Limit - {arg.name}</label>
+                <input type={getInputType(arg.type)} className="form-control" id={'limit-argument-' + arg.name}
                        onChange={(event) => arg.value = event.target.value}
                        required/>
               </div>

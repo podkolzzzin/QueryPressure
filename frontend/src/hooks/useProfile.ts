@@ -1,6 +1,6 @@
-import {ProfilesApi} from "@api";
-import {ProfileModel} from "@models";
-import {useEffect, useState} from "react";
+import {useEffect, useState} from 'react';
+import {ProfilesApi} from '@api';
+import {ProfileModel} from '@models';
 
 export function useProfile() {
   const [selectedProfile, setSelectedProfile] = useState<ProfileModel | null>(null);
