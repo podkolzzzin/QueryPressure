@@ -1,5 +1,6 @@
 using Autofac;
 using QueryPressure.App;
+using QueryPressure.UI;
 
 public class ApiApplicationLoader : ApplicationLoader
 {

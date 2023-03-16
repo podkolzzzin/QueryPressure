@@ -2,17 +2,20 @@ using Autofac;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 
-public class ProviderManager
+namespace QueryPressure.UI
 {
-  private readonly Dictionary<string, Provider> _providers;
-
-  public ProviderManager(IContainer container, ICreator<IConnectionProvider>[] creators)
+  public class ProviderManager
   {
-    _providers = creators.ToDictionary(x => x.Type, x => container.Resolve<Provider>(new NamedParameter("creator", x)));
-  }
+    private readonly Dictionary<string, Provider> _providers;
 
-  public Provider GetProvider(string providerName)
-  {
-    return _providers[providerName.ToLower()];
+    public ProviderManager(IComponentContext container, ICreator<IConnectionProvider>[] creators)
+    {
+      _providers = creators.ToDictionary(x => x.Type, x => container.Resolve<Provider>(new NamedParameter("creator", x)));
+    }
+
+    public Provider GetProvider(string providerName)
+    {
+      return _providers[providerName.ToLower()];
+    }
   }
 }
