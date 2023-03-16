@@ -15,6 +15,10 @@ public class MongoDBConnectionProvider : IConnectionProvider
     _collectionName = collectionName;
   }
 
+  public Task<IServerInfo> GetServerInfoAsync(CancellationToken cancellationToken)
+  {
+    throw new NotImplementedException();
+  }
   public async Task<IExecutable> CreateExecutorAsync(IScriptSource scriptSource, ConnectionRequirement connectionRequirement,
       CancellationToken cancellationToken)
   {

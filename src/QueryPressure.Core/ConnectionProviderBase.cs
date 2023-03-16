@@ -16,6 +16,12 @@ public abstract class ConnectionProviderBase<T> : IConnectionProvider
 
   protected abstract IExecutable CreateExecutor(IScript script, IConnectionPool<T> pool);
 
+  public virtual Task<IServerInfo> GetServerInfoAsync(CancellationToken cancellationToken)
+  {
+    // TODO: (!!!) make this method abstract!
+    throw new NotImplementedException();
+  }
+
   public async Task<IExecutable> CreateExecutorAsync(IScriptSource scriptSource, ConnectionRequirement connectionRequirement, CancellationToken cancellationToken)
   {
     var script = await scriptSource.GetScriptAsync(cancellationToken);

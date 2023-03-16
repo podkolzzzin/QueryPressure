@@ -5,9 +5,12 @@ using QueryPressure.Core.LoadProfiles;
 
 namespace QueryPressure.App.ProfileCreators;
 
-public class SequentialLoadCreator : ICreator<IProfile>
+public class SequentialLoadCreator : IProfileCreator
 {
   public string Type => "sequential";
 
+
+
   public IProfile Create(ArgumentsSection profile) => new SequentialLoadProfile();
+  public ArgumentDescriptor[] Arguments => Array.Empty<ArgumentDescriptor>();
 }

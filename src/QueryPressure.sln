@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
@@ -50,6 +50,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.MongoDB.Core", "QueryPressure.MongoDB.Core\QueryPressure.MongoDB.Core.csproj", "{48FE2749-2BAB-42EA-8ACB-9715D7BC7CEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.MongoDB.App", "QueryPressure.MongoDB.App\QueryPressure.MongoDB.App.csproj", "{4B20ECA8-FEEA-4FC5-AE5F-C7DEF483C5D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryPressure.UI", "QueryPressure.UI\QueryPressure.UI.csproj", "{54848272-BC4A-4C86-BE62-C806624F7357}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +119,10 @@ Global
 		{26783B1B-F475-4426-9026-42D43E11A18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC684FF9-5D13-47A0-A3A4-EB341410C56B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC684FF9-5D13-47A0-A3A4-EB341410C56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54848272-BC4A-4C86-BE62-C806624F7357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54848272-BC4A-4C86-BE62-C806624F7357}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54848272-BC4A-4C86-BE62-C806624F7357}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54848272-BC4A-4C86-BE62-C806624F7357}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -160,6 +166,7 @@ Global
 		{4B20ECA8-FEEA-4FC5-AE5F-C7DEF483C5D6} = {6A2322DA-5E94-45E0-821C-92B3D83754D0}
 		{26783B1B-F475-4426-9026-42D43E11A18F} = {ABF63B8F-C981-4ABB-94CA-DC8B06F689AD}
 		{BC684FF9-5D13-47A0-A3A4-EB341410C56B} = {ABF63B8F-C981-4ABB-94CA-DC8B06F689AD}
+		{ABF63B8F-C981-4ABB-94CA-DC8B06F689AD} = {CD10134A-2A5F-4B75-B0CE-A5DF0A3D5C65}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B298503-55F3-4399-B28B-10094D440CCB}
