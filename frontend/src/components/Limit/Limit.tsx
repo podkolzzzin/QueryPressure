@@ -5,9 +5,9 @@ import {LimitProps} from './Limit.models';
 
 export function Limit({limits, selectLimit, selectedLimit}: LimitProps) {
   return (
-    <div className="card border-secondary mb-3">
+    <div className="card mb-3">
       <div className="card-header">Limit</div>
-      <div className="card-body text-dark">
+      <div className="card-body">
         <div className="mb-3">
           <select className="form-select w-100" defaultValue="" title="Limit"
                   onChange={(event) => selectLimit(event.target.value)}

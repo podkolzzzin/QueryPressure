@@ -1,0 +1,73 @@
+.theme-switch {
+  position: relative;
+  border-radius: 11px;
+  display: block;
+  width: 40px;
+  height: 23px;
+  flex-shrink: 0;
+  border: 1px solid #3c3c434a;
+  background-color: #f6f6f7;
+  transition: border-color .25s;
+}
+
+[data-bs-theme=dark] .theme-switch {
+  border: rgba(82, 82, 89, .68);
+  background-color: #313136;
+}
+
+.theme-switch-check {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #000000;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 1px 2px rgba(0, 0, 0, .06);
+  transition: transform .25s;
+}
+
+[data-bs-theme=dark] .theme-switch-check {
+  transform: translate(18px);
+}
+
+
+.theme-switch-icon {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.theme-switch-icon svg {
+  fill: #ebebf599;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+}
+
+
+[data-bs-theme=dark] .theme-switch-icon svg {
+  fill: #fffff5db;
+  transition: opacity .25s;
+}
+
+.theme-switch-icon .sun {
+  opacity: 1;
+}
+
+.theme-switch-icon .moon {
+  opacity: 1;
+}
+
+[data-bs-theme=dark] .theme-switch-icon .sun {
+  opacity: 0;
+}
+
+[data-bs-theme=light] .theme-switch-icon .moon {
+  opacity: 0;
+}

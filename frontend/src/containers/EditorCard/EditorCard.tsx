@@ -3,7 +3,7 @@ import {StatusBar} from '@components';
 import {EditorCardProps} from '@containers/EditorCard/EditorCard.models';
 import Editor from '@monaco-editor/react';
 
-export function EditorCard({providers, selectedProvider, selectProvider, setScript}: EditorCardProps) {
+export function EditorCard({providers, selectedProvider, selectProvider, setScript, theme}: EditorCardProps) {
   function handleEditorChange(value: string | undefined) {
     value && setScript(value);
   }
@@ -28,6 +28,7 @@ export function EditorCard({providers, selectedProvider, selectProvider, setScri
             }}
             onChange={handleEditorChange}
             onMount={handleEditorMount}
+            theme={theme === 'dark' ? 'vs-dark' : 'light'}
           />
         </div>
         <StatusBar status="Ready"

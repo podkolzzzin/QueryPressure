@@ -6,9 +6,9 @@ import {ProfileProps} from './Profile.models';
 export function Profile({profiles, selectProfile, selectedProfile}: ProfileProps) {
 
   return (
-    <div className="card border-secondary mb-3">
+    <div className="card mb-3">
       <div className="card-header">Profile</div>
-      <div className="card-body text-dark">
+      <div className="card-body">
         <div className="mb-3">
           <select className="form-select w-100" defaultValue="" title="Profile"
                   onChange={(event) => selectProfile(event.target.value)}

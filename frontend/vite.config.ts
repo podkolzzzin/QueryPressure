@@ -7,12 +7,13 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": {
-        target: "http://localhost:5073",
+      '/api': {
+        target: 'http://localhost:5073',
         changeOrigin: true,
         secure: false
       },
     },
+    port: 5173
   },
   resolve: {
     alias: [
@@ -25,6 +26,7 @@ export default defineConfig({
       {find: '@services', replacement: path.resolve(__dirname, 'src', 'services')},
       {find: '@containers', replacement: path.resolve(__dirname, 'src', 'containers')},
       {find: '@hooks', replacement: path.resolve(__dirname, 'src', 'hooks')},
+      {find: '~bootstrap', replacement: path.resolve(__dirname, 'node_modules/bootstrap')}
     ]
   }
 });
