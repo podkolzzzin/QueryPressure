@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <ProjectReference Include="$(LibsSourcePath)QueryPressure.App\QueryPressure.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.SqlServer\QueryPressure.SqlServer.Core\QueryPressure.SqlServer.Core.csproj" />
+    </ItemGroup>
+
+</Project>

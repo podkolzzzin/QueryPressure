@@ -2,6 +2,14 @@
 
 The tool for load testing of...
 
+## Development
+
+Build sln file: 
+```console
+slngen --solutionfile src\QueryPressure.sln --folders true --collapsefolders true --nologo --launch false
+```
+
+
 ## Features
 
 1. ❌ Multi-tab

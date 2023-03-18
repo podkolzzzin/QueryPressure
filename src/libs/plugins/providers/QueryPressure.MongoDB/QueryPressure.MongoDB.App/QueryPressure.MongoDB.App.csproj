@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibsSourcePath)QueryPressure.App\QueryPressure.App.csproj" />
+    <ProjectReference Include="$(LibsSourcePath)QueryPressure.Core\QueryPressure.Core.csproj" />
+    <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.MongoDB\QueryPressure.MongoDB.Core\QueryPressure.MongoDB.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="plugins\dirs.proj" />
+    <ProjectReference Include="QueryPressure.App\QueryPressure.App.csproj" />
+    <ProjectReference Include="QueryPressure.Core\QueryPressure.Core.csproj" />
+  </ItemGroup>
+</Project>

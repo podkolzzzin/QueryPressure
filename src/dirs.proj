@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="libs\dirs.proj" />
+    <ProjectReference Include="tests\**\*.csproj" />
+    <ProjectReference Include="tools\**\*.csproj" />
+    <ProjectReference Include="web\**\*.csproj" />
+  </ItemGroup>
+</Project>

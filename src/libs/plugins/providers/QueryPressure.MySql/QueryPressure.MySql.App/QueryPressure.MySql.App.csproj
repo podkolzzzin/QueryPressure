@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="$(LibsSourcePath)QueryPressure.App\QueryPressure.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.MySql\QueryPressure.MySql.Core\QueryPressure.MySql.Core.csproj" />
+    </ItemGroup>
+
+</Project>

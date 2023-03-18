@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="metrics\dirs.proj" />
+    <ProjectReference Include="providers\dirs.proj" />
+  </ItemGroup>
+</Project>

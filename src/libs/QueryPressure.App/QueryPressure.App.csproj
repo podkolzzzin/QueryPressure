@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <ProjectReference Include="$(LibsSourcePath)QueryPressure.Core\QueryPressure.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" />
+      <PackageReference Include="Mono.Cecil" />
+    </ItemGroup>
+
+</Project>

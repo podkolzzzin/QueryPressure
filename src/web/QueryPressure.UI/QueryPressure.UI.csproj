@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Swashbuckle.AspNetCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="$(LibsSourcePath)QueryPressure.App\QueryPressure.App.csproj" />
+      <ProjectReference Include="$(MetricsSourcePath)QueryPressure.Metrics\QueryPressure.Metrics.App\QueryPressure.Metrics.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.MongoDB\QueryPressure.MongoDB.App\QueryPressure.MongoDB.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.MySql\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.Postgres\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.SqlServer\QueryPressure.SqlServer.App\QueryPressure.SqlServer.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.Redis\QueryPressure.Redis.App\QueryPressure.Redis.App.csproj" />
+    </ItemGroup>
+
+</Project>

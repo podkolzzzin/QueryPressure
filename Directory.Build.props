@@ -1,0 +1,23 @@
+<Project>
+  <Import Project="$(RootPath)src\contracts\Copyright\Copyright.props"/>
+
+  <PropertyGroup>
+      <TargetFramework>net7.0</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RootPath>$(MSBuildThisFileDirectory)</RootPath>
+  </PropertyGroup>
+
+  <PropertyGroup Label="KnownFolders">
+    <LibsSourcePath>$(MSBuildThisFileDirectory)src\libs\</LibsSourcePath>
+    <PluginsSourcePath>$(LibsSourcePath)plugins\</PluginsSourcePath>
+    <MetricsSourcePath>$(PluginsSourcePath)metrics\</MetricsSourcePath>
+    <ProvidersSourcePath>$(PluginsSourcePath)providers\</ProvidersSourcePath>
+    <TestsSourcePath>$(MSBuildThisFileDirectory)src\tests\</TestsSourcePath>
+    <ToolsSourcePath>$(MSBuildThisFileDirectory)src\tools\</ToolsSourcePath>
+    <WebSourcePath>$(MSBuildThisFileDirectory)src\web\</WebSourcePath>
+  </PropertyGroup>
+</Project>

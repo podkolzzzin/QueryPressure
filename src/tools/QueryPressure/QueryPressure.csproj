@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="$(RootPath)README.md">
+        <Link>README.md</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" />
+      <PackageReference Include="Mono.Cecil" />
+      <PackageReference Include="YamlDotNet" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="$(LibsSourcePath)QueryPressure.App\QueryPressure.App.csproj" />
+      <ProjectReference Include="$(LibsSourcePath)QueryPressure.Core\QueryPressure.Core.csproj" />
+      <ProjectReference Include="$(MetricsSourcePath)QueryPressure.Metrics\QueryPressure.Metrics.App\QueryPressure.Metrics.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.MongoDB\QueryPressure.MongoDB.App\QueryPressure.MongoDB.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.MySql\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.Postgres\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.SqlServer\QueryPressure.SqlServer.App\QueryPressure.SqlServer.App.csproj" />
+      <ProjectReference Include="$(ProvidersSourcePath)QueryPressure.Redis\QueryPressure.Redis.App\QueryPressure.Redis.App.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="sample.mongodb.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="sample.postgres.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.mongodb.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="sample.mongodb.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.mongodb.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.postgres.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="sample.mysql.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.mysql.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.sqlserver.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="sample.sqlserver.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="sample.redis.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="script.redis.lua">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Examples" />
+    </ItemGroup>
+
+</Project>
