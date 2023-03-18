@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Text;
 using NSubstitute;
@@ -20,7 +20,7 @@ en-US:
     var result = resourceManager.GetResources("en-US", ResourceFormat.Plain);
     Assert.Collection(result, x => Assert.Equal(("simple", "String 1"), (x.Key, x.Value)));
   }
-  
+
   [Fact]
   public void GetResources_SimpleSingleResource_PlainIsReturnedIfHtmlNotProvided()
   {
@@ -31,7 +31,7 @@ en-US:
     var result = resourceManager.GetResources("en-US", ResourceFormat.Html);
     Assert.Collection(result, x => Assert.Equal(("simple", "String 1"), (x.Key, x.Value)));
   }
-  
+
   [Fact]
   public void GetResources_MultiFormatResource_HtmlIsReturnedIfProvided()
   {
@@ -44,7 +44,7 @@ en-US:
     var result = resourceManager.GetResources("en-US", ResourceFormat.Html);
     Assert.Collection(result, x => Assert.Equal(("simple", "<b>String</b> 1"), (x.Key, x.Value)));
   }
-  
+
   [Fact]
   public void GetResources_ComplexValue_IsRepresentedAsPlain()
   {
@@ -57,13 +57,13 @@ en-US:
       nestedChild: nestedValue
 """);
     var result = resourceManager.GetResources("en-US", ResourceFormat.Plain);
-    Assert.Collection(result, 
+    Assert.Collection(result,
       x => Assert.Equal(("root", "Root Value"), (x.Key, x.Value)),
       x => Assert.Equal(("parent.child1", "String 1"), (x.Key, x.Value)),
       x => Assert.Equal(("parent.child2.nestedChild", "nestedValue"), (x.Key, x.Value))
     );
   }
-  
+
   [Fact]
   public void GetResources_TwoResourceFiles_MergedSuccessfully()
   {
@@ -76,7 +76,7 @@ en-US:
   another: Value 2
 """);
     var result = resourceManager.GetResources("en-US", ResourceFormat.Plain);
-    Assert.Collection(result, 
+    Assert.Collection(result,
       x => Assert.Equal(("simple", "String 1"), (x.Key, x.Value)),
       x => Assert.Equal(("another", "Value 2"), (x.Key, x.Value))
     );
@@ -97,7 +97,7 @@ en-US:
 """);
     });
   }
-  
+
   private IResourceManager CreateManager(params string[] resources)
   {
     return new ResourceManager(CreateResources(resources));

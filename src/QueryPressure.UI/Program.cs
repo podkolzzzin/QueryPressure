@@ -37,7 +37,7 @@ app.MapGet("/api/limits", GetCreatorMetadata<ILimitCreator, ILimit>);
 app.MapPost("/api/execution", (ExecutionRequest request, ProviderManager manager) =>
   manager.GetProvider(request.Provider).StartExecutionAsync(request));
 
-app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) => 
+app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) =>
   manager.GetResources(locale, ResourceFormat.Html));
 
 app.MapGet("/api/locales", () => new[] { "en-US", "uk-UA" });

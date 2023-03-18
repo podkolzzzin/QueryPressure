@@ -1,4 +1,4 @@
-﻿using QueryPressure.App.Interfaces;
+using QueryPressure.App.Interfaces;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -8,7 +8,7 @@ namespace QueryPressure.App;
 public class AmbiguousResourceException : Exception
 {
   private const string Template = "Resource {0}/{1} is ambiguous to Resource {2}/{3}.";
-  
+
   public string Resource1 { get; }
   public string File1 { get; }
   public string Resource2 { get; }
@@ -29,10 +29,10 @@ public class ResourceManager : IResourceManager
   {
     public string ResourceName { get; }
     public string FileName { get; }
-    
+
     private readonly Dictionary<ResourceFormat, string> _resources;
     public Resource(string resource, string resourceName, string fileName)
-      : this(new Dictionary<ResourceFormat, string>{ [ResourceFormat.Plain] = resource }, resourceName, fileName)
+      : this(new Dictionary<ResourceFormat, string> { [ResourceFormat.Plain] = resource }, resourceName, fileName)
     {
     }
 
@@ -56,7 +56,7 @@ public class ResourceManager : IResourceManager
   {
     _resources = GetAllResources(discovery);
   }
-  
+
   public IDictionary<string, string> GetResources(string locale, ResourceFormat format)
   {
     return _resources.Where(x => x.Key.StartsWith(locale))
@@ -77,7 +77,7 @@ public class ResourceManager : IResourceManager
   }
   private static Dictionary<string, Resource> Merge(Resource[] resources)
   {
-    Dictionary<string, Resource> result = new ();
+    Dictionary<string, Resource> result = new();
     foreach (var item in resources)
     {
       if (result.TryGetValue(item.ResourceName, out var resource))
@@ -102,7 +102,7 @@ public class ResourceManager : IResourceManager
   {
     foreach (var (key, value) in dictionary)
     {
-      if (value is null) 
+      if (value is null)
         continue;
 
       var name = resourceName is "" ? key.ToString()! : resourceName + "." + key;
@@ -118,7 +118,7 @@ public class ResourceManager : IResourceManager
     }
     return resources;
   }
-    
+
   private static Resource? GetResource(object source, string resourceName, string fileName)
   {
     if (source is string str)
@@ -131,7 +131,7 @@ public class ResourceManager : IResourceManager
     var keys = Enum.GetNames(typeof(ResourceFormat))
       .Select(x => x.ToLower())
       .ToArray();
-      
+
     if (sourceDic.Keys.Cast<string>().Any(x => !keys.Contains(x.ToLowerInvariant())))
       return null;
 

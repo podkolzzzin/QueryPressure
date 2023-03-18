@@ -1,4 +1,4 @@
-﻿namespace QueryPressure.App.Interfaces;
+namespace QueryPressure.App.Interfaces;
 
 public enum ResourceFormat { Plain, Html }
 
