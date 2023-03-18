@@ -1,0 +1,40 @@
+﻿en-US:
+  limits:
+    queryCount:
+      title: Query Count
+      description: Execute limited query count and then stop execution.
+      arguments:
+        queryCount: Integer number of queries that should be executed.
+    tillFirstError:
+      title: Till First Error
+      description: Stop execution on first error.
+    tillNErrors:
+      title: Till Error Count
+      description: Stop execution when error count reaches specified value.
+      arguments:
+        errorCount: Error Count
+    time:
+      title: Time
+      description: Stop execution after specified period of time
+      arguments:
+        limit: TimeSpan limit
+uk-UA:
+  limits:
+    queryCount:
+      title: Кількість запросів
+      description: Зупинити після виконання певної кількості запросів
+      arguments:
+        queryCount: Число запросів
+    tillFirstError:
+      title: До першої помилки
+      description: Зупинити виконання після першої помилки
+    tillNErrors:
+      title: До заданої кількості помилок
+      description: Запинити виконання по досягненню певної кількості помилок.
+      arguments:
+        errorCount: Число помилок
+    time:
+      title: Час
+      description: Запинити виконання через певний час
+      arguments:
+        limit: Час виконання
