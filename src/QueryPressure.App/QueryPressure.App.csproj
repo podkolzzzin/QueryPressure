@@ -18,7 +18,11 @@
 
     <ItemGroup>
       <None Remove="Resources.yml" />
-      <EmbeddedResource Include="Resources.yml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Limit.Resources.yml" />
+      <EmbeddedResource Include="Resources\Profile.Resources.yml" />
     </ItemGroup>
 
 </Project>
