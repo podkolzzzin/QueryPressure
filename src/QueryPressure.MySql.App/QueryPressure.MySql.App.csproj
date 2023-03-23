@@ -1,13 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.4.0" />
+      <PackageReference Include="Autofac" />
     </ItemGroup>
 
     <ItemGroup>
