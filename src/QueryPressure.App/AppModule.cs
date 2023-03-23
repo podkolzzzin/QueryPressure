@@ -41,5 +41,13 @@ public class AppModule : Autofac.Module
 
     builder.RegisterType<ConsoleMetricsVisualizer>()
       .Keyed<IMetricsVisualizer>("Console");
+
+    builder.RegisterType<ResourceManager>()
+      .As<IResourceManager>()
+      .SingleInstance();
+
+    builder.RegisterType<EmbeddedResourceDiscovery>()
+      .As<IResourceDiscovery>()
+      .SingleInstance();
   }
 }

@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using QueryPressure.App;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
@@ -29,23 +30,22 @@ app.MapGet("/api/providers", (IProviderInfo[] providers) => providers.Select(x =
 app.MapPost("/api/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
   await manager.GetProvider(request.Provider).TestConnectionAsync(request.ConnectionString));
 
-app.MapGet("/api/profiles", (IProfileCreator[] creators) => creators.Select(x => new
-{
-  x.Arguments,
-  x.Type
-}));
+app.MapGet("/api/profiles", GetCreatorMetadata<IProfileCreator, IProfile>);
 
-app.MapGet("/api/limits", (ILimitCreator[] creators) => creators.Select(x => new
-{
-  x.Arguments,
-  x.Type
-}));
+app.MapGet("/api/limits", GetCreatorMetadata<ILimitCreator, ILimit>);
 
 app.MapPost("/api/execution", (ExecutionRequest request, ProviderManager manager) =>
   manager.GetProvider(request.Provider).StartExecutionAsync(request));
 
+app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) =>
+  manager.GetResources(locale, ResourceFormat.Html));
+
+app.MapGet("/api/locales", () => new[] { "en-US", "uk-UA" });
+
 app.Run();
 
-public record ConnectionRequest(string ConnectionString, string Provider);
+static IEnumerable<CreatorMetadataResponse> GetCreatorMetadata<TCreator, TCreated>(IEnumerable<TCreator> creators)
+  where TCreator : IArgumentProvider, ICreator<TCreated>
+  => creators.Select(x => new CreatorMetadataResponse(x.Arguments, x.Type));
 
-public record ExecutionRequest(string ConnectionString, string Provider, string Script, FlatArgumentsSection Profile, FlatArgumentsSection Limit);
+
