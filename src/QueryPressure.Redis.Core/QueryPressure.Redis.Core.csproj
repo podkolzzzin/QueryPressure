@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="StackExchange.Redis" Version="2.6.70" />
+      <PackageReference Include="StackExchange.Redis" />
     </ItemGroup>
 
 </Project>
