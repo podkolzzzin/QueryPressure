@@ -1,11 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\QueryPressure.App\QueryPressure.App.csproj" />
       <ProjectReference Include="..\QueryPressure.SqlServer.Core\QueryPressure.SqlServer.Core.csproj" />
