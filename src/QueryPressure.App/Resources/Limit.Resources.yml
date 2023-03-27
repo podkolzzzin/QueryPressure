@@ -15,19 +15,19 @@
         errorCount: Error Count
     time:
       title: Time
-      description: Stop execution after specified period of time
+      description: Stop execution after specified period of time.
       arguments:
         limit: TimeSpan limit
 uk-UA:
   limits:
     queryCount:
       title: Кількість запросів
-      description: Зупинити після виконання певної кількості запросів
+      description: Зупинити після виконання певної кількості запросів.
       arguments:
         queryCount: Число запросів
     tillFirstError:
       title: До першої помилки
-      description: Зупинити виконання після першої помилки
+      description: Зупинити виконання після першої помилки.
     tillNErrors:
       title: До заданої кількості помилок
       description: Запинити виконання по досягненню певної кількості помилок.
@@ -35,6 +35,6 @@ uk-UA:
         errorCount: Число помилок
     time:
       title: Час
-      description: Запинити виконання через певний час
+      description: Запинити виконання через певний час.
       arguments:
         limit: Час виконання

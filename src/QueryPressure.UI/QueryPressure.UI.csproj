@@ -22,8 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageVersion Update="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-      <PackageVersion Update="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <EmbeddedResource Include="Resources.yml" />
     </ItemGroup>
-
 </Project>

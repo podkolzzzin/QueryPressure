@@ -1,7 +1,9 @@
 import React, {BaseSyntheticEvent} from 'react';
+import { useTranslation } from 'react-i18next';
 import {ExecutionApi} from '@api';
 import {ConnectionString, Limit, Profile, ThemeSwitchButton} from '@components';
 import {useConnectionString, useLimit, useProfile} from '@hooks';
+import { t } from 'i18next';
 
 import {ConfigurationCardProps} from './ConfigurationCardProps';
 
@@ -14,6 +16,7 @@ export function ConfigurationCard({selectedProvider, script, toggleTheme}: Confi
     setConnectionString,
     testConnectionString,
   } = useConnectionString(selectedProvider);
+  const { t } = useTranslation();
 
   function execute(event: BaseSyntheticEvent) {
     event.preventDefault();
@@ -35,11 +38,11 @@ export function ConfigurationCard({selectedProvider, script, toggleTheme}: Confi
         <form className="d-flex flex-column justify-content-between h-100" onSubmit={execute}>
           <div className="configuration-section">
             <div className="d-flex justify-content-between">
-              <h5 className="card-title">Configuration</h5>
+              <h5 className="card-title">{t('labels.configuration')}</h5>
               <ThemeSwitchButton toggleTheme={toggleTheme}/>
             </div>
             <div className="mb-3">
-              <span>Provider: {selectedProvider ?? 'Not selected.'}</span>
+              <span>{t('labels.provider')}: {selectedProvider ?? 'Not selected.'}</span>
             </div>
 
             <ConnectionString changed={setConnectionString}
@@ -55,7 +58,7 @@ export function ConfigurationCard({selectedProvider, script, toggleTheme}: Confi
                    selectLimit={selectLimit}/>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">Execute</button>
+          <button type="submit" className="btn btn-primary w-100">{t('labels.execute')}</button>
         </form>
       </div>
     </div>

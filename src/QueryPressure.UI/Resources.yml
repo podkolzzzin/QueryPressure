@@ -1,0 +1,26 @@
+﻿en-US:
+  labels:
+    configuration: Configuration
+    provider: Provider
+    connectionString: Connection String
+    profile: Profile
+    selectProfile: Select Profile...
+    limit: Limit
+    selectLimit: Select Limit...
+    execute: Execute
+    ready: Ready
+    codeEditor: Code Editor
+    showConnectionString: Show Connection String
+uk-UA:
+  labels:
+    configuration: Конфігурація
+    provider: Provider
+    connectionString: Строка підключення
+    profile: Профіль
+    selectProfile: Оберіть профіль...
+    limit: Обмеження
+    selectLimit: Оберіть обмеження...
+    execute: Виконати
+    ready: Готово
+    codeEditor: Редактор Коду
+    showConnectionString: Показати Строку Підключення
