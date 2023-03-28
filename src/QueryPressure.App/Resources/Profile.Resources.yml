@@ -19,6 +19,9 @@
       description: Execute queries in one thread with delay.
       arguments:
         delay: TimeSpan delay value
+    targetThroughput:
+      title: Target throughput
+      description: Execute queries with the target throughput.
 uk-UA:
   profiles:
     limitedConcurrency:
@@ -28,15 +31,18 @@ uk-UA:
         limit: Кількість потоків.
     limitedConcurrencyWithDelay:
       title: Багатониткове виконання із затримкою 
-      description: Виконувати запросі на декількох потоках, але після завершення робити певну зупинку
+      description: Виконувати запросі на декількох потоках, але після завершення робити певну зупинку.
       arguments:
         limit: Кількість потоків
         delay: Час затримки
     sequential:
       title: Послідовне виконання
-      description: Виконувати запроси один за одним без затримки
+      description: Виконувати запроси один за одним без затримки.
     sequentialWithDelay:
       title: Послідовне виконання із затримкою
-      description: Виконувати запроси в один поток із затримкою між виконаннями
+      description: Виконувати запроси в один поток із затримкою між виконаннями.
       arguments:
         delay: Час затримки
+    targetThroughput:
+      title: Цільове навантаження
+      description: Виконувати з цільовим рівнем запросів у секунду.
