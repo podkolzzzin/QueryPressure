@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {ExecutionApi} from '@api';
 import {ConnectionString, Limit, Profile, ThemeSwitchButton} from '@components';
 import {useConnectionString, useLimit, useProfile} from '@hooks';
-import { t } from 'i18next';
 
 import {ConfigurationCardProps} from './ConfigurationCardProps';
 
