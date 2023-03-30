@@ -11,6 +11,7 @@
     ready: Ready
     codeEditor: Code Editor
     showConnectionString: Show Connection String
+    selectProvider: Select Provider
 uk-UA:
   labels:
     configuration: Конфігурація
@@ -24,3 +25,4 @@ uk-UA:
     ready: Готово
     codeEditor: Редактор Коду
     showConnectionString: Показати Строку Підключення
+    selectProvider: Обрати Provider

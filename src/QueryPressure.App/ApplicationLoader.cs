@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Reflection;
+using System.Reflection.Metadata;
 using Autofac;
 using QueryPressure.Core;
 
@@ -30,7 +33,7 @@ public class ApplicationLoader
 
   private void LoadPlugins(ContainerBuilder builder)
   {
-    var dir = new FileInfo(GetType().Assembly.Location).Directory;
+    var dir = new FileInfo(AppContext.BaseDirectory).Directory;
     var dlls = dir.GetFiles("*.dll");
     var asms = AppDomain.CurrentDomain.GetAssemblies();
     foreach (var dll in dlls.Where(x => IsSuitable(x.FullName)))
@@ -39,9 +42,15 @@ public class ApplicationLoader
       var loaded = asms.FirstOrDefault(x => x.Location.ToLowerInvariant() == dll.FullName.ToLowerInvariant());
       if (loaded == null)
       {
-        loaded = defaultContext.LoadFromAssemblyPath(dll.FullName);
+        defaultContext.LoadFromAssemblyPath(dll.FullName);
       }
-      builder.RegisterAssemblyModules(loaded);
+    }
+
+    asms = AppDomain.CurrentDomain.GetAssemblies();
+    foreach (var asm in asms.Where(x => x.GetCustomAttribute<QueryPressurePluginAttribute>() != null))
+    {
+      Console.WriteLine(asm.FullName);
+      builder.RegisterAssemblyModules(asm);
     }
   }
 }
