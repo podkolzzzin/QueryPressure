@@ -25,20 +25,17 @@ jobs:
 
     - name: Build and publish dotnet app
       run: |
-        dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
-        --output src/QueryPressure.UI/.out/win \
-        --runtime win-x64 
+        alias publish="dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true"
         
-        dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
-        --output src/QueryPressure.UI/.out/linux \
-        --runtime linux-x64     
-
-        dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
-        --output src/QueryPressure.UI/.out/osx \
-        --runtime osx-x64
+        publish --output src/QueryPressure.UI/.out/win --runtime win-x64
+        publish --output src/QueryPressure.UI/.out/linux --runtime linux-x64
+        publish --output src/QueryPressure.UI/.out/osx --runtime osx
+        
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
         name: build-artifacts
         path: |
-          src/QueryPressure.UI/.out/
+          src/QueryPressure.UI/.out/win/QueryPressure.UI.exe
+          src/QueryPressure.UI/.out/linux/QueryPressure.UI
+          src/QueryPressure.UI/.out/osx/QueryPressure.UI
