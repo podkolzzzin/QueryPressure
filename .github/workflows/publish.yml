@@ -30,7 +30,7 @@ jobs:
         dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
           --output src/QueryPressure.UI/.out/linux --runtime linux-x64
         dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
-          --output src/QueryPressure.UI/.out/osx --runtime osx
+          --output src/QueryPressure.UI/.out/osx --runtime osx-x64
         
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
