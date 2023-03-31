@@ -24,7 +24,7 @@ jobs:
         cp -r frontend/dist/* src/QueryPressure.UI/dist/
 
     - name: Build and publish dotnet app
-      run: |        
+      run: |
         dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
           --output src/QueryPressure.UI/.out/win --runtime win-x64
         dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \

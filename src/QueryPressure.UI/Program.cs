@@ -28,6 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseFrontendStaticFiles();
+app.OpenBrowserWhenReady();
 
 app.MapGet("/api/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
 
@@ -46,10 +47,6 @@ app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) 
 
 app.MapGet("/api/locales", () => new[] { "en-US", "uk-UA" });
 
-app.Lifetime.ApplicationStarted.Register(() =>
-{
-  var _ = app.Services.GetRequiredService<Launcher>().Start(app.Lifetime.ApplicationStopped);
-});
 app.Run();
 
 static IEnumerable<CreatorMetadataResponse> GetCreatorMetadata<TCreator, TCreated>(IEnumerable<TCreator> creators)
