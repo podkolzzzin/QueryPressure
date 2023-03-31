@@ -1,0 +1,46 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm install
+        npm run build
+
+    - name: Copy frontend build artifacts to dotnet app
+      run: |
+        mkdir -p src/QueryPressure.UI/dist
+        cp -r frontend/dist/* src/QueryPressure.UI/dist/
+
+    - name: Build and publish dotnet app
+      run: |
+        dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
+        --output src/QueryPressure.UI/.out/linux \
+        --runtime linux-x64
+
+        dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
+        --output src/QueryPressure.UI/.out/win \
+        --runtime windows-x64      
+
+        dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true \
+        --output src/QueryPressure.UI/.out/osx \
+        --runtime osx-x64
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-artifacts
+        path: |
+          src/QueryPressure.UI/.out/linux-x64/QueryPressure.UI
+          src/QueryPressure.UI/.out/osx-x64/QueryPressure.UI
+          src/QueryPressure.UI/.out/win-x64/QueryPressure.UI
