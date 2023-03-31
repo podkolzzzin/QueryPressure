@@ -12,4 +12,4 @@ COPY ./src/ /src/
 COPY --from=fe-build /frontend/dist/ /src/QueryPressure.UI/dist/
 
 WORKDIR /
-ENTRYPOINT dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release -o .out -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true
+ENTRYPOINT dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release -o .out -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true

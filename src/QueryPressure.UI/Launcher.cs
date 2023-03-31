@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 
@@ -12,16 +12,17 @@ public class Launcher
   {
     _server = server;
   }
-  
+
   public async Task Start(CancellationToken cancellationToken)
   {
     var host = await WhenServerIsReadyAsync(cancellationToken);
     var url = new Uri(host, "UI");
-    Process.Start(new ProcessStartInfo(url.ToString()) {
+    Process.Start(new ProcessStartInfo(url.ToString())
+    {
       UseShellExecute = true,
     });
   }
-  
+
   private async Task<Uri> WhenServerIsReadyAsync(CancellationToken cancellationToken)
   {
     var sw = Stopwatch.StartNew();

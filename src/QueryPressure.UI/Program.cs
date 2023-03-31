@@ -6,32 +6,6 @@ using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.UI;
 
-// dotnet publish .\QueryPressure.UI.csproj
-//        -c Release
-//        -o .out
-//        -p:PublishSingleFile=true
-//        -p:PublishTrimmed=true
-//        -p:PublishReadyToRun=true
-//        -p:PublishTrimmed=true
-//        --self-contained true
-
-Console.WriteLine("1");
-var types = new[] {
-  typeof(QueryPressure.MongoDB.App.MongoDBAppModule),
-  typeof(QueryPressure.Postgres.App.PostgresAppModule),
-  typeof(QueryPressure.Redis.App.RedisAppModule),
-  typeof(QueryPressure.MySql.App.MySqlAppModule),
-  typeof(QueryPressure.SqlServer.App.SqlServerAppModule),
-  typeof(QueryPressure.Metrics.App.MetricsModule),
-};
-Console.WriteLine("========");
-foreach (var asm in typeof(Program).Assembly.GetReferencedAssemblies().Where(x => x.Name.Contains("QueryPressure")))
-{
-  Console.WriteLine(asm.Name);
-}
-
-Console.WriteLine("========");
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -42,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
   .ConfigureContainer<ContainerBuilder>(diBuilder => new ApiApplicationLoader().Load(diBuilder));
 
+builder.UseBuiltAssemblyPlugins();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,26 +27,7 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-app.UseFileServer(new FileServerOptions()
-{
-  RequestPath = "/ui",
-  FileProvider = new ManifestEmbeddedFileProvider(typeof(Program).Assembly, "dist/"),
-  EnableDefaultFiles = true,
-});
-
-app.UseFileServer(new FileServerOptions()
-{
-  RequestPath = "/img",
-  FileProvider = new ManifestEmbeddedFileProvider(typeof(Program).Assembly, "dist/img/"),
-  EnableDefaultFiles = true,
-});
-
-app.UseFileServer(new FileServerOptions()
-{
-  RequestPath = "/assets",
-  FileProvider = new ManifestEmbeddedFileProvider(typeof(Program).Assembly, "dist/assets/"),
-  EnableDefaultFiles = true,
-});
+app.UseFrontendStaticFiles();
 
 app.MapGet("/api/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
 
