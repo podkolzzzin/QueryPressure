@@ -25,11 +25,11 @@ jobs:
 
     - name: Build and publish dotnet app
       run: |
-        alias publish="dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true"
+        alias do_publish="dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release --self-contained true -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true"
         
-        publish --output src/QueryPressure.UI/.out/win --runtime win-x64
-        publish --output src/QueryPressure.UI/.out/linux --runtime linux-x64
-        publish --output src/QueryPressure.UI/.out/osx --runtime osx
+        do_publish --output src/QueryPressure.UI/.out/win --runtime win-x64
+        do_publish --output src/QueryPressure.UI/.out/linux --runtime linux-x64
+        do_publish --output src/QueryPressure.UI/.out/osx --runtime osx
         
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
