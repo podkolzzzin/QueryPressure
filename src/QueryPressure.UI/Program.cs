@@ -1,7 +1,7 @@
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using QueryPressure.App;
-using QueryPressure.App.Arguments;
+using Microsoft.Extensions.FileProviders;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.UI;
@@ -16,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
   .ConfigureContainer<ContainerBuilder>(diBuilder => new ApiApplicationLoader().Load(diBuilder));
 
+builder.UseBuiltAssemblyPlugins();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +26,8 @@ if (app.Environment.IsDevelopment())
   app.UseSwagger();
   app.UseSwaggerUI();
 }
+
+app.UseFrontendStaticFiles();
 
 app.MapGet("/api/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
 
@@ -42,10 +46,13 @@ app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) 
 
 app.MapGet("/api/locales", () => new[] { "en-US", "uk-UA" });
 
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+  var _ = app.Services.GetRequiredService<Launcher>().Start(app.Lifetime.ApplicationStopped);
+});
 app.Run();
 
 static IEnumerable<CreatorMetadataResponse> GetCreatorMetadata<TCreator, TCreated>(IEnumerable<TCreator> creators)
   where TCreator : IArgumentProvider, ICreator<TCreated>
   => creators.Select(x => new CreatorMetadataResponse(x.Arguments, x.Type));
-
 

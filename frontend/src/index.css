@@ -1,9 +1,9 @@
 [data-bs-theme=light] #root {
-  background-image: url("/background.jpg");
+  background-image: url("/img/background.jpg");
   background-size: contain;
 }
 
 [data-bs-theme=dark] #root {
-  background-image: url("/background-dark.jpg");
+  background-image: url("/img/background-dark.jpg");
   background-size: contain;
 }

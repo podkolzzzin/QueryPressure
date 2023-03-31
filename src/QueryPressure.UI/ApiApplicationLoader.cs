@@ -12,6 +12,11 @@ public class ApiApplicationLoader : ApplicationLoader
 
     builder.RegisterType<Provider>()
       .AsSelf();
+
+    builder.RegisterType<Launcher>()
+      .AsSelf()
+      .SingleInstance();
+
     return base.Load(builder);
   }
 }
