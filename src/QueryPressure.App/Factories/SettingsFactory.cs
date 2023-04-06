@@ -12,7 +12,7 @@ public class SettingsFactory<T> : ISettingsFactory<T> where T : ISetting
   public SettingsFactory(string settingType, IEnumerable<ICreator<T>> creators)
   {
     _settingType = settingType;
-    _creators = creators.ToDictionary(x => x.Type);
+    _creators = creators.ToDictionary(x => x.Type.ToLowerInvariant());
   }
 
   public T Create(ApplicationArguments arguments)
@@ -22,7 +22,7 @@ public class SettingsFactory<T> : ISettingsFactory<T> where T : ISetting
       throw new ApplicationException($"No section {_settingType} was found.");
     }
 
-    if (!_creators.TryGetValue(section.Type, out var creator))
+    if (!_creators.TryGetValue(section.Type.ToLowerInvariant(), out var creator))
       throw new ApplicationException($"No setting {typeof(T).Name} with the name of {section.Type}");
 
     return creator.Create(section);

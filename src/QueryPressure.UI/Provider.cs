@@ -44,8 +44,19 @@ public class Provider
           ["connectionString"] = request.ConnectionString,
         }
       },
-      ["provider"] = new()
-      {
+      ["profile"] = new () {
+        Type = request.Profile.Type,
+        Arguments = request.Profile.Arguments.ToDictionary(x => x.Name, x => x.Value),
+      },
+      ["limit"] = new() {
+        Type = request.Limit.Type,
+        Arguments = request.Limit.Arguments.ToDictionary(x => x.Name, x => x.Value),
+      },
+      ["script"] = new () {
+        Type = "text",
+        Arguments = new () {
+          ["text"] = request.Script
+        }
       }
     };
     var executor = await _builder.BuildAsync(appArgs, _store, _liveMetricProviders, default);
