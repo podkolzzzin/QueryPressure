@@ -21,10 +21,10 @@
 uk-UA:
   limits:
     queryCount:
-      title: Кількість запросів
-      description: Зупинити після виконання певної кількості запросів.
+      title: Кількість запитів
+      description: Зупинити після виконання певної кількості запитів.
       arguments:
-        queryCount: Число запросів
+        queryCount: Число запитів
     tillFirstError:
       title: До першої помилки
       description: Зупинити виконання після першої помилки.
@@ -35,6 +35,6 @@ uk-UA:
         errorCount: Число помилок
     time:
       title: Час
-      description: Запинити виконання через певний час.
+      description: Зупинити виконання через певний час.
       arguments:
         limit: Час виконання
