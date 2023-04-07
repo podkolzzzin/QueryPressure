@@ -44,17 +44,21 @@ public class Provider
           ["connectionString"] = request.ConnectionString,
         }
       },
-      ["profile"] = new () {
+      ["profile"] = new()
+      {
         Type = request.Profile.Type,
         Arguments = request.Profile.Arguments.ToDictionary(x => x.Name, x => x.Value),
       },
-      ["limit"] = new() {
+      ["limit"] = new()
+      {
         Type = request.Limit.Type,
         Arguments = request.Limit.Arguments.ToDictionary(x => x.Name, x => x.Value),
       },
-      ["script"] = new () {
+      ["script"] = new()
+      {
         Type = "text",
-        Arguments = new () {
+        Arguments = new()
+        {
           ["text"] = request.Script
         }
       }
