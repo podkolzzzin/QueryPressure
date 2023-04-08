@@ -13,19 +13,19 @@ The tool for load testing of...
     - ✔️ Postgres
     - ✔️ MySQL/MariaDB
     - ❌ CosmosDB
-    - ❌ Mongo
+    - ✔️ Mongo
     - ❌ Elastic Search
     - ✔️ Redis
     - ✔️ Expandable with plugins
 6. Cross-platform support
-    - ❌ MacOC
-    - ❌ Linux
+    - ✔️ MacOC
+    - ✔️ Linux
     - ✔️ Windows
 7. Metrics
     - ❌ Distribution
     - ✔️ Avg
-    - ❌ Med
-    - ❌ Std. Dev
+    - ✔️ Med
+    - ✔️ Std. Dev
     - ❌ Confidence interval
     - ❌ Expandable with plugins
 8. Load Profiles
