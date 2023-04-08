@@ -18,14 +18,16 @@ public class StatisticalMetricsProviderTests
     var token = CancellationToken.None;
 
     IMetricProvider metricProvider = new StatisticalMetricsProvider();
-    IExecutionResultStore store =  await GetNormalDistributionStoreAsync(seed, expectedMean, expectedStdDev, count, token);
+    IExecutionResultStore store =
+      await GetNormalDistributionStoreAsync(seed, expectedMean, expectedStdDev, count, token);
 
     var metrics = await metricProvider.CalculateAsync(store, token);
 
     Assert.NotNull(metrics);
   }
 
-  private static async Task<IExecutionResultStore> GetNormalDistributionStoreAsync(int seed, TimeSpan mean, TimeSpan stdDev, int count, CancellationToken token)
+  private static async Task<IExecutionResultStore> GetNormalDistributionStoreAsync(int seed, TimeSpan mean,
+    TimeSpan stdDev, int count, CancellationToken token)
   {
     var random = new NormalDistribution(mean.TotalMicroseconds, stdDev.TotalMicroseconds).Random(seed);
 
@@ -38,6 +40,7 @@ public class StatisticalMetricsProviderTests
     {
       await result.OnQueryExecutedAsync(execution, token);
     }
+
     return result;
   }
 }
