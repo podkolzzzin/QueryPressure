@@ -1,6 +1,7 @@
 // See https://aka.ms/new-console-template for more information
 
 using Autofac;
+using QueryPressure;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
@@ -27,7 +28,7 @@ while (!executionTask.IsCompleted)
   Console.WriteLine(liveVisualization);
 }
 
-Console.WriteLine("=======================");
+Console.WriteLine(new string('=', 80));
 
 var calculator = container.Resolve<IMetricsCalculator>();
 var metrics = await calculator.CalculateAsync(store, token); // IEnumerable<IMetric>

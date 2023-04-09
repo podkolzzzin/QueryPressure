@@ -1,4 +1,5 @@
 using Autofac;
+using QueryPressure.App.Console;
 using QueryPressure.App.Factories;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core;
@@ -38,6 +39,18 @@ public class AppModule : Autofac.Module
 
     builder.RegisterType<MetricsCalculator>()
       .As<IMetricsCalculator>();
+
+    builder.RegisterType<DefaultConsoleMetricFormatter>()
+      .Keyed<IConsoleMetricFormatter>("default");
+
+    builder.Register(ctx =>
+    {
+      var defaultFormatter = ctx.ResolveKeyed<IConsoleMetricFormatter>("default");
+      var services = ctx.Resolve<IEnumerable<IConsoleMetricFormatter>>()
+        .Except(new[] { defaultFormatter }).ToList();
+
+      return new ConsoleMetricFormatterProvider(services, defaultFormatter);
+    }).As<IConsoleMetricFormatterProvider>();
 
     builder.RegisterType<ConsoleMetricsVisualizer>()
       .Keyed<IMetricsVisualizer>("Console");

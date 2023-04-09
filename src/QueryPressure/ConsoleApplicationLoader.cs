@@ -4,6 +4,8 @@ using QueryPressure.App.Arguments;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
+namespace QueryPressure;
+
 internal class ConsoleApplicationLoader : ApplicationLoader
 {
   private readonly string[] _args;
