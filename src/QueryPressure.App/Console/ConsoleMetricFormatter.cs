@@ -25,7 +25,7 @@ public class DefaultConsoleMetricFormatter : IConsoleMetricFormatter
 
     _padCharsFirstColumn = width / 2 - tabSize * 2;
 
-    var leftPartSize = (double) width / 2;
+    var leftPartSize = (double)width / 2;
 
     if (leftPartSize % tabSize == 0)
     {
@@ -48,5 +48,5 @@ public class DefaultConsoleMetricFormatter : IConsoleMetricFormatter
   {
     return $"|\t{metricName.PadRight(_padCharsFirstColumn)}|\t{metricValue.PadRight(_padCharsSecondColumn)}|";
   }
-    
-}   
+
+}
