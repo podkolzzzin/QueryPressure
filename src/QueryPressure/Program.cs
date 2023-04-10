@@ -2,6 +2,7 @@
 
 using Autofac;
 using QueryPressure;
+using QueryPressure.App;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
@@ -28,7 +29,7 @@ while (!executionTask.IsCompleted)
   Console.WriteLine(liveVisualization);
 }
 
-Console.WriteLine(new string('=', 80));
+Console.WriteLine(new string('=', ConsoleMetricsVisualizer.ConsoleCharWidth));
 
 var calculator = container.Resolve<IMetricsCalculator>();
 var metrics = await calculator.CalculateAsync(store, token); // IEnumerable<IMetric>

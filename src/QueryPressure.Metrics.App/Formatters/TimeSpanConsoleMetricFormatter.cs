@@ -21,7 +21,7 @@ public class TimeSpanConsoleMetricFormatter : IConsoleMetricFormatter
   {
     if (metricValue is TimeSpan value)
     {
-      return $"|\t{metricName,-31}|\t{value.ToString("g", formatProvider),-31}|";
+      return DefaultConsoleMetricFormatter.FormatRow(metricName, value.ToString("g", formatProvider));
     }
 
     throw new ArgumentException($"The parameter '{nameof(metricValue)}' should be '{nameof(TimeSpan)}' type");
