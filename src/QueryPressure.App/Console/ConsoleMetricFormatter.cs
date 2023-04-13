@@ -27,7 +27,7 @@ public class DefaultConsoleMetricFormatter : IConsoleMetricFormatter
 
     _padCharsFirstColumn = width / 2 - tabSize * 2;
 
-    var leftPartSize = (double) width / 2;
+    var leftPartSize = (double)width / 2;
 
     if (leftPartSize % tabSize == 0)
     {
@@ -38,7 +38,7 @@ public class DefaultConsoleMetricFormatter : IConsoleMetricFormatter
       leftPartSize = Math.Ceiling(leftPartSize / tabSize) * tabSize;
     }
 
-    _padCharsSecondColumn = width - (int) leftPartSize - 1;
+    _padCharsSecondColumn = width - (int)leftPartSize - 1;
   }
 
   public HashSet<string> SupportedMetricNames { get; init; }
