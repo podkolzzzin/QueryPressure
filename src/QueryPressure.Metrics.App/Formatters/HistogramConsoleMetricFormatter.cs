@@ -1,14 +1,16 @@
 using System.Text;
 using Perfolizer.Mathematics.Histograms;
-using QueryPressure.App;
 using QueryPressure.App.Console;
 
 namespace QueryPressure.Metrics.App.Formatters;
 
 public class HistogramConsoleMetricFormatter : IConsoleMetricFormatter
 {
-  public HistogramConsoleMetricFormatter()
+  private readonly ConsoleOptions _consoleOptions;
+
+  public HistogramConsoleMetricFormatter(ConsoleOptions consoleOptions)
   {
+    _consoleOptions = consoleOptions;
     SupportedMetricNames = new HashSet<string> { "Histogram" };
   }
 
@@ -21,12 +23,12 @@ public class HistogramConsoleMetricFormatter : IConsoleMetricFormatter
       throw new ArgumentException($"The parameter '{nameof(metricValue)}' should be '{nameof(Histogram)}' type");
     }
 
-    var separator = ConsoleMetricsVisualizer.ConsoleRowSeparatorChar;
-    var consoleWidth = ConsoleMetricsVisualizer.ConsoleCharWidth;
+    var separator = _consoleOptions.RowSeparatorChar;
+    var width = _consoleOptions.WidthInChars;
 
     var sb = new StringBuilder();
-    sb.Append(new string(separator, consoleWidth / 2 - metricName.Length / 2));
-    sb.AppendLine(metricName.PadRight(consoleWidth / 2 + metricName.Length / 2, separator));
+    sb.Append(new string(separator, width / 2 - metricName.Length / 2));
+    sb.AppendLine(metricName.PadRight(width / 2 + metricName.Length / 2, separator));
     sb.Append(value.ToString(x =>
     {
       var timeSpan = TimeSpan.FromMilliseconds(x);

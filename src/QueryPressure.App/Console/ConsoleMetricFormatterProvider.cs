@@ -1,3 +1,5 @@
+using Autofac.Features.AttributeFilters;
+
 namespace QueryPressure.App.Console;
 
 public interface IConsoleMetricFormatterProvider
@@ -10,7 +12,7 @@ public class ConsoleMetricFormatterProvider : IConsoleMetricFormatterProvider
   private readonly IReadOnlyList<IConsoleMetricFormatter> _customMetricFormatters;
   private readonly IConsoleMetricFormatter _defaultFormatter;
 
-  public ConsoleMetricFormatterProvider(IReadOnlyList<IConsoleMetricFormatter> customMetricFormatters, IConsoleMetricFormatter defaultFormatter)
+  public ConsoleMetricFormatterProvider([KeyFilter("default")] IConsoleMetricFormatter defaultFormatter, IReadOnlyList<IConsoleMetricFormatter> customMetricFormatters)
   {
     _customMetricFormatters = customMetricFormatters;
     _defaultFormatter = defaultFormatter;

@@ -1,25 +1,21 @@
 using System.Globalization;
 using System.Text;
-using QueryPressure.App.Console;
 using QueryPressure.Core.Interfaces;
 
-namespace QueryPressure.App;
+namespace QueryPressure.App.Console;
 
 public class ConsoleMetricsVisualizer : IMetricsVisualizer
 {
-  public const char ConsoleRowSeparatorChar = '-';
-  public const int ConsoleCharWidth = 60;
-  public const int TabSize = 4;
-
+  private readonly ConsoleOptions _consoleOptions;
   private readonly IConsoleMetricFormatterProvider _formatterProvider;
 
   private class ConsoleVisualization : IVisualization
   {
     private readonly string _view;
+
     public ConsoleVisualization(string view)
     {
       _view = view;
-
     }
 
     public override string ToString()
@@ -28,8 +24,9 @@ public class ConsoleMetricsVisualizer : IMetricsVisualizer
     }
   }
 
-  public ConsoleMetricsVisualizer(IConsoleMetricFormatterProvider formatterProvider)
+  public ConsoleMetricsVisualizer(ConsoleOptions consoleOptions, IConsoleMetricFormatterProvider formatterProvider)
   {
+    _consoleOptions = consoleOptions;
     _formatterProvider = formatterProvider;
   }
 
@@ -38,11 +35,11 @@ public class ConsoleMetricsVisualizer : IMetricsVisualizer
     var stringBuilder = new StringBuilder();
     foreach (var metric in metrics)
     {
-      stringBuilder.AppendLine(new string(ConsoleRowSeparatorChar, ConsoleCharWidth));
+      stringBuilder.AppendLine(new string(_consoleOptions.RowSeparatorChar, _consoleOptions.WidthInChars));
       var formattedString = _formatterProvider.Get(metric.Name).Format(metric.Name, metric.Value, CultureInfo.CurrentUICulture);
       stringBuilder.AppendLine(formattedString);
     }
-    stringBuilder.AppendLine(new string(ConsoleRowSeparatorChar, ConsoleCharWidth));
+    stringBuilder.AppendLine(new string(_consoleOptions.RowSeparatorChar, _consoleOptions.WidthInChars));
     return Task.FromResult<IVisualization>(new ConsoleVisualization(stringBuilder.ToString()));
   }
 }
