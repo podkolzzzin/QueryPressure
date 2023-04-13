@@ -1,3 +1,5 @@
+using QueryPressure.App.Interfaces;
+
 namespace QueryPressure.App.Console;
 
 public interface IConsoleMetricFormatter
@@ -10,13 +12,15 @@ public interface IConsoleMetricFormatter
 public class DefaultConsoleMetricFormatter : IConsoleMetricFormatter
 {
   private readonly ConsoleOptions _consoleOptions;
+  private readonly IDictionary<string, string> _locale;
   private int _padCharsFirstColumn;
   private int _padCharsSecondColumn;
 
-  public DefaultConsoleMetricFormatter(ConsoleOptions consoleOptions)
+  public DefaultConsoleMetricFormatter(ConsoleOptions consoleOptions, IResourceManager resourceManager)
   {
     _consoleOptions = consoleOptions;
     SupportedMetricNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+    _locale = resourceManager.GetResources(consoleOptions.CultureInfo.Name, ResourceFormat.Plain);
     InitConsoleTablePaddings();
   }
 
@@ -43,6 +47,10 @@ public class DefaultConsoleMetricFormatter : IConsoleMetricFormatter
 
   public HashSet<string> SupportedMetricNames { get; init; }
 
-  public string Format(string metricName, object metricValue, IFormatProvider _) =>
-    $"|\t{metricName.PadRight(_padCharsFirstColumn)}|\t{(metricValue?.ToString() ?? "NULL").PadRight(_padCharsSecondColumn)}|";
+  public string Format(string metricName, object metricValue, IFormatProvider _)
+  {
+    var metricDisplayName = _locale[$"metrics.{metricName}.title"];
+    return $"|\t{metricDisplayName.PadRight(_padCharsFirstColumn)}|\t{(metricValue?.ToString() ?? "NULL").PadRight(_padCharsSecondColumn)}|";
+  }
+
 }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Autofac;
 using Autofac.Features.AttributeFilters;
 using QueryPressure.App.Console;
@@ -40,6 +41,8 @@ public class AppModule : Module
 
     builder.RegisterType<MetricsCalculator>()
       .As<IMetricsCalculator>();
+
+    builder.RegisterInstance(CultureInfo.CurrentUICulture);
 
     builder.RegisterType<ConsoleOptions>()
       .SingleInstance();

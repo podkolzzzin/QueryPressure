@@ -10,14 +10,14 @@ public class TimeSpanConsoleMetricFormatter : IConsoleMetricFormatter
   public TimeSpanConsoleMetricFormatter([KeyFilter("default")] IConsoleMetricFormatter defaultFormatter)
   {
     _defaultFormatter = defaultFormatter;
-    SupportedMetricNames = new HashSet<string>
+    SupportedMetricNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
     {
-      "Q1",
-      "Median",
-      "Q3",
-      "StandardDeviation",
-      "Mean",
-      "Average"
+      "q1",
+      "median",
+      "q3",
+      "standard-deviation",
+      "mean",
+      "live-average"
     };
   }
 

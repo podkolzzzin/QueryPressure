@@ -1,11 +1,12 @@
-// See https://aka.ms/new-console-template for more information
-
 using Autofac;
 using QueryPressure;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Console;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
+using System.Text;
+
+Console.OutputEncoding = Encoding.UTF8;
 
 var token = CancellationToken.None;
 var loader = new ConsoleApplicationLoader(args);

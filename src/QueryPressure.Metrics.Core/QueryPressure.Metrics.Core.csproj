@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+      <None Remove="Resources\Metrics.Resources.yml" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Metrics.Resources.yml" />
+    </ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="..\QueryPressure.Core\QueryPressure.Core.csproj" />
     </ItemGroup>
 

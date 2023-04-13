@@ -19,12 +19,12 @@ public class StatisticalMetricsProvider : IMetricProvider
     var histogram = BuildSimpleHistogram(sorted, moments.StandardDeviation);
 
     IEnumerable<IMetric> results = new IMetric[] {
-      new SimpleMetric("Q1", TimeSpan.FromMilliseconds(quartiles.Q1)),
-      new SimpleMetric("Median", TimeSpan.FromMilliseconds(quartiles.Median)),
-      new SimpleMetric("Q3", TimeSpan.FromMilliseconds(quartiles.Q3)),
-      new SimpleMetric("StandardDeviation", TimeSpan.FromMilliseconds(moments.StandardDeviation)),
-      new SimpleMetric("Mean", TimeSpan.FromMilliseconds(moments.Mean)),
-      new SimpleMetric("Histogram", histogram),
+      new SimpleMetric("q1", TimeSpan.FromMilliseconds(quartiles.Q1)),
+      new SimpleMetric("median", TimeSpan.FromMilliseconds(quartiles.Median)),
+      new SimpleMetric("q3", TimeSpan.FromMilliseconds(quartiles.Q3)),
+      new SimpleMetric("standard-deviation", TimeSpan.FromMilliseconds(moments.StandardDeviation)),
+      new SimpleMetric("mean", TimeSpan.FromMilliseconds(moments.Mean)),
+      new SimpleMetric("histogram", histogram),
     };
 
     return Task.FromResult(results);
