@@ -1,5 +1,6 @@
 using Autofac;
 using QueryPressure.App;
+using QueryPressure.Core.Interfaces;
 using QueryPressure.UI;
 
 public class ApiApplicationLoader : ApplicationLoader
@@ -15,6 +16,14 @@ public class ApiApplicationLoader : ApplicationLoader
 
     builder.RegisterType<Launcher>()
       .AsSelf()
+      .SingleInstance();
+
+    builder.RegisterGeneric(typeof(HubService<>))
+      .AsImplementedInterfaces()
+      .SingleInstance();
+
+    builder.RegisterType<DashboardVisualizer>()
+      .Keyed<IMetricsVisualizer>(DashboardVisualizer.Key)
       .SingleInstance();
 
     return base.Load(builder);

@@ -5,6 +5,7 @@ using Microsoft.Extensions.FileProviders;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.UI;
+using QueryPressure.UI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
   .ConfigureContainer<ContainerBuilder>(diBuilder => new ApiApplicationLoader().Load(diBuilder));
 
@@ -27,8 +29,10 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-app.UseFrontendStaticFiles();
+// app.UseFrontendStaticFiles();
 app.OpenBrowserWhenReady();
+
+app.MapHub<DashboardHub>("/ws/dashboard");
 
 app.MapGet("/api/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
 
