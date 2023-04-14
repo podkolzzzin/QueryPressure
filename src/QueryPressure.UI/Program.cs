@@ -29,7 +29,7 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-// app.UseFrontendStaticFiles();
+app.UseFrontendStaticFiles();
 app.OpenBrowserWhenReady();
 
 app.MapHub<DashboardHub>("/ws/dashboard");
