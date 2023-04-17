@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Text;
 using QueryPressure.Core.Interfaces;
 
@@ -33,12 +32,14 @@ public class ConsoleMetricsVisualizer : IMetricsVisualizer
   public Task<IVisualization> VisualizeAsync(IEnumerable<IMetric> metrics, CancellationToken cancellationToken)
   {
     var stringBuilder = new StringBuilder();
+    stringBuilder.AppendLine(new string(_consoleOptions.RowSeparatorChar, _consoleOptions.WidthInChars));
+
     foreach (var metric in metrics)
     {
-      stringBuilder.AppendLine(new string(_consoleOptions.RowSeparatorChar, _consoleOptions.WidthInChars));
-      var formattedString = _formatterProvider.Get(metric.Name).Format(metric.Name, metric.Value, CultureInfo.CurrentUICulture);
+      var formattedString = _formatterProvider.Get(metric.Name, metric.Value).Format(metric.Name, metric.Value);
       stringBuilder.AppendLine(formattedString);
     }
+
     stringBuilder.AppendLine(new string(_consoleOptions.RowSeparatorChar, _consoleOptions.WidthInChars));
     return Task.FromResult<IVisualization>(new ConsoleVisualization(stringBuilder.ToString()));
   }

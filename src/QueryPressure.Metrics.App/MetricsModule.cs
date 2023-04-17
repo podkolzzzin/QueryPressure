@@ -15,7 +15,7 @@ public class MetricsModule : Module
 {
   protected override void Load(ContainerBuilder builder)
   {
-    builder.RegisterType<TimeSpanConsoleMetricFormatter>()
+    builder.RegisterType<TimeIntervalConsoleMetricFormatter>()
       .As<IConsoleMetricFormatter>()
       .WithAttributeFiltering()
       .SingleInstance();

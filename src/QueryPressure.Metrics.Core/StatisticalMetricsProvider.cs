@@ -1,3 +1,4 @@
+using Perfolizer.Horology;
 using Perfolizer.Mathematics.Common;
 using Perfolizer.Mathematics.Histograms;
 using Perfolizer.Mathematics.QuantileEstimators;
@@ -11,7 +12,7 @@ public class StatisticalMetricsProvider : IMetricProvider
   public Task<IEnumerable<IMetric>> CalculateAsync(IExecutionResultStore store, CancellationToken cancellationToken)
   {
     var sorted = store.OrderBy(x => x.Duration)
-      .Select(x => x.Duration.TotalMilliseconds)
+      .Select(x => x.Duration.TotalNanoseconds)
       .ToList();
 
     var quartiles = Quartiles.FromSorted(sorted);
@@ -19,11 +20,11 @@ public class StatisticalMetricsProvider : IMetricProvider
     var histogram = BuildSimpleHistogram(sorted, moments.StandardDeviation);
 
     IEnumerable<IMetric> results = new IMetric[] {
-      new SimpleMetric("q1", TimeSpan.FromMilliseconds(quartiles.Q1)),
-      new SimpleMetric("median", TimeSpan.FromMilliseconds(quartiles.Median)),
-      new SimpleMetric("q3", TimeSpan.FromMilliseconds(quartiles.Q3)),
-      new SimpleMetric("standard-deviation", TimeSpan.FromMilliseconds(moments.StandardDeviation)),
-      new SimpleMetric("mean", TimeSpan.FromMilliseconds(moments.Mean)),
+      new SimpleMetric("q1", TimeInterval.FromNanoseconds(quartiles.Q1)),
+      new SimpleMetric("median", TimeInterval.FromNanoseconds(quartiles.Median)),
+      new SimpleMetric("q3", TimeInterval.FromNanoseconds(quartiles.Q3)),
+      new SimpleMetric("standard-deviation", TimeInterval.FromNanoseconds(moments.StandardDeviation)),
+      new SimpleMetric("mean", TimeInterval.FromNanoseconds(moments.Mean)),
       new SimpleMetric("histogram", histogram),
     };
 
