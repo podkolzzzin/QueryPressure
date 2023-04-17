@@ -1,0 +1,40 @@
+﻿en-US:
+  metrics:
+    q1:
+      title: The first quartile
+      description: The first quartile (Q1) is the 25th percentile, meaning that 25% of the requests falls below the first quartile.
+    median:
+      title: Median
+      description: The second quartile (Q2, or the median) is the 50th percentile, meaning that 50% of the data requests below the second quartile.
+    q3:
+      title: The third quartile
+      description: The third quartile (Q3) is the 75th percentile, meaning that 75% of the requests falls below the third quartile.
+    standard-deviation:
+      title: Standard Deviation
+      description: Standard deviation is a statistic that measures the dispersion of a requests time relative to its mean and is calculated as the square root of the variance.
+    mean:
+      title: Mean
+      description: Average request time.
+    histogram:
+      title: Histogram
+      description: The frequency distribution shows how often each request falls into each time range.
+uk-UA:
+  metrics:
+    q1:
+      title: Перший квартиль
+      description: Перший квартиль (Q1) є 25тим перцентилем, оцінка того, що 25% запитів виконались швидше за заданий час.
+    median:
+      title: Середній час
+      description: Перший квартиль (Q1) є 25тим перцентилем, оцінка того, що 25% запитів виконались швидше за заданий час.
+    q3:
+      title: Третій квартиль
+      description: Перший квартиль (Q1) є 25тим перцентилем, оцінка того, що 25% запитів виконались швидше за заданий час.
+    standard-deviation:
+      title: Стандартне відхилення
+      description: Standard deviation is a statistic that measures the dispersion of a requests time relative to its mean and is calculated as the square root of the variance.
+    mean:
+      title: Середній час
+      description: Середній час запиту.
+    histogram:
+      title: Гістограма
+      description: Розподіл частот показує, як часто кожен запит потрапляє у кожен часовий діапазон.

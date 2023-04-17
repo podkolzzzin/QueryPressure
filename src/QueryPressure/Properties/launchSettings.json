@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "QueryPressure": {
+      "commandName": "Project"
+    },
+    "QueryPressure (Postgress)": {
+      "commandName": "Project",
+      "commandLineArgs": "$(ProjectDir)\\Examples\\postgres\\sample.postgres.yml $(ProjectDir)\\Examples\\postgres\\script.postgres.sql"
+    }
+  }
+}

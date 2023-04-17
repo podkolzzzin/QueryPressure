@@ -1,4 +1,7 @@
+using System.Globalization;
 using Autofac;
+using Autofac.Features.AttributeFilters;
+using QueryPressure.App.Console;
 using QueryPressure.App.Factories;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core;
@@ -6,7 +9,7 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.App;
 
-public class AppModule : Autofac.Module
+public class AppModule : Module
 {
   protected override void Load(ContainerBuilder builder)
   {
@@ -38,6 +41,19 @@ public class AppModule : Autofac.Module
 
     builder.RegisterType<MetricsCalculator>()
       .As<IMetricsCalculator>();
+
+    builder.RegisterInstance(CultureInfo.CurrentUICulture);
+
+    builder.RegisterType<ConsoleOptions>()
+      .SingleInstance();
+
+    builder.RegisterType<DefaultConsoleMetricFormatter>()
+      .Keyed<IConsoleMetricFormatter>("default")
+      .SingleInstance();
+
+    builder.RegisterType<ConsoleMetricFormatterProvider>()
+      .As<IConsoleMetricFormatterProvider>()
+      .WithAttributeFiltering();
 
     builder.RegisterType<ConsoleMetricsVisualizer>()
       .Keyed<IMetricsVisualizer>("Console");

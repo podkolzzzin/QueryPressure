@@ -17,7 +17,7 @@ public class LiveAverageMetricProvider : ILiveMetricProvider
   }
   public IEnumerable<IMetric> GetMetrics()
   {
-    yield return new SimpleMetric("Average", _count == 0 ? TimeSpan.Zero : new TimeSpan(_ticks / _count));
-    yield return new SimpleMetric("Request Count", _count);
+    yield return new SimpleMetric("live-average", _count == 0 ? TimeSpan.Zero : new TimeSpan(_ticks / _count));
+    yield return new SimpleMetric("live-request-count", _count);
   }
 }
