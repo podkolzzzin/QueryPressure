@@ -1,0 +1,16 @@
+﻿en-US:
+  metrics:
+    live-average:
+      title: Average
+      description: Average request time.
+    live-request-count:
+      title: Request Count
+      description: Total Count of requests.
+uk-UA:
+  metrics:
+    live-average:
+      title: Середній час
+      description: Середній час запиту.
+    live-request-count:
+      title: Кількість запитів
+      description: Загальна кількість запитів.
