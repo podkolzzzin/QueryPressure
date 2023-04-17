@@ -14,7 +14,7 @@ public class DashboardVisualizer : IMetricsVisualizer
   {
     _hubService = hubService;
   }
-  
+
   public async Task<IVisualization> VisualizeAsync(IEnumerable<IMetric> metrics, CancellationToken cancellationToken)
   {
     await _hubService.SendMessageToAllAsync("metrics", metrics);
