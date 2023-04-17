@@ -23,6 +23,6 @@ public class TimeIntervalConsoleMetricFormatter : DefaultConsoleMetricFormatter
 
   public override string GetValue(string metricName, object metricValue)
   {
-    return ((TimeInterval) metricValue).ToString(_cultureInfo);
+    return ((TimeInterval)metricValue).ToString(_cultureInfo);
   }
 }

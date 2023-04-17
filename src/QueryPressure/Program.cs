@@ -39,7 +39,7 @@ PrintResult(visualization);
 
 void PrintResult(IVisualization result)
 {
-  var oldColor = Console.ForegroundColor; 
+  var oldColor = Console.ForegroundColor;
 
   Console.ForegroundColor = ConsoleColor.Cyan;
   Console.WriteLine(result);
