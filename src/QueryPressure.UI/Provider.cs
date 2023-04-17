@@ -9,6 +9,7 @@ public class Provider
   private readonly IExecutionResultStore _store;
   private readonly ILiveMetricProvider[] _liveMetricProviders;
   private readonly IScenarioBuilder _builder;
+
   public Provider(
     ICreator<IConnectionProvider> creator,
     IExecutionResultStore store,
@@ -32,6 +33,7 @@ public class Provider
     });
     return await provider.GetServerInfoAsync(default);
   }
+
   public async Task<Guid> StartExecutionAsync(ExecutionRequest request)
   {
     var appArgs = new ApplicationArguments()
@@ -65,8 +67,9 @@ public class Provider
     };
     var executor = await _builder.BuildAsync(appArgs, _store, _liveMetricProviders, default);
 
-    return Store(executor.ExecuteAsync(default));//TODO: put somewhere 
+    return Store(executor.ExecuteAsync(default)); //TODO: put somewhere 
   }
+
   private Guid Store(Task executeAsync)
   {
     return Guid.NewGuid(); // TODO !!!!!

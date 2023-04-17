@@ -8,7 +8,7 @@ public class Launcher
 {
   private static readonly TimeSpan WaitForServerTimout = TimeSpan.FromMinutes(1);
   private readonly IServer _server;
-  public Launcher(Microsoft.AspNetCore.Hosting.Server.IServer server)
+  public Launcher(IServer server)
   {
     _server = server;
   }
