@@ -35,25 +35,40 @@ var metrics = await calculator.CalculateAsync(store, token); // IEnumerable<IMet
 
 var visualization = await visualizer.VisualizeAsync(metrics, token);
 
-Console.WriteLine(visualization);
+PrintResult(visualization);
+
+void PrintResult(IVisualization result)
+{
+  var oldColor = Console.ForegroundColor; 
+
+  Console.ForegroundColor = ConsoleColor.Cyan;
+  Console.WriteLine(result);
+  Console.ForegroundColor = oldColor;
+}
 
 void UpdateLiveTable(IVisualization live)
 {
+  var oldColor = Console.ForegroundColor;
+
+  Console.ForegroundColor = ConsoleColor.Yellow;
+
   if (string.IsNullOrEmpty(clearBuffer))
   {
     Console.Clear();
     Console.Write(live);
 
-    var line = string.Empty.PadLeft(Console.CursorLeft, ' ');
+    var line = string.Empty.PadLeft(Console.WindowWidth, ' ');
     clearBuffer = Enumerable.Range(0, Console.CursorTop)
       .Aggregate(new StringBuilder(), (stringBuilder, _) => stringBuilder.AppendLine(line))
       .ToString();
-
-    return;
+  }
+  else
+  {
+    Console.SetCursorPosition(0, 0);
+    Console.Write(clearBuffer);
+    Console.SetCursorPosition(0, 0);
+    Console.Write(live);
   }
 
-  Console.SetCursorPosition(0, 0);
-  Console.Write(clearBuffer);
-  Console.SetCursorPosition(0, 0);
-  Console.Write(live);
+  Console.ForegroundColor = oldColor;
 }

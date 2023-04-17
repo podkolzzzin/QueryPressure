@@ -1,30 +1,28 @@
 using System.Globalization;
-using Autofac.Features.AttributeFilters;
 using Perfolizer.Horology;
 using QueryPressure.App.Console;
+using QueryPressure.App.Interfaces;
 
 namespace QueryPressure.Metrics.App.Formatters;
 
-public class TimeIntervalConsoleMetricFormatter : IConsoleMetricFormatter
+public class TimeIntervalConsoleMetricFormatter : DefaultConsoleMetricFormatter
 {
   private readonly CultureInfo _cultureInfo;
-  private readonly IConsoleMetricFormatter _defaultFormatter;
 
-  public TimeIntervalConsoleMetricFormatter(CultureInfo cultureInfo, [KeyFilter("default")] IConsoleMetricFormatter defaultFormatter)
+  public TimeIntervalConsoleMetricFormatter(ConsoleOptions consoleOptions, IResourceManager resourceManager) : base(consoleOptions, resourceManager)
   {
-    _cultureInfo = cultureInfo;
-    _defaultFormatter = defaultFormatter;
+    _cultureInfo = consoleOptions.CultureInfo;
   }
 
-  public uint Priority => 1;
+  public override uint Priority => 1;
 
-  public bool CanFormat(string metricName, object metricValue)
+  public override bool CanFormat(string metricName, object metricValue)
   {
     return metricValue is TimeInterval;
   }
 
-  public string Format(string metricName, object metricValue)
+  public override string GetValue(string metricName, object metricValue)
   {
-    return _defaultFormatter.Format(metricName, ((TimeInterval)metricValue).ToString(_cultureInfo));
+    return ((TimeInterval) metricValue).ToString(_cultureInfo);
   }
 }

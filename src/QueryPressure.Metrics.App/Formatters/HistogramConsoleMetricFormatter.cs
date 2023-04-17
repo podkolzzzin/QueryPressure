@@ -28,19 +28,21 @@ public class HistogramConsoleMetricFormatter : IConsoleMetricFormatter
   {
     var value = (Histogram)metricValue;
 
-    var separator = _consoleOptions.RowSeparatorChar;
-    var width = _consoleOptions.WidthInChars;
-
-    var metricDisplayName = _locale[$"metrics.{metricName}.title"];
+    if (!_locale.TryGetValue($"metrics.{metricName}.title", out var metricDisplayName))
+    {
+      metricDisplayName = metricName;
+    }
 
     var sb = new StringBuilder();
-    sb.Append(new string(separator, width / 2 - metricName.Length / 2));
-    sb.AppendLine(metricDisplayName.PadRight(width / 2 + metricName.Length / 2, separator));
-    sb.Append(value.ToString(x =>
+    var header = $"-------------------- {metricDisplayName} --------------------"
+      .Replace('-', _consoleOptions.RowSeparatorChar);
+    sb.AppendLine(header);
+    sb.AppendLine(value.ToString(x =>
     {
       var timeInterval = TimeInterval.FromNanoseconds(x);
       return timeInterval.ToString(_consoleOptions.CultureInfo);
     }));
+    sb.Append(string.Empty.PadRight(header.Length, _consoleOptions.RowSeparatorChar));
 
     return sb.ToString();
   }

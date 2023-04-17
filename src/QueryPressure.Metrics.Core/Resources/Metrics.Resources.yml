@@ -1,5 +1,8 @@
 ﻿en-US:
   metrics:
+    min:
+      title: Min
+      description: The minimal request time.
     q1:
       title: Q1
       description: The first quartile (Q1) is the 25th percentile, meaning that 25% of the requests falls below the first quartile.
@@ -9,17 +12,29 @@
     q3:
       title: Q2
       description: The third quartile (Q3) is the 75th percentile, meaning that 75% of the requests falls below the third quartile.
-    standard-deviation:
-      title: Standard Deviation
-      description: Standard deviation is a statistic that measures the dispersion of a requests time relative to its mean and is calculated as the square root of the variance.
+    max:
+      title: Max
+      description: The maximum request time.
     mean:
       title: Mean
       description: Average request time.
+    standard-deviation:
+      title: Standard Deviation
+      description: Standard deviation is a statistic that measures the dispersion of a requests time relative to its mean and is calculated as the square root of the variance.
+    standard-error:
+      title: Standard Error
+      description: The standard error measures how much the sample mean is likely to vary from the true population mean.
+    confidence-interval:
+      title: Confidence Interval
+      description: A confidence interval (CI) is a range of values around a sample estimate (such as a mean or a proportion) that is likely to contain the true population parameter with a certain degree of confidence.
     histogram:
       title: Histogram
       description: The frequency distribution shows how often each request falls into each time range.
 uk-UA:
   metrics:
+    min:
+      title: Мінімум
+      description: Мінімальний час запиту.
     q1:
       title: Q1
       description: Перший квартиль (Q1) є 25тим перцентилем, оцінка того, що 25% запитів виконались швидше за заданий час.
@@ -29,12 +44,21 @@ uk-UA:
     q3:
       title: Q3
       description: Перший квартиль (Q3) є 75тим перцентилем, оцінка того, що 75% запитів виконались швидше за заданий час.
-    standard-deviation:
-      title: Стандартне відхилення
-      description: Стандартне відхилення - це статистична величина, яка вимірює розкид часу запитів відносно їх середнього значення і обчислюється як квадратний корінь з дисперсії.
+    max:
+      title: Максимум
+      description: Максимальний час запиту.
     mean:
       title: Середній час
       description: Середній час запиту.
+    standard-deviation:
+      title: Стандартне відхилення
+      description: Стандартне відхилення - це статистична величина, яка вимірює розкид часу запитів відносно їх середнього значення і обчислюється як квадратний корінь з дисперсії.
+    standard-error:
+      title: Стандартна помилка
+      description: Стандартна помилка вимірює, наскільки ймовірно зразкове середнє значення відрізняється від справжнього середнього значення в популяції.
+    confidence-interval:
+      title: Інтервал довіри
+      description: Інтервал довіри - це діапазон значень навколо зразкової оцінки (наприклад, середнього значення або пропорції), який з ймовірністю відповідною до рівня довіри, містить справжній параметр популяції.
     histogram:
       title: Гістограма
       description: Розподіл частот показує, як часто кожен запит потрапляє у кожен часовий діапазон.
