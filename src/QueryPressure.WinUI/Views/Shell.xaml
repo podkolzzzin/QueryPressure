@@ -11,7 +11,9 @@
         Title="{Binding Title, Mode=OneWay}"
         MinWidth="300" MinHeight="300">
 
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="4">
+        <TextBlock Text="{Binding CurrentLanguage}"/>
+        <Button Command="{Binding SetLanguageCommand}" CommandParameter="uk-UA" Margin="0 2">Українська</Button>
+        <Button Command="{Binding SetLanguageCommand}" CommandParameter="en-US" Margin="0 2">English</Button>
+    </StackPanel>
 </Window>

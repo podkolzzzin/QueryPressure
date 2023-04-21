@@ -8,6 +8,12 @@
         <AssemblyVersion>0.0.1</AssemblyVersion>
         <FileVersion>0.0.1</FileVersion>
     </PropertyGroup>
+    <ItemGroup>
+      <None Remove="Resources\Resources.yml" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Resources.yml" />
+    </ItemGroup>
     
     <ItemGroup>
         <PackageReference Include="Autofac.Extensions.DependencyInjection" />
@@ -26,7 +32,6 @@
 
     <ItemGroup>
       <Folder Include="Models\" />
-      <Folder Include="Resources\" />
     </ItemGroup>
 
 </Project>
