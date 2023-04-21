@@ -29,7 +29,7 @@ namespace QueryPressure.WinUI.Common.Commands
         throw new NullReferenceException(nameof(parameter));
       }
 
-      ExecuteInternal((TParameter) parameter);
+      ExecuteInternal((TParameter)parameter);
     }
 
     protected virtual bool CanExecuteInternal(TParameter? parameter)

@@ -38,5 +38,5 @@ public class LanguageService : ILanguageService
     _subject.Notify(new LanguageItem(locale, _cache));
   }
 
-  public IReadOnlyList<string> GetAvailableLanguages() => new[] {"en-US", "uk-UA"};
+  public IReadOnlyList<string> GetAvailableLanguages() => new[] { "en-US", "uk-UA" };
 }
