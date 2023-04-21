@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <FileVersion>0.0.1</FileVersion>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\QueryPressure.App\QueryPressure.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Metrics.App\QueryPressure.Metrics.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.MongoDB.App\QueryPressure.MongoDB.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Redis.App\QueryPressure.Redis.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.SqlServer.App\QueryPressure.SqlServer.App.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\" />
+      <Folder Include="Resources\" />
+    </ItemGroup>
+
+</Project>

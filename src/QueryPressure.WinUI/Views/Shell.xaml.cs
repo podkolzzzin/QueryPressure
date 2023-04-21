@@ -1,0 +1,16 @@
+using System.Windows;
+using QueryPressure.WinUI.ViewModels;
+
+namespace QueryPressure.WinUI.Views;
+
+public partial class Shell : Window
+{
+  public Shell(ShellViewModel viewModel)
+  {
+    InitializeComponent();
+
+    DataContext = ViewModel = viewModel;
+  }
+
+  public ShellViewModel ViewModel { get; }
+}
