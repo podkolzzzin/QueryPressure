@@ -1,4 +1,5 @@
 using System.Text;
+using Perfolizer.Horology;
 using Perfolizer.Mathematics.Histograms;
 using QueryPressure.App.Console;
 using QueryPressure.App.Interfaces;
@@ -13,32 +14,35 @@ public class HistogramConsoleMetricFormatter : IConsoleMetricFormatter
   public HistogramConsoleMetricFormatter(ConsoleOptions consoleOptions, IResourceManager resourceManager)
   {
     _consoleOptions = consoleOptions;
-    SupportedMetricNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "histogram" };
     _locale = resourceManager.GetResources(consoleOptions.CultureInfo.Name, ResourceFormat.Plain);
   }
 
-  public HashSet<string> SupportedMetricNames { get; }
+  public uint Priority => 1;
 
-  public string Format(string metricName, object metricValue, IFormatProvider formatProvider)
+  public bool CanFormat(string metricName, object metricValue)
   {
-    if (metricValue is not Histogram value)
+    return metricValue is Histogram;
+  }
+
+  public string Format(string metricName, object metricValue)
+  {
+    var value = (Histogram)metricValue;
+
+    if (!_locale.TryGetValue($"metrics.{metricName}.title", out var metricDisplayName))
     {
-      throw new ArgumentException($"The parameter '{nameof(metricValue)}' should be '{nameof(Histogram)}' type");
+      metricDisplayName = metricName;
     }
 
-    var separator = _consoleOptions.RowSeparatorChar;
-    var width = _consoleOptions.WidthInChars;
-
-    var metricDisplayName = _locale[$"metrics.{metricName}.title"];
-
     var sb = new StringBuilder();
-    sb.Append(new string(separator, width / 2 - metricName.Length / 2));
-    sb.AppendLine(metricDisplayName.PadRight(width / 2 + metricName.Length / 2, separator));
-    sb.Append(value.ToString(x =>
+    var header = $"-------------------- {metricDisplayName} --------------------"
+      .Replace('-', _consoleOptions.RowSeparatorChar);
+    sb.AppendLine(header);
+    sb.AppendLine(value.ToString(x =>
     {
-      var timeSpan = TimeSpan.FromMilliseconds(x);
-      return timeSpan.ToString("g", formatProvider);
+      var timeInterval = TimeInterval.FromNanoseconds(x);
+      return timeInterval.ToString(_consoleOptions.CultureInfo);
     }));
+    sb.Append(string.Empty.PadRight(header.Length, _consoleOptions.RowSeparatorChar));
 
     return sb.ToString();
   }

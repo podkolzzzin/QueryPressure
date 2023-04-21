@@ -1,3 +1,4 @@
+using Perfolizer.Horology;
 using Perfolizer.Mathematics.Common;
 using Perfolizer.Mathematics.Histograms;
 using Perfolizer.Mathematics.QuantileEstimators;
@@ -11,19 +12,25 @@ public class StatisticalMetricsProvider : IMetricProvider
   public Task<IEnumerable<IMetric>> CalculateAsync(IExecutionResultStore store, CancellationToken cancellationToken)
   {
     var sorted = store.OrderBy(x => x.Duration)
-      .Select(x => x.Duration.TotalMilliseconds)
+      .Select(x => x.Duration.TotalNanoseconds)
       .ToList();
 
     var quartiles = Quartiles.FromSorted(sorted);
     var moments = Moments.Create(sorted);
+    var standardError = moments.StandardDeviation / Math.Sqrt(sorted.Count);
+    var confidenceInterval = new ConfidenceInterval(moments.Mean, standardError, sorted.Count);
     var histogram = BuildSimpleHistogram(sorted, moments.StandardDeviation);
 
     IEnumerable<IMetric> results = new IMetric[] {
-      new SimpleMetric("q1", TimeSpan.FromMilliseconds(quartiles.Q1)),
-      new SimpleMetric("median", TimeSpan.FromMilliseconds(quartiles.Median)),
-      new SimpleMetric("q3", TimeSpan.FromMilliseconds(quartiles.Q3)),
-      new SimpleMetric("standard-deviation", TimeSpan.FromMilliseconds(moments.StandardDeviation)),
-      new SimpleMetric("mean", TimeSpan.FromMilliseconds(moments.Mean)),
+      new SimpleMetric("min", TimeInterval.FromNanoseconds(quartiles.Min)),
+      new SimpleMetric("q1", TimeInterval.FromNanoseconds(quartiles.Q1)),
+      new SimpleMetric("median", TimeInterval.FromNanoseconds(quartiles.Median)),
+      new SimpleMetric("q3", TimeInterval.FromNanoseconds(quartiles.Q3)),
+      new SimpleMetric("max", TimeInterval.FromNanoseconds(quartiles.Max)),
+      new SimpleMetric("mean", TimeInterval.FromNanoseconds(moments.Mean)),
+      new SimpleMetric("standard-deviation", TimeInterval.FromNanoseconds(moments.StandardDeviation)),
+      new SimpleMetric("standard-error", TimeInterval.FromNanoseconds(standardError)),
+      new SimpleMetric("confidence-interval", confidenceInterval),
       new SimpleMetric("histogram", histogram),
     };
 

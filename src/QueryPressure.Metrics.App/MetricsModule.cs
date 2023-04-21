@@ -1,5 +1,4 @@
 using Autofac;
-using Autofac.Features.AttributeFilters;
 using QueryPressure.App.Console;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core;
@@ -15,14 +14,14 @@ public class MetricsModule : Module
 {
   protected override void Load(ContainerBuilder builder)
   {
-    builder.RegisterType<TimeSpanConsoleMetricFormatter>()
-      .As<IConsoleMetricFormatter>()
-      .WithAttributeFiltering()
-      .SingleInstance();
+    builder.RegisterType<TimeIntervalConsoleMetricFormatter>()
+      .As<IConsoleMetricFormatter>();
+
+    builder.RegisterType<ConfidenceIntervalConsoleMetricFormatter>()
+      .As<IConsoleMetricFormatter>();
 
     builder.RegisterType<HistogramConsoleMetricFormatter>()
-      .As<IConsoleMetricFormatter>()
-      .SingleInstance();
+      .As<IConsoleMetricFormatter>();
 
     builder.RegisterType<StatisticalMetricsProvider>()
       .As<IMetricProvider>()

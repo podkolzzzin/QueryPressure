@@ -47,9 +47,7 @@ public class AppModule : Module
     builder.RegisterType<ConsoleOptions>()
       .SingleInstance();
 
-    builder.RegisterType<DefaultConsoleMetricFormatter>()
-      .Keyed<IConsoleMetricFormatter>("default")
-      .SingleInstance();
+    builder.RegisterType<DefaultConsoleMetricFormatter>();
 
     builder.RegisterType<ConsoleMetricFormatterProvider>()
       .As<IConsoleMetricFormatterProvider>()

@@ -4,53 +4,49 @@ namespace QueryPressure.App.Console;
 
 public interface IConsoleMetricFormatter
 {
-  HashSet<string> SupportedMetricNames { get; }
+  uint Priority { get; }
 
-  string Format(string metricName, object metricValue, IFormatProvider formatProvider);
+  bool CanFormat(string metricName, object metricValue);
+
+  string Format(string metricName, object metricValue);
 }
 
-public class DefaultConsoleMetricFormatter : IConsoleMetricFormatter
+public interface IConsoleMetricRowFormatter : IConsoleMetricFormatter
 {
-  private readonly ConsoleOptions _consoleOptions;
+  string GetHeader(string metricName, object metricValue);
+  string GetValue(string metricName, object metricValue);
+}
+
+public class DefaultConsoleMetricFormatter : IConsoleMetricRowFormatter
+{
   private readonly IDictionary<string, string> _locale;
-  private int _padCharsFirstColumn;
-  private int _padCharsSecondColumn;
 
   public DefaultConsoleMetricFormatter(ConsoleOptions consoleOptions, IResourceManager resourceManager)
   {
-    _consoleOptions = consoleOptions;
-    SupportedMetricNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
     _locale = resourceManager.GetResources(consoleOptions.CultureInfo.Name, ResourceFormat.Plain);
-    InitConsoleTablePaddings();
   }
 
-  private void InitConsoleTablePaddings()
+  public virtual uint Priority => 0;
+
+  public virtual bool CanFormat(string metricName, object metricValue) => true;
+
+  public string Format(string metricName, object metricValue)
   {
-    var width = _consoleOptions.WidthInChars;
-    var tabSize = _consoleOptions.TabSize;
+    return $"{GetHeader(metricName, metricValue)} = {GetValue(metricName, metricValue)}";
+  }
 
-    _padCharsFirstColumn = width / 2 - tabSize * 2;
-
-    var leftPartSize = (double)width / 2;
-
-    if (leftPartSize % tabSize == 0)
+  public virtual string GetHeader(string metricName, object metricValue)
+  {
+    if (!_locale.TryGetValue($"metrics.{metricName}.title", out var metricDisplayName))
     {
-      leftPartSize += 2 * tabSize;
-    }
-    else
-    {
-      leftPartSize = Math.Ceiling(leftPartSize / tabSize) * tabSize;
+      metricDisplayName = metricName;
     }
 
-    _padCharsSecondColumn = width - (int)leftPartSize - 1;
+    return metricDisplayName;
   }
 
-  public HashSet<string> SupportedMetricNames { get; init; }
-
-  public string Format(string metricName, object metricValue, IFormatProvider _)
+  public virtual string GetValue(string metricName, object metricValue)
   {
-    var metricDisplayName = _locale[$"metrics.{metricName}.title"];
-    return $"|\t{metricDisplayName.PadRight(_padCharsFirstColumn)}|\t{(metricValue?.ToString() ?? "NULL").PadRight(_padCharsSecondColumn)}|";
+    return metricValue?.ToString() ?? "NULL";
   }
-
 }
