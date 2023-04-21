@@ -20,18 +20,18 @@ public class DelegateCommand<TParameter> : ICommand
       return true;
     }
 
-    switch (parameter)
+    if (parameter == null && typeof(TParameter).IsValueType)
     {
-      case null when typeof(TParameter).IsValueType:
-      {
-        var obj = default(TParameter);
-        return obj is not null && _canExecute(obj);
-      }
-      case TParameter param:
-        return _canExecute(param);
-      default:
-        return false;
+      var obj = default(TParameter);
+      return obj is not null && _canExecute(obj);
     }
+
+    if (parameter is TParameter param)
+    {
+      return _canExecute(param);
+    }
+
+    return false;
   }
 
   public void Execute(object? parameter)
