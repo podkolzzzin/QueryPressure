@@ -1,7 +1,7 @@
 using QueryPressure.WinUI.Common;
 
 namespace QueryPressure.WinUI.ViewModels;
-public class ShellViewModel: ViewModelBase
+public class ShellViewModel : ViewModelBase
 {
   private string _title;
   private double _width;
