@@ -8,12 +8,16 @@
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
         d:DesignHeight="{Binding Width}" d:DesignWidth="{Binding Height}"
-        Title="{Binding Title, Mode=OneWay}"
+        Title="{Binding Locale.Strings[labels.title], Mode=OneWay}"
         MinWidth="300" MinHeight="300">
 
     <StackPanel Margin="4">
-        <TextBlock Text="{Binding CurrentLanguage}"/>
-        <Button Command="{Binding SetLanguageCommand}" CommandParameter="uk-UA" Margin="0 2">Українська</Button>
-        <Button Command="{Binding SetLanguageCommand}" CommandParameter="en-US" Margin="0 2">English</Button>
+        <TextBlock Text="{Binding Locale.CurrentLanguage}"/>
+        <Button Command="{Binding SetLanguageCommand}" CommandParameter="uk-UA" Margin="0 2">
+            <TextBlock Text="{Binding Locale.Strings[languages.uk-UA]}"></TextBlock>
+        </Button>
+        <Button Command="{Binding SetLanguageCommand}" CommandParameter="en-US" Margin="0 2">
+            <TextBlock Text="{Binding Locale.Strings[languages.en-US]}"></TextBlock>
+        </Button>
     </StackPanel>
 </Window>

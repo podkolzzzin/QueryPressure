@@ -1,6 +1,12 @@
 ﻿en-US:
   labels:
     title: Query Pressure - Databases Preformance Testing
+  languages:
+    en-US: English (USA)
+    uk-UA: Ukrainian
 uk-UA:
   labels:
     title: Query Pressure - Навантажувальне Тестування Баз Даних
+  languages:
+    en-US: Англійська (США)
+    uk-UA: Українська

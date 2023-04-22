@@ -22,6 +22,7 @@ public class WinApplicationLoader : ApplicationLoader
     //register dependencies
     builder.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
 
+    builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<ShellViewModel>().SingleInstance();
     builder.RegisterType<Shell>().SingleInstance();
 
