@@ -2,9 +2,11 @@ import React from 'react';
 import {StatusBar} from '@components';
 import {EditorCardProps} from '@containers/EditorCard/EditorCard.models';
 import Editor from '@monaco-editor/react';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export function EditorCard({providers, selectedProvider, selectProvider, setScript, theme}: EditorCardProps) {
+  const { t } = useTranslation();
+  
   function handleEditorChange(value: string | undefined) {
     value && setScript(value);
   }
