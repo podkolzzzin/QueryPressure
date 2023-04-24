@@ -87,7 +87,7 @@ public class WindowPositionService : IWindowPositionService
     normalPosition = new Rect(settings.NormalPositionLeft, settings.NormalPositionTop, settings.NormalPositionRight, settings.NormalPositionBottom)
   };
 
-  private static WindowSettings GetSettings(WindowPlacement windowPlacement) => new ()
+  private static WindowSettings GetSettings(WindowPlacement windowPlacement) => new()
   {
     Length = windowPlacement.length,
     Flags = windowPlacement.flags,
