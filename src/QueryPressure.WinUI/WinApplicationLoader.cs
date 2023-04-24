@@ -4,6 +4,8 @@ using Autofac;
 using QueryPressure.App;
 using QueryPressure.WinUI.Extensions;
 using QueryPressure.WinUI.Services.Language;
+using QueryPressure.WinUI.Services.Settings;
+using QueryPressure.WinUI.Services.WindowPosition;
 using QueryPressure.WinUI.ViewModels;
 using QueryPressure.WinUI.Views;
 
@@ -21,6 +23,8 @@ public class WinApplicationLoader : ApplicationLoader
   {
     //register dependencies
     builder.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
+    builder.RegisterType<WindowPositionService>().As<IWindowPositionService>().SingleInstance();
+    builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
 
     builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<ShellViewModel>().SingleInstance();

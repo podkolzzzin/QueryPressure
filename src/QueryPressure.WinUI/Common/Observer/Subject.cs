@@ -13,12 +13,20 @@ public class Subject<TPayload> : ISubject<TPayload>, IObservableItem<TPayload>, 
     _subscriptions = new Dictionary<string, OnSubjectNext<TPayload>>();
   }
 
+  public TPayload CurrentValue { get; private set; }
+
   public void Notify(TPayload payload)
   {
+    SetCurrentValue(payload);
     foreach (var subscription in _subscriptions)
     {
       subscription.Value.Invoke(payload);
     }
+  }
+
+  public void SetCurrentValue(TPayload payload)
+  {
+    CurrentValue = payload;
   }
 
   public ISubscription Subscribe(OnSubjectNext<TPayload> onLanguageChanged, [CallerFilePath] string key = "")

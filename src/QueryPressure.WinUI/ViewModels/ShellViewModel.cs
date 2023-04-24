@@ -1,31 +1,35 @@
+using System.Windows;
 using System.Windows.Input;
 using QueryPressure.WinUI.Commands;
+using QueryPressure.WinUI.Services.Settings;
+using QueryPressure.WinUI.Services.WindowPosition;
 
 namespace QueryPressure.WinUI.ViewModels;
 
 public class ShellViewModel : LocalizedViewModel
 {
-  private double _width;
-  private double _height;
+  private readonly IWindowPositionService _positionService;
+  private readonly ISettingsService _settingsService;
 
-  public ShellViewModel(LocaleViewModel locale, SetLanguageCommand setLanguageCommand) : base(locale)
+  public ShellViewModel(LocaleViewModel locale, IWindowPositionService positionService, ISettingsService settingsService,
+    SetLanguageCommand setLanguageCommand) : base(locale)
   {
-    _width = 800;
-    _height = 600;
+    _positionService = positionService;
+    _settingsService = settingsService;
     SetLanguageCommand = setLanguageCommand;
   }
 
   public ICommand SetLanguageCommand { get; }
 
-  public double Width
+  public void SetWindowPosition(Window shell)
   {
-    get => _width;
-    set => SetField(ref _width, value);
+    var windowSettings = _settingsService.GetWindowSettings();
+    _positionService.SetSettings(shell, windowSettings);
   }
 
-  public double Height
+  public void SaveWindowPosition(Window shell)
   {
-    get => _height;
-    set => SetField(ref _height, value);
+    var windowSettings = _positionService.GetSettings(shell);
+    _settingsService.SetWindowSettings(windowSettings);
   }
 }

@@ -6,4 +6,5 @@ public interface IObservableItem<out TPayload>
 {
   ISubscription Subscribe(OnSubjectNext<TPayload> onValueChanged, [CallerFilePath] string key = "");
   void Unsubscribe(ISubscription subscription);
+  TPayload CurrentValue { get; }
 }

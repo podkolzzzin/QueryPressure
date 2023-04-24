@@ -1,7 +1,6 @@
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Services.Language;
-using System.Globalization;
 
 namespace QueryPressure.WinUI.ViewModels;
 
@@ -14,8 +13,8 @@ public class LocaleViewModel : ViewModelBase, IDisposable
   public LocaleViewModel(IObservableItem<LanguageItem> languageObserver)
   {
     _languageSubscription = languageObserver.Subscribe(OnLanguageValueChanged);
-    _currentLanguage = CultureInfo.CurrentUICulture.Name;
-    _strings = new Dictionary<string, string>();
+    _currentLanguage = languageObserver.CurrentValue.Locale;
+    _strings = languageObserver.CurrentValue.Strings;
   }
 
   private void OnLanguageValueChanged(LanguageItem value)

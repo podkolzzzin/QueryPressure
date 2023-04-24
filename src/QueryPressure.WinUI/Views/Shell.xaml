@@ -7,8 +7,9 @@
         xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
-        d:DesignHeight="{Binding Width}" d:DesignWidth="{Binding Height}"
         Title="{Binding Locale.Strings[labels.title], Mode=OneWay}"
+        WindowStartupLocation="CenterScreen"
+        Width="600" Height="400"
         MinWidth="300" MinHeight="300">
 
     <StackPanel Margin="4">
