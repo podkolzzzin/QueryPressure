@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint ./src --ext .jsx,.js,.ts,.tsx --ignore-path ./.gitignore",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --fix --ignore-path ./.gitignore",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "build:full": "yarn build && cp -r ./dist ../src/QueryPressure.UI/ && dotnet run --project ../src/QueryPressure.UI/"
   },
   "dependencies": {
     "@microsoft/signalr": "^7.0.5",
