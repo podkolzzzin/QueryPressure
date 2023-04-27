@@ -1,4 +1,4 @@
-﻿namespace QueryPressure.WinUI.Services.Theme;
+namespace QueryPressure.WinUI.Services.Theme;
 
 public enum ApplicationTheme
 {
