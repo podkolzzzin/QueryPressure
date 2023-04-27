@@ -4,9 +4,15 @@
   languages:
     en-US: English (USA)
     uk-UA: Ukrainian
+  themes:
+    dark: Dark
+    light: Light
 uk-UA:
   labels:
     title: Query Pressure - Навантажувальне Тестування Баз Даних
   languages:
     en-US: Англійська (США)
     uk-UA: Українська
+  themes:
+    dark: Темна
+    light: Світла

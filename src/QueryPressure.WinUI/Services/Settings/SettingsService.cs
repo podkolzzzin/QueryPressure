@@ -1,8 +1,8 @@
-using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using QueryPressure.WinUI.Configuration;
+using QueryPressure.WinUI.Services.Theme;
 
 namespace QueryPressure.WinUI.Services.Settings;
 
@@ -16,6 +16,9 @@ public interface ISettingsService
 
   string GetLanguageSetting();
   void SetLanguageSetting(string languageSetting);
+
+  ApplicationTheme GetApplicationTheme();
+  void SetApplicationTheme(ApplicationTheme applicationTheme);
 }
 
 public class SettingsService : ISettingsService
@@ -24,10 +27,10 @@ public class SettingsService : ISettingsService
 
   private Settings _settingsCache;
 
-  public SettingsService(IOptionsMonitor<UserSettingsOptions> userSettingsOptions)
+  public SettingsService(IOptionsMonitor<UserSettingsOptions> userSettingsOptions, IDefaultSettingsProvider defaultSettingsProvider)
   {
     _userSettingsOptions = userSettingsOptions;
-    _settingsCache = new Settings();
+    _settingsCache = defaultSettingsProvider.Get();
   }
 
   public async Task LoadAsync(CancellationToken token)
@@ -53,4 +56,8 @@ public class SettingsService : ISettingsService
   public string GetLanguageSetting() => _settingsCache.Language;
 
   public void SetLanguageSetting(string languageSetting) => _settingsCache.Language = languageSetting;
+
+  public ApplicationTheme GetApplicationTheme() => _settingsCache.Theme;
+
+  public void SetApplicationTheme(ApplicationTheme applicationTheme) => _settingsCache.Theme = applicationTheme;
 }

@@ -5,6 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
         xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
+        xmlns:theme="clr-namespace:QueryPressure.WinUI.Services.Theme"
+        xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
+        xmlns:common="clr-namespace:QueryPressure.WinUI.Common"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
         Title="{Binding Locale.Strings[labels.title], Mode=OneWay}"
@@ -14,11 +17,17 @@
 
     <StackPanel Margin="4">
         <TextBlock Text="{Binding Locale.CurrentLanguage}"/>
-        <Button Command="{Binding SetLanguageCommand}" CommandParameter="uk-UA" Margin="0 2">
+        <Button Command="{common:CommandImport commands:SetLanguageCommand}" CommandParameter="uk-UA" Margin="0 2">
             <TextBlock Text="{Binding Locale.Strings[languages.uk-UA]}"></TextBlock>
         </Button>
-        <Button Command="{Binding SetLanguageCommand}" CommandParameter="en-US" Margin="0 2">
+        <Button Command="{common:CommandImport commands:SetLanguageCommand}" CommandParameter="en-US" Margin="0 2">
             <TextBlock Text="{Binding Locale.Strings[languages.en-US]}"></TextBlock>
+        </Button>
+        <Button Command="{common:CommandImport commands:SetThemeCommand}" CommandParameter="{x:Static theme:ApplicationTheme.Dark}" Margin="0 2">
+            <TextBlock Text="{Binding Locale.Strings[themes.dark]}"></TextBlock>
+        </Button>
+        <Button Command="{common:CommandImport commands:SetThemeCommand}" CommandParameter="{x:Static theme:ApplicationTheme.Light}" Margin="0 2">
+            <TextBlock Text="{Binding Locale.Strings[themes.light]}"></TextBlock>
         </Button>
     </StackPanel>
 </Window>

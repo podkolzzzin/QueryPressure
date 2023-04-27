@@ -11,15 +11,11 @@ public class ShellViewModel : LocalizedViewModel
   private readonly IWindowPositionService _positionService;
   private readonly ISettingsService _settingsService;
 
-  public ShellViewModel(LocaleViewModel locale, IWindowPositionService positionService, ISettingsService settingsService,
-    SetLanguageCommand setLanguageCommand) : base(locale)
+  public ShellViewModel(LocaleViewModel locale, IWindowPositionService positionService, ISettingsService settingsService) : base(locale)
   {
     _positionService = positionService;
     _settingsService = settingsService;
-    SetLanguageCommand = setLanguageCommand;
   }
-
-  public ICommand SetLanguageCommand { get; }
 
   public void SetWindowPosition(Window shell)
   {

@@ -7,6 +7,7 @@ using QueryPressure.WinUI.Configuration;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Views;
 using QueryPressure.WinUI.Services.Settings;
+using QueryPressure.WinUI.Services.Theme;
 
 namespace QueryPressure.WinUI;
 
@@ -25,10 +26,12 @@ public partial class App : Application
 #endif
 
       .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-      .ConfigureContainer<ContainerBuilder>(diBuilder => new WinApplicationLoader(_subjects).Load(diBuilder))
+      .ConfigureContainer<ContainerBuilder>(diBuilder => new WinApplicationLoader(this, _subjects).Load(diBuilder))
       .ConfigureServices(ConfigureServices)
       .Build();
   }
+
+  public IServiceProvider ServiceProvider => _host.Services;
 
   private static void ConfigureServices(HostBuilderContext builder, IServiceCollection services)
   {
@@ -41,11 +44,7 @@ public partial class App : Application
 
     await _host.StartAsync(token);
 
-    var settingsService = _host.Services.GetRequiredService<ISettingsService>();
-    await settingsService.LoadAsync(token);
-
-    var languageService = _host.Services.GetRequiredService<ILanguageService>();
-    languageService.SetLanguage(settingsService.GetLanguageSetting());
+    await LoadSettingsAsync(token);
 
     var shell = _host.Services.GetRequiredService<Shell>();
     shell.Show();
@@ -53,14 +52,24 @@ public partial class App : Application
     base.OnStartup(e);
   }
 
+  private async Task LoadSettingsAsync(CancellationToken token)
+  {
+    var settingsService = _host.Services.GetRequiredService<ISettingsService>();
+    await settingsService.LoadAsync(token);
+
+    var languageService = _host.Services.GetRequiredService<ILanguageService>();
+    languageService.SetLanguage(settingsService.GetLanguageSetting());
+
+    var themeService = _host.Services.GetRequiredService<IThemeService>();
+    themeService.Set(settingsService.GetApplicationTheme());
+  }
+
   protected override async void OnExit(ExitEventArgs e)
   {
     using (_host)
     {
       var token = CancellationToken.None;
-      var languageService = _host.Services.GetRequiredService<ILanguageService>();
       var settingsService = _host.Services.GetRequiredService<ISettingsService>();
-      settingsService.SetLanguageSetting(languageService.GetCurrentLanguage());
 
       await settingsService.SaveAsync(token);
       await _host.StopAsync(TimeSpan.FromSeconds(5));

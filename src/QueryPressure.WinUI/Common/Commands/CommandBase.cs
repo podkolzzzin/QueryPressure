@@ -1,4 +1,6 @@
+using System.Windows;
 using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 
 namespace QueryPressure.WinUI.Common.Commands
 {
@@ -17,6 +19,13 @@ namespace QueryPressure.WinUI.Common.Commands
 
   public abstract class CommandBase<TParameter> : CommandBase
   {
+    protected readonly ILogger Logger;
+
+    protected CommandBase(ILogger logger)
+    {
+      Logger = logger;
+    }
+
     public sealed override bool CanExecute(object? parameter)
     {
       return parameter?.GetType() == typeof(TParameter) && CanExecuteInternal((TParameter)parameter);
@@ -29,7 +38,15 @@ namespace QueryPressure.WinUI.Common.Commands
         throw new NullReferenceException(nameof(parameter));
       }
 
-      ExecuteInternal((TParameter)parameter);
+      try
+      {
+        ExecuteInternal((TParameter)parameter);
+      }
+      catch (Exception exception)
+      {
+        MessageBox.Show($"Failed to execute command. {exception.Message}", "Unhandled Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        Logger.LogError(exception, "Failed to execute command");
+      }
     }
 
     protected virtual bool CanExecuteInternal(TParameter? parameter)
