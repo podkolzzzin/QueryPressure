@@ -64,9 +64,11 @@
                 <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
             </MenuItem>
         </Menu>
+
         <Grid DockPanel.Dock="Bottom" Height="20">
             <TextBlock Text="Hello World"/>
         </Grid>
+
         <DockingManager>
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">

@@ -18,7 +18,7 @@ public class LocaleExtension : BaseMarkupExtension
   {
   }
 
-  public LocaleExtension(string? key) 
+  public LocaleExtension(string? key)
   {
     _key = key;
     _viewModel = ServiceProvider?.GetRequiredService<LocaleViewModel>();
