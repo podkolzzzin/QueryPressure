@@ -1,43 +1,76 @@
 ﻿<Window x:Class="QueryPressure.WinUI.Views.Shell"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
         xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
-        xmlns:theme="clr-namespace:QueryPressure.WinUI.Services.Theme"
         xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
-        xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
+        xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
         Title="{ex:Locale labels.title}"
         WindowStartupLocation="CenterScreen"
         Width="600" Height="400"
         MinWidth="300" MinHeight="300">
-
-    <StackPanel Margin="4">
-
-        <TextBlock Text="{ex:Locale}"/>
-
-        <Button Margin="0 2"
-                Command="{ex:CommandImport commands:SetLanguageCommand}"
-                CommandParameter="uk-UA"
-                Content="{ex:Locale languages.uk-UA}"/>
-
-        <Button Margin="0 2"
-                Command="{ex:CommandImport commands:SetLanguageCommand}" 
-                CommandParameter="en-US"
-                Content="{ex:Locale languages.en-US}"/>
-
-        <Button Margin="0 2"
-                Command="{ex:CommandImport commands:SetThemeCommand}" 
-                CommandParameter="{x:Static theme:ApplicationTheme.Dark}"
-                Content="{ex:Locale themes.dark}"/>
-
-        <Button Margin="0 2"
-                Command="{ex:CommandImport commands:SetThemeCommand}" 
-                CommandParameter="{x:Static theme:ApplicationTheme.Light}" 
-                Content="{ex:Locale themes.light}"/>
-        
-    </StackPanel>
+    <Window.Resources>
+        <converters:EqualsConverter x:Key="EqualsConverter" />
+    </Window.Resources>
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{ex:Locale labels.menu.file.title}">
+                <MenuItem Header="{ex:Locale labels.menu.file.exit}"/>
+            </MenuItem>
+            <MenuItem Header="{ex:Locale labels.menu.view.title}">
+                <MenuItem Header="{ex:Locale labels.menu.view.language}">
+                    <ItemsControl ItemsSource="{Binding Languages, Mode=OneTime}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <MenuItem Header="{ex:Locale Binding = {Binding StringFormat='languages.{0}'}}"
+                                          Command="{ex:CommandImport commands:SetLanguageCommand}"
+                                          CommandParameter="{Binding }">
+                                    <MenuItem.IsChecked>
+                                        <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
+                                            <Binding Mode="OneTime"/>
+                                            <ex:Locale/>
+                                        </MultiBinding>
+                                    </MenuItem.IsChecked>
+                                </MenuItem>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </MenuItem>
+                <MenuItem Header="{ex:Locale labels.menu.view.theme}">
+                    <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
+                    <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{ex:Locale labels.menu.about.title}">
+                <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Bottom" Height="20">
+            <TextBlock Text="Hello World"/>
+        </Grid>
+        <DockingManager>
+            <LayoutRoot>
+                <LayoutPanel Orientation="Horizontal">
+                    <LayoutAnchorablePaneGroup>
+                        <LayoutAnchorablePane>
+                            <LayoutAnchorable Title="Output">
+                                <TextBlock Text="This is the output pane"/>
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+                    </LayoutAnchorablePaneGroup>
+                    <LayoutDocumentPaneGroup>
+                        <LayoutDocumentPane>
+                            <LayoutDocument Title="Document 1">
+                                <TextBlock Text="This is document 1"/>
+                            </LayoutDocument>
+                        </LayoutDocumentPane>
+                    </LayoutDocumentPaneGroup>
+                </LayoutPanel>
+            </LayoutRoot>
+        </DockingManager>
+    </DockPanel>
 </Window>

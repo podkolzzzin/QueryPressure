@@ -1,6 +1,17 @@
 ﻿en-US:
   labels:
     title: Query Pressure - Databases Preformance Testing
+    menu:
+        file:
+            title: File
+            exit: Exit
+        view:
+            title: View
+            theme: Theme
+            language: Language
+        about:
+            title: About
+            version: Version
   languages:
     en-US: English (USA)
     uk-UA: Ukrainian
@@ -10,6 +21,17 @@
 uk-UA:
   labels:
     title: Query Pressure - Навантажувальне Тестування Баз Даних
+    menu:
+        file:
+            title: Файл
+            exit: Вихід
+        view:
+            title: Вид
+            theme: Тема
+            language: Мова
+        about:
+            title: Про програму
+            version: Версія
   languages:
     en-US: Англійська (США)
     uk-UA: Українська

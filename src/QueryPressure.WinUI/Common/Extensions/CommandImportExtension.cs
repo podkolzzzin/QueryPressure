@@ -4,11 +4,11 @@ using QueryPressure.WinUI.Common.Commands;
 
 namespace QueryPressure.WinUI.Common.Extensions;
 
-public class CommandImport : BaseMarkupExtension
+public class CommandImportExtension : BaseMarkupExtension
 {
   private readonly Type _serviceType;
 
-  public CommandImport(Type serviceType)
+  public CommandImportExtension(Type serviceType)
   {
     _serviceType = serviceType;
   }

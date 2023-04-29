@@ -1,6 +1,7 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageVersion Include="Dirkster.AvalonDock" Version="4.72.0" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="7.0.1" />

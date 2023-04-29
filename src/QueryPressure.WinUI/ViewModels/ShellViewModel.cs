@@ -1,5 +1,6 @@
 using System.Windows;
 using QueryPressure.WinUI.Common;
+using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Settings;
 using QueryPressure.WinUI.Services.WindowPosition;
 
@@ -10,10 +11,12 @@ public class ShellViewModel : ViewModelBase
   private readonly IWindowPositionService _positionService;
   private readonly ISettingsService _settingsService;
 
-  public ShellViewModel(IWindowPositionService positionService, ISettingsService settingsService)
+  public ShellViewModel(IWindowPositionService positionService, ISettingsService settingsService,
+    ILanguageService languageService)
   {
     _positionService = positionService;
     _settingsService = settingsService;
+    Languages = languageService.GetAvailableLanguages();
   }
 
   public void SetWindowPosition(Window shell)
@@ -27,4 +30,6 @@ public class ShellViewModel : ViewModelBase
     var windowSettings = _positionService.GetSettings(shell);
     _settingsService.SetWindowSettings(windowSettings);
   }
+
+  public IReadOnlyList<string> Languages { get; }
 }
