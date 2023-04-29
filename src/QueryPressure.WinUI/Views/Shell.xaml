@@ -7,27 +7,37 @@
         xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
         xmlns:theme="clr-namespace:QueryPressure.WinUI.Services.Theme"
         xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
-        xmlns:common="clr-namespace:QueryPressure.WinUI.Common"
+        xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
-        Title="{Binding Locale.Strings[labels.title], Mode=OneWay}"
+        Title="{ex:Locale labels.title}"
         WindowStartupLocation="CenterScreen"
         Width="600" Height="400"
         MinWidth="300" MinHeight="300">
 
     <StackPanel Margin="4">
-        <TextBlock Text="{Binding Locale.CurrentLanguage}"/>
-        <Button Command="{common:CommandImport commands:SetLanguageCommand}" CommandParameter="uk-UA" Margin="0 2">
-            <TextBlock Text="{Binding Locale.Strings[languages.uk-UA]}"></TextBlock>
-        </Button>
-        <Button Command="{common:CommandImport commands:SetLanguageCommand}" CommandParameter="en-US" Margin="0 2">
-            <TextBlock Text="{Binding Locale.Strings[languages.en-US]}"></TextBlock>
-        </Button>
-        <Button Command="{common:CommandImport commands:SetThemeCommand}" CommandParameter="{x:Static theme:ApplicationTheme.Dark}" Margin="0 2">
-            <TextBlock Text="{Binding Locale.Strings[themes.dark]}"></TextBlock>
-        </Button>
-        <Button Command="{common:CommandImport commands:SetThemeCommand}" CommandParameter="{x:Static theme:ApplicationTheme.Light}" Margin="0 2">
-            <TextBlock Text="{Binding Locale.Strings[themes.light]}"></TextBlock>
-        </Button>
+
+        <TextBlock Text="{ex:Locale}"/>
+
+        <Button Margin="0 2"
+                Command="{ex:CommandImport commands:SetLanguageCommand}"
+                CommandParameter="uk-UA"
+                Content="{ex:Locale languages.uk-UA}"/>
+
+        <Button Margin="0 2"
+                Command="{ex:CommandImport commands:SetLanguageCommand}" 
+                CommandParameter="en-US"
+                Content="{ex:Locale languages.en-US}"/>
+
+        <Button Margin="0 2"
+                Command="{ex:CommandImport commands:SetThemeCommand}" 
+                CommandParameter="{x:Static theme:ApplicationTheme.Dark}"
+                Content="{ex:Locale themes.dark}"/>
+
+        <Button Margin="0 2"
+                Command="{ex:CommandImport commands:SetThemeCommand}" 
+                CommandParameter="{x:Static theme:ApplicationTheme.Light}" 
+                Content="{ex:Locale themes.light}"/>
+        
     </StackPanel>
 </Window>

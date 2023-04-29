@@ -6,15 +6,24 @@ namespace QueryPressure.WinUI.ViewModels;
 
 public class LocaleViewModel : ViewModelBase, IDisposable
 {
-  private readonly ISubscription _languageSubscription;
+  private readonly ISubscription? _languageSubscription;
   private string _currentLanguage;
   private IDictionary<string, string> _strings;
 
-  public LocaleViewModel(IObservableItem<LanguageItem> languageObserver)
+  public LocaleViewModel(IObservableItem<LanguageItem>? languageObserver)
   {
-    _languageSubscription = languageObserver.Subscribe(OnLanguageValueChanged);
-    _currentLanguage = languageObserver.CurrentValue.Locale;
-    _strings = languageObserver.CurrentValue.Strings;
+    if (languageObserver != null)
+    {
+      _languageSubscription = languageObserver.Subscribe(OnLanguageValueChanged);
+      _currentLanguage = languageObserver.CurrentValue.Locale;
+      _strings = languageObserver.CurrentValue.Strings;
+    }
+    else
+    {
+      _languageSubscription = null;
+      _currentLanguage = "";
+      _strings = new Dictionary<string, string>();
+    }
   }
 
   private void OnLanguageValueChanged(LanguageItem value)
@@ -36,6 +45,6 @@ public class LocaleViewModel : ViewModelBase, IDisposable
   }
   public void Dispose()
   {
-    _languageSubscription.Dispose();
+    _languageSubscription?.Dispose();
   }
 }

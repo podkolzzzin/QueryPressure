@@ -1,17 +1,16 @@
 using System.Windows;
-using System.Windows.Input;
-using QueryPressure.WinUI.Commands;
+using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Services.Settings;
 using QueryPressure.WinUI.Services.WindowPosition;
 
 namespace QueryPressure.WinUI.ViewModels;
 
-public class ShellViewModel : LocalizedViewModel
+public class ShellViewModel : ViewModelBase
 {
   private readonly IWindowPositionService _positionService;
   private readonly ISettingsService _settingsService;
 
-  public ShellViewModel(LocaleViewModel locale, IWindowPositionService positionService, ISettingsService settingsService) : base(locale)
+  public ShellViewModel(IWindowPositionService positionService, ISettingsService settingsService)
   {
     _positionService = positionService;
     _settingsService = settingsService;
