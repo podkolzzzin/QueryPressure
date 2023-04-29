@@ -19,7 +19,7 @@ public class CommandImport : BaseMarkupExtension
     {
       throw new ArgumentException($"Failed to get ICommand from the '{_serviceType.Name}'");
     }
-      
+
     serviceProvider = ServiceProvider ?? serviceProvider;
 
     try
