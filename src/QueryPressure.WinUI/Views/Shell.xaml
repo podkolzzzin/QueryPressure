@@ -15,6 +15,7 @@
         MinWidth="300" MinHeight="300">
     <Window.Resources>
         <converters:EqualsConverter x:Key="EqualsConverter" />
+        <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
@@ -41,8 +42,22 @@
                     </ItemsControl>
                 </MenuItem>
                 <MenuItem Header="{ex:Locale labels.menu.view.theme}">
-                    <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
-                    <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
+                    <ItemsControl ItemsSource="{Binding Themes, Mode=OneTime}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <MenuItem Header="{ex:Locale Binding = {Binding Converter={StaticResource EnumDescriptionConverter}}}"
+                                          Command="{ex:CommandImport commands:SetThemeCommand}"
+                                          CommandParameter="{Binding }">
+                                    <MenuItem.IsChecked>
+                                        <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
+                                            <Binding Mode="OneTime"/>
+                                            <ex:Theme/>
+                                        </MultiBinding>
+                                    </MenuItem.IsChecked>
+                                </MenuItem>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="{ex:Locale labels.menu.about.title}">

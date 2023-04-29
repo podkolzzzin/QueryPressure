@@ -1,6 +1,5 @@
 using Autofac;
 using QueryPressure.WinUI.Common.Observer;
-using QueryPressure.WinUI.Services.Language;
 
 namespace QueryPressure.WinUI.Extensions
 {
@@ -9,8 +8,8 @@ namespace QueryPressure.WinUI.Extensions
     public static IDisposable RegisterSubject<TPayload>(this ContainerBuilder builder)
     {
       var instance = new Subject<TPayload>();
-      builder.RegisterInstance(instance).As<ISubject<LanguageItem>>().ExternallyOwned();
-      builder.RegisterInstance(instance).As<IObservableItem<LanguageItem>>().ExternallyOwned();
+      builder.RegisterInstance(instance).As<ISubject<TPayload>>().ExternallyOwned();
+      builder.RegisterInstance(instance).As<IObservableItem<TPayload>>().ExternallyOwned();
       return instance;
     }
   }

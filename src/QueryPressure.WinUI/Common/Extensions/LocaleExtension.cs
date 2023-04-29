@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -68,8 +69,7 @@ public class LocaleExtension : BaseMarkupExtension
         throw new InvalidOperationException("The MarkupExtension can only be used on a FrameworkElement.");
       }
 
-
-      var boundKey = EvaluateBindingExpression(element, bindingExpression);
+      var boundKey = EvaluateBindingExpression(element, bindingExpression)?.ToString();
 
       if (!string.IsNullOrEmpty(boundKey))
       {
@@ -87,7 +87,7 @@ public class LocaleExtension : BaseMarkupExtension
     return bindingResult.ProvideValue(serviceProvider);
   }
 
-  private static string? EvaluateBindingExpression(FrameworkElement element, BindingExpression bindingExpression)
+  private static object? EvaluateBindingExpression(FrameworkElement element, BindingExpression bindingExpression)
   {
     var format = bindingExpression.ParentBinding.StringFormat;
 
@@ -99,11 +99,22 @@ public class LocaleExtension : BaseMarkupExtension
         .ToString(), format);
     }
 
-    return GetValue(element.DataContext.ToString(), format);
+    return GetConvertedValue(bindingExpression, GetValue(element.DataContext, format));
 
   }
 
-  private static string? GetValue(string? value, string format)
+  private static object? GetConvertedValue(BindingExpression bindingExpression, object? value)
+  {
+    if (bindingExpression.ParentBinding.Converter != null)
+    {
+      return bindingExpression.ParentBinding.Converter
+        .Convert(value, typeof(string), bindingExpression.ParentBinding.ConverterParameter, CultureInfo.CurrentUICulture);
+    }
+
+    return value;
+  }
+
+  private static object? GetValue(object? value, string format)
   {
     return string.IsNullOrEmpty(format) ? value : string.Format(format, value);
   }

@@ -34,6 +34,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
 
     builder.RegisterType<LocaleViewModel>().SingleInstance();
+    builder.RegisterType<ThemeViewModel>().SingleInstance();
     builder.RegisterType<ShellViewModel>().SingleInstance();
     builder.RegisterType<Shell>().SingleInstance();
 
@@ -42,6 +43,7 @@ public class WinApplicationLoader : ApplicationLoader
 
 
     _subjects.Add(builder.RegisterSubject<LanguageItem>());
+    _subjects.Add(builder.RegisterSubject<ApplicationTheme>());
 
     return base.Load(builder);
   }
