@@ -28,7 +28,15 @@ namespace QueryPressure.WinUI.Common.Commands
 
     public sealed override bool CanExecute(object? parameter)
     {
-      return parameter?.GetType() == typeof(TParameter) && CanExecuteInternal((TParameter)parameter);
+      try
+      {
+        return parameter?.GetType() == typeof(TParameter) && CanExecuteInternal((TParameter)parameter);
+      }
+      catch (Exception exception)
+      {
+        Logger.LogWarning(exception, "Failed to execute a 'CanExecute' of a command");
+        return false;
+      }
     }
 
     public sealed override void Execute(object? parameter)

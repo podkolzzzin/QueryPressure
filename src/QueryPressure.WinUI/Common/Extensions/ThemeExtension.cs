@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using QueryPressure.WinUI.ViewModels;
 using System.Windows.Data;
 using System.Windows;
+using QueryPressure.WinUI.ViewModels.Helpers;
 
 namespace QueryPressure.WinUI.Common.Extensions
 {

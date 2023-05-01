@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using Microsoft.Extensions.DependencyInjection;
-using QueryPressure.WinUI.ViewModels;
+using QueryPressure.WinUI.ViewModels.Helpers;
 
 namespace QueryPressure.WinUI.Common.Extensions;
 

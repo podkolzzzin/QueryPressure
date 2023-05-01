@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using Autofac.Core;
 using Microsoft.Extensions.DependencyInjection;
 using QueryPressure.WinUI.Common.Commands;
 
@@ -25,6 +26,10 @@ public class CommandImportExtension : BaseMarkupExtension
     try
     {
       return serviceProvider.GetRequiredService(_serviceType);
+    }
+    catch (DependencyResolutionException)
+    {
+      throw;
     }
     catch
     {

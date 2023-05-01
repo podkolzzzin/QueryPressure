@@ -4,6 +4,7 @@
     menu:
         file:
             title: File
+            create-new: New
             exit: Exit
         view:
             title: View
@@ -24,6 +25,7 @@ uk-UA:
     menu:
         file:
             title: Файл
+            create-new: Створити
             exit: Вихід
         view:
             title: Вид

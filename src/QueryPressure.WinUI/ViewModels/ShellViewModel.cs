@@ -1,9 +1,9 @@
 using System.Windows;
 using QueryPressure.WinUI.Common;
-using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Settings;
-using QueryPressure.WinUI.Services.Theme;
 using QueryPressure.WinUI.Services.WindowPosition;
+using QueryPressure.WinUI.ViewModels.DockElements;
+using QueryPressure.WinUI.ViewModels.ProjectTree;
 
 namespace QueryPressure.WinUI.ViewModels;
 
@@ -13,12 +13,13 @@ public class ShellViewModel : ViewModelBase
   private readonly ISettingsService _settingsService;
 
   public ShellViewModel(IWindowPositionService positionService, ISettingsService settingsService,
-    ILanguageService languageService, IThemeService themeService)
+    MenuViewModel menu, ProjectTreeViewModel projectTree)
   {
     _positionService = positionService;
     _settingsService = settingsService;
-    Languages = languageService.GetAvailableLanguages();
-    Themes = themeService.GetAvailableThemes();
+    Menu = menu;
+    ProjectTree = projectTree;
+    Tools = new[] {ProjectTree};
   }
 
   public void SetWindowPosition(Window shell)
@@ -33,6 +34,9 @@ public class ShellViewModel : ViewModelBase
     _settingsService.SetWindowSettings(windowSettings);
   }
 
-  public IReadOnlyList<ApplicationTheme> Themes { get; set; }
-  public IReadOnlyList<string> Languages { get; }
+  public MenuViewModel Menu { get; }
+
+  public ProjectTreeViewModel ProjectTree { get; }
+
+  public IEnumerable<ToolViewModel> Tools { get; }
 }

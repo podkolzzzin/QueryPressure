@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace QueryPressure.WinUI.Common.Observer;
 
 public delegate void OnSubjectNext<in TPayload>(TPayload value);
@@ -13,7 +11,7 @@ public class Subject<TPayload> : ISubject<TPayload>, IObservableItem<TPayload>, 
     _subscriptions = new Dictionary<string, OnSubjectNext<TPayload>>();
   }
 
-  public TPayload CurrentValue { get; private set; }
+  public TPayload? CurrentValue { get; private set; }
 
   public void Notify(TPayload payload)
   {
@@ -29,18 +27,6 @@ public class Subject<TPayload> : ISubject<TPayload>, IObservableItem<TPayload>, 
     CurrentValue = payload;
   }
 
-  public ISubscription Subscribe(OnSubjectNext<TPayload> onLanguageChanged, [CallerFilePath] string key = "")
-  {
-    if (_subscriptions.ContainsKey(key))
-    {
-      throw new InvalidOperationException($"Failed to subscribe. Subscription with the same key '{key}' already exist");
-    }
-
-    _subscriptions.Add(key, onLanguageChanged);
-
-    return new Subscription(key, () => Unsubscribe(key));
-  }
-
   private void Unsubscribe(string key)
   {
     if (!_subscriptions.ContainsKey(key))
@@ -49,6 +35,18 @@ public class Subject<TPayload> : ISubject<TPayload>, IObservableItem<TPayload>, 
     }
 
     _subscriptions.Remove(key);
+  }
+
+  public ISubscription SubscribeWithKey(OnSubjectNext<TPayload> onValueChanged, string key = "")
+  {
+    if (_subscriptions.ContainsKey(key))
+    {
+      throw new InvalidOperationException($"Failed to subscribe. Subscription with the same key '{key}' already exist");
+    }
+
+    _subscriptions.Add(key, onValueChanged);
+
+    return new Subscription(key, () => Unsubscribe(key));
   }
 
   public void Unsubscribe(ISubscription subscription) => Unsubscribe(subscription.Key);

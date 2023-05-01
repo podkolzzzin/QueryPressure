@@ -4,9 +4,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
         xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
         xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
         xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
+        xmlns:dockElements="clr-namespace:QueryPressure.WinUI.ViewModels.DockElements"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
         Title="{ex:Locale labels.title}"
@@ -14,8 +17,8 @@
         Width="600" Height="400"
         MinWidth="300" MinHeight="300">
     <Window.Resources>
-        <converters:EqualsConverter x:Key="EqualsConverter" />
-        <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        <system:Boolean x:Key="False">False</system:Boolean>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -23,74 +26,46 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="{ex:Locale labels.menu.file.title}">
-                <MenuItem Header="{ex:Locale labels.menu.file.exit}"/>
-            </MenuItem>
-            <MenuItem Header="{ex:Locale labels.menu.view.title}">
-                <MenuItem Header="{ex:Locale labels.menu.view.language}">
-                    <ItemsControl ItemsSource="{Binding Languages, Mode=OneTime}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <MenuItem Header="{ex:Locale Binding = {Binding StringFormat='languages.{0}'}}"
-                                          Command="{ex:CommandImport commands:SetLanguageCommand}"
-                                          CommandParameter="{Binding }">
-                                    <MenuItem.IsChecked>
-                                        <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
-                                            <Binding Mode="OneTime"/>
-                                            <ex:Locale/>
-                                        </MultiBinding>
-                                    </MenuItem.IsChecked>
-                                </MenuItem>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </MenuItem>
-                <MenuItem Header="{ex:Locale labels.menu.view.theme}">
-                    <ItemsControl ItemsSource="{Binding Themes, Mode=OneTime}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <MenuItem Header="{ex:Locale Binding = {Binding Converter={StaticResource EnumDescriptionConverter}}}"
-                                          Command="{ex:CommandImport commands:SetThemeCommand}"
-                                          CommandParameter="{Binding }">
-                                    <MenuItem.IsChecked>
-                                        <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
-                                            <Binding Mode="OneTime"/>
-                                            <ex:Theme/>
-                                        </MultiBinding>
-                                    </MenuItem.IsChecked>
-                                </MenuItem>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="{ex:Locale labels.menu.about.title}">
-                <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
-            </MenuItem>
-        </Menu>
+
+        <local:MenuView DataContext="{Binding Menu}"></local:MenuView>
 
         <Grid Grid.Row="2" DockPanel.Dock="Bottom" Height="20">
             <TextBlock Text="Hello World"/>
         </Grid>
 
-        <DockingManager Grid.Row="1">
+        <DockingManager
+            Grid.Row="1"
+            AnchorablesSource="{Binding Tools}">
+            <DockingManager.LayoutItemTemplateSelector>
+                <dockElements:PanesTemplateSelector>
+                    <dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>
+                        <DataTemplate>
+                            <local:ProjectTreeView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>
+                </dockElements:PanesTemplateSelector>
+            </DockingManager.LayoutItemTemplateSelector>
+
+            <DockingManager.LayoutItemContainerStyleSelector>
+                <dockElements:PanesStyleSelector>
+                    <dockElements:PanesStyleSelector.ToolStyle>
+                        <Style TargetType="{x:Type LayoutAnchorableItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="CanClose" Value="True" />
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
+                            <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={StaticResource False}}" />
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
+                            <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
+                            <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
+                        </Style>
+                    </dockElements:PanesStyleSelector.ToolStyle>
+                </dockElements:PanesStyleSelector>
+            </DockingManager.LayoutItemContainerStyleSelector>
+
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
-                    <LayoutAnchorablePaneGroup>
-                        <LayoutAnchorablePane>
-                            <LayoutAnchorable Title="Output">
-                                <TextBlock Text="This is the output pane"/>
-                            </LayoutAnchorable>
-                        </LayoutAnchorablePane>
-                    </LayoutAnchorablePaneGroup>
-                    <LayoutDocumentPaneGroup>
-                        <LayoutDocumentPane>
-                            <LayoutDocument Title="Document 1">
-                                <TextBlock Text="This is document 1"/>
-                            </LayoutDocument>
-                        </LayoutDocumentPane>
-                    </LayoutDocumentPaneGroup>
+                    <LayoutAnchorablePane Name="ToolsPane" DockWidth="200" />
+                    <LayoutDocumentPane />
                 </LayoutPanel>
             </LayoutRoot>
         </DockingManager>

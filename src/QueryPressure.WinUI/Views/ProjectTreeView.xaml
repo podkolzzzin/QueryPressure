@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="QueryPressure.WinUI.Views.ProjectTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:projectTree="clr-namespace:QueryPressure.WinUI.ViewModels.ProjectTree"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance d:Type=projectTree:ProjectTreeViewModel}"
+             d:DesignHeight="450" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type projectTree:ProjectNodeViewModel}">
+            <TextBlock Text="{Binding Title}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <TreeView ItemsSource="{Binding Nodes}"></TreeView>
+</UserControl>

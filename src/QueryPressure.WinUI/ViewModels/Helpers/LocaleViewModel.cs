@@ -2,7 +2,7 @@ using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Services.Language;
 
-namespace QueryPressure.WinUI.ViewModels;
+namespace QueryPressure.WinUI.ViewModels.Helpers;
 
 public class LocaleViewModel : ViewModelBase, IDisposable
 {
