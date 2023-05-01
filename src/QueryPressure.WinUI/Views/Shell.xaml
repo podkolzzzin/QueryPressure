@@ -17,8 +17,13 @@
         <converters:EqualsConverter x:Key="EqualsConverter" />
         <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </Window.Resources>
-    <DockPanel LastChildFill="True">
-        <Menu DockPanel.Dock="Top">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
             <MenuItem Header="{ex:Locale labels.menu.file.title}">
                 <MenuItem Header="{ex:Locale labels.menu.file.exit}"/>
             </MenuItem>
@@ -65,11 +70,11 @@
             </MenuItem>
         </Menu>
 
-        <Grid DockPanel.Dock="Bottom" Height="20">
+        <Grid Grid.Row="2" DockPanel.Dock="Bottom" Height="20">
             <TextBlock Text="Hello World"/>
         </Grid>
 
-        <DockingManager>
+        <DockingManager Grid.Row="1">
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
                     <LayoutAnchorablePaneGroup>
@@ -89,5 +94,5 @@
                 </LayoutPanel>
             </LayoutRoot>
         </DockingManager>
-    </DockPanel>
+    </Grid>
 </Window>

@@ -35,6 +35,7 @@
     <ItemGroup>
         <PackageReference Include="Autofac.Extensions.DependencyInjection" />
         <PackageReference Include="Dirkster.AvalonDock" />
+        <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" />
         <PackageReference Include="Microsoft.Extensions.Hosting" />
     </ItemGroup>
 
