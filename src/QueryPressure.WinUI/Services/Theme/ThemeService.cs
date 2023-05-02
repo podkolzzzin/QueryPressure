@@ -44,7 +44,15 @@ public class ThemeService : IThemeService
 
     var value = theme == ApplicationTheme.Dark;
 
-    DwmSetWindowAttribute(new WindowInteropHelper(window).Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, Marshal.SizeOf(value));
+    try
+    {
+      DwmSetWindowAttribute(new WindowInteropHelper(window).Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, Marshal.SizeOf(value));
+    }
+    catch
+    {
+      // ignored TODO Logging
+    }
+
   }
 
   public IReadOnlyList<ApplicationTheme> GetAvailableThemes()
