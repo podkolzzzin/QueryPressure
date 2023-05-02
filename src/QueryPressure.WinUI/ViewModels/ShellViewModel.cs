@@ -19,7 +19,7 @@ public class ShellViewModel : ViewModelBase
     _settingsService = settingsService;
     Menu = menu;
     ProjectTree = projectTree;
-    Tools = new[] {ProjectTree};
+    Tools = new[] { ProjectTree };
   }
 
   public void SetWindowPosition(Window shell)

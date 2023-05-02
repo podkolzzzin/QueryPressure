@@ -48,7 +48,7 @@ public class PaneViewModel : ViewModelBase
   public bool IsActive
   {
     get => _isActive;
-    set=> SetField(ref _isActive, value);
+    set => SetField(ref _isActive, value);
   }
   #endregion Properties
 }

@@ -17,7 +17,7 @@ public class ProjectTreeViewModel : ToolViewModel, IDisposable
     Nodes = new ObservableCollection<BaseNodeViewModel>();
     _subscription = projectObserver.Subscribe(BuildTree);
   }
-  
+
   public void BuildTree(ProjectModel? project)
   {
     Nodes.Clear();

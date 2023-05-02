@@ -20,7 +20,7 @@ public class ProjectNodeViewModel : BaseNodeViewModel, IDisposable
     OnOtherPropertyChanged(nameof(Title));
   }
 
-  private ProjectModel ProjectModel => (ProjectModel) Model;
+  private ProjectModel ProjectModel => (ProjectModel)Model;
 
   public string Title => ProjectModel.Name;
 

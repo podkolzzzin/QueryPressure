@@ -35,7 +35,7 @@ public class LocaleExtension : BaseMarkupExtension
 
     if (string.IsNullOrEmpty(key))
     {
-      if (Binding == null) 
+      if (Binding == null)
       {
         var bindingCurrentLanguage = new Binding
         {
@@ -77,7 +77,7 @@ public class LocaleExtension : BaseMarkupExtension
           key = boundKey;
         }
       }
-    } 
+    }
     
     if (!string.IsNullOrEmpty(key) && !_viewModel.Strings.ContainsKey(key))
     {

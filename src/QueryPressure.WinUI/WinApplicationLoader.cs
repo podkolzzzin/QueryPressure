@@ -43,7 +43,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<ThemeViewModel>().SingleInstance();
     builder.RegisterType<ProjectTreeViewModel>().SingleInstance();
-    builder.RegisterType<MenuViewModel> ().SingleInstance();
+    builder.RegisterType<MenuViewModel>().SingleInstance();
     builder.RegisterType<ShellViewModel>().SingleInstance();
     builder.RegisterType<Shell>().SingleInstance();
 

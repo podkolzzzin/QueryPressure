@@ -11,7 +11,7 @@ public class SubscriptionManager : ISubscriptionManager, IDisposable
   {
     _subjects = new Dictionary<string, Subject<IModel>>();
   }
-  
+
   public IObservableItem<IModel> On(ModelAction action, IModel model)
   {
     var key = GetKey(action, model);
