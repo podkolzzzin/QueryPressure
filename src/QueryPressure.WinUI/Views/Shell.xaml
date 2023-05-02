@@ -6,10 +6,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
         xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
-        xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
         xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
         xmlns:dockElements="clr-namespace:QueryPressure.WinUI.ViewModels.DockElements"
-        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
         Title="{ex:Locale labels.title}"
@@ -17,7 +15,6 @@
         Width="600" Height="400"
         MinWidth="300" MinHeight="300">
     <Window.Resources>
-        <system:Boolean x:Key="False">False</system:Boolean>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
     <Grid>
@@ -33,9 +30,7 @@
             <TextBlock Text="Hello World"/>
         </Grid>
 
-        <DockingManager
-            Grid.Row="1"
-            AnchorablesSource="{Binding Tools}">
+        <DockingManager Grid.Row="1" x:Name="DockManager" AnchorablesSource="{Binding Tools}">
             <DockingManager.LayoutItemTemplateSelector>
                 <dockElements:PanesTemplateSelector>
                     <dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>
@@ -50,10 +45,9 @@
                 <dockElements:PanesStyleSelector>
                     <dockElements:PanesStyleSelector.ToolStyle>
                         <Style TargetType="{x:Type LayoutAnchorableItem}">
-                            <Setter Property="Title" Value="{Binding Model.Title}" />
-                            <Setter Property="CanClose" Value="True" />
+                            <Setter Property="Title" Value="{Binding Model.Title, Mode=OneWay}" />
                             <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
-                            <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={StaticResource False}}" />
+                            <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}" />
                             <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
                             <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
                             <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
@@ -62,12 +56,12 @@
                 </dockElements:PanesStyleSelector>
             </DockingManager.LayoutItemContainerStyleSelector>
 
-            <LayoutRoot>
-                <LayoutPanel Orientation="Horizontal">
-                    <LayoutAnchorablePane Name="ToolsPane" DockWidth="200" />
-                    <LayoutDocumentPane />
-                </LayoutPanel>
-            </LayoutRoot>
+
+
+            <DockingManager.LayoutUpdateStrategy>
+                <dockElements:LayoutInitializer />
+            </DockingManager.LayoutUpdateStrategy>
+
         </DockingManager>
     </Grid>
 </Window>

@@ -58,6 +58,7 @@ public class LocaleExtension : BaseMarkupExtension
         }
 
         var value = Binding.ProvideValue(serviceProvider);
+
         var bindingExpression = value as BindingExpression;
 
         if (bindingExpression == null)

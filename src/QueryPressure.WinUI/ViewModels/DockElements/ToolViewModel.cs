@@ -13,13 +13,12 @@ public class ToolViewModel : PaneViewModel
   /// <param name="name"></param>
   public ToolViewModel(string name)
   {
-    Name = name;
     Title = name;
+    ContentId = name;
   }
   #endregion constructor
 
   #region Properties
-  public string Name { get; private set; }
 
   public bool IsVisible
   {

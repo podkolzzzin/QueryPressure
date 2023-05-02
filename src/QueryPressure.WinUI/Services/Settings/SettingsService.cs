@@ -1,5 +1,7 @@
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
+using AvalonDock.Layout.Serialization;
 using Microsoft.Extensions.Options;
 using QueryPressure.WinUI.Configuration;
 using QueryPressure.WinUI.Services.Theme;
@@ -19,6 +21,9 @@ public interface ISettingsService
 
   ApplicationTheme GetApplicationTheme();
   void SetApplicationTheme(ApplicationTheme applicationTheme);
+
+  void LoadDockLayout(XmlLayoutSerializer serializer);
+  void SetDockLayout(XmlLayoutSerializer serializer);
 }
 
 public class SettingsService : ISettingsService
@@ -60,4 +65,38 @@ public class SettingsService : ISettingsService
   public ApplicationTheme GetApplicationTheme() => _settingsCache.Theme;
 
   public void SetApplicationTheme(ApplicationTheme applicationTheme) => _settingsCache.Theme = applicationTheme;
+
+  public void LoadDockLayout(XmlLayoutSerializer serializer)
+  {
+    var settingsFile = new FileInfo(Environment.ExpandEnvironmentVariables(_userSettingsOptions.CurrentValue.LayoutPath));
+    if (settingsFile.Exists)
+    {
+      serializer.Deserialize(settingsFile.FullName);
+    }
+    else
+    {
+      LoadDefaultDockLayout(serializer);
+    }
+  }
+
+  private static void LoadDefaultDockLayout(XmlLayoutSerializer serializer)
+  {
+    var assembly = Assembly.GetExecutingAssembly();
+    const string defaultDockLayoutConfig = "QueryPressure.WinUI.Resources.default.dock.layout.config";
+
+    using var stream = assembly.GetManifestResourceStream(defaultDockLayoutConfig);
+    if (stream == null)
+    {
+      throw new InvalidOperationException($"Cannot find the Default Dock Layout resource file ('{defaultDockLayoutConfig}') in the current assemble");
+    }
+
+    using var reader = new StreamReader(stream);
+    serializer.Deserialize(reader);
+  }
+
+  public void SetDockLayout(XmlLayoutSerializer serializer)
+  {
+    var filePath = Environment.ExpandEnvironmentVariables(_userSettingsOptions.CurrentValue.LayoutPath);
+    serializer.Serialize(filePath);
+  }
 }

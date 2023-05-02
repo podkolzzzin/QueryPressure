@@ -13,6 +13,7 @@
       <None Remove="appsettings.Development.json" />
       <None Remove="appsettings.json" />
       <None Remove="appsettings.Production.json" />
+      <None Remove="Resources\default.dock.layout.config" />
       <None Remove="Resources\Resources.yml" />
     </ItemGroup>
 
@@ -29,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Resources\default.dock.layout.config" />
       <EmbeddedResource Include="Resources\Resources.yml" />
     </ItemGroup>
     

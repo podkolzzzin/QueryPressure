@@ -19,12 +19,12 @@ public partial class Shell : Window
   protected override void OnSourceInitialized(EventArgs e)
   {
     base.OnSourceInitialized(e);
-    ViewModel.SetWindowPosition(this);
+    ViewModel.OnWindowSourceInitialized(this);
   }
 
   protected override void OnClosing(CancelEventArgs e)
   {
     base.OnClosing(e);
-    ViewModel.SaveWindowPosition(this);
+    ViewModel.OnWindowsClosing(this);
   }
 }

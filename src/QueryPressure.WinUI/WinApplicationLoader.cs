@@ -13,6 +13,7 @@ using QueryPressure.WinUI.Services.WindowPosition;
 using QueryPressure.WinUI.ViewModels;
 using QueryPressure.WinUI.ViewModels.Helpers;
 using QueryPressure.WinUI.ViewModels.ProjectTree;
+using QueryPressure.WinUI.ViewModels.Properties;
 using QueryPressure.WinUI.Views;
 
 namespace QueryPressure.WinUI;
@@ -43,6 +44,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<ThemeViewModel>().SingleInstance();
     builder.RegisterType<ProjectTreeViewModel>().SingleInstance();
+    builder.RegisterType<PropertiesViewModel>().SingleInstance();
     builder.RegisterType<MenuViewModel>().SingleInstance();
     builder.RegisterType<ShellViewModel>().SingleInstance();
     builder.RegisterType<Shell>().SingleInstance();
