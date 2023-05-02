@@ -78,7 +78,7 @@ public class LocaleExtension : BaseMarkupExtension
         }
       }
     }
-    
+
     if (!string.IsNullOrEmpty(key) && !_viewModel.Strings.ContainsKey(key))
     {
       return key;

@@ -26,7 +26,7 @@ public class ProjectTreeViewModel : ToolViewModel, IDisposable
     {
       return;
     }
-    
+
     Nodes.Add(new ProjectNodeViewModel(_subscriptionManager, project));
   }
 
