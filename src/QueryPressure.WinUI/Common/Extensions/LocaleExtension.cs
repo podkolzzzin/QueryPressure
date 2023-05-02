@@ -31,50 +31,57 @@ public class LocaleExtension : BaseMarkupExtension
       return string.IsNullOrEmpty(_key) ? "en-US(dev)" : _key;
     }
 
-    if (string.IsNullOrEmpty(_key) && Binding == null)
-    {
-      var bindingCurrentLanguage = new Binding
-      {
-        Source = _viewModel,
-        Mode = BindingMode.OneWay,
-        Path = new PropertyPath("CurrentLanguage"),
-      };
-
-      return bindingCurrentLanguage.ProvideValue(serviceProvider);
-    }
-
     var key = _key;
 
-    if (string.IsNullOrEmpty(key) && Binding != null)
+    if (string.IsNullOrEmpty(key))
     {
-      var provideValueTarget = serviceProvider.GetRequiredService<IProvideValueTarget>();
-
-      if (provideValueTarget.TargetObject.GetType().FullName == "System.Windows.SharedDp")
+      if (Binding == null) 
       {
-        // In a control template the TargetObject is a SharedDp (internal WPF class)
-        // In that case, the markup extension itself is returned to be re-evaluated later in the context where the template is applied
-        return this;
+        var bindingCurrentLanguage = new Binding
+        {
+          Source = _viewModel,
+          Mode = BindingMode.OneWay,
+          Path = new PropertyPath("CurrentLanguage"),
+        };
+
+        return bindingCurrentLanguage.ProvideValue(serviceProvider);
       }
-
-      var value = Binding.ProvideValue(serviceProvider);
-      var bindingExpression = value as BindingExpression;
-
-      if (bindingExpression == null)
+      else
       {
-        throw new InvalidOperationException("The binding must return a BindingExpressionBase.");
-      }
+        var provideValueTarget = serviceProvider.GetRequiredService<IProvideValueTarget>();
 
-      if (provideValueTarget.TargetObject is not FrameworkElement element)
-      {
-        throw new InvalidOperationException("The MarkupExtension can only be used on a FrameworkElement.");
-      }
+        if (provideValueTarget.TargetObject.GetType().FullName == "System.Windows.SharedDp")
+        {
+          // In a control template the TargetObject is a SharedDp (internal WPF class)
+          // In that case, the markup extension itself is returned to be re-evaluated later in the context where the template is applied
+          return this;
+        }
 
-      var boundKey = EvaluateBindingExpression(element, bindingExpression)?.ToString();
+        var value = Binding.ProvideValue(serviceProvider);
+        var bindingExpression = value as BindingExpression;
 
-      if (!string.IsNullOrEmpty(boundKey))
-      {
-        key = boundKey;
+        if (bindingExpression == null)
+        {
+          throw new InvalidOperationException("The binding must return a BindingExpressionBase.");
+        }
+
+        if (provideValueTarget.TargetObject is not FrameworkElement element)
+        {
+          throw new InvalidOperationException("The MarkupExtension can only be used on a FrameworkElement.");
+        }
+
+        var boundKey = EvaluateBindingExpression(element, bindingExpression)?.ToString();
+
+        if (!string.IsNullOrEmpty(boundKey))
+        {
+          key = boundKey;
+        }
       }
+    } 
+    
+    if (!string.IsNullOrEmpty(key) && !_viewModel.Strings.ContainsKey(key))
+    {
+      return key;
     }
 
     var bindingResult = new Binding
