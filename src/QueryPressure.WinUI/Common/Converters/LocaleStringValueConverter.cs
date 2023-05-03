@@ -38,9 +38,9 @@ public class LocaleStringValueConverter : IMultiValueConverter
     if (!string.IsNullOrEmpty(stringFormat))
     {
       key = string.Format(stringFormat, key);
-    }
+    } 
 
-    return _viewModel.Strings.TryGetValue(key, out var str) ? str : $"<!{key}!>";
+    return _viewModel.Strings.TryGetValue(key, out var str) ? str : $"<!- {key} -!>";
   }
 
   public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

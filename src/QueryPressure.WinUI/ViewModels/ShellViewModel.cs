@@ -6,8 +6,7 @@ using QueryPressure.WinUI.Services.Settings;
 using QueryPressure.WinUI.Services.Theme;
 using QueryPressure.WinUI.Services.WindowPosition;
 using QueryPressure.WinUI.ViewModels.DockElements;
-using QueryPressure.WinUI.ViewModels.ProjectTree;
-using QueryPressure.WinUI.ViewModels.Properties;
+
 using QueryPressure.WinUI.Views;
 
 namespace QueryPressure.WinUI.ViewModels;
@@ -19,17 +18,16 @@ public class ShellViewModel : ViewModelBase
   private readonly IThemeService _themeService;
 
   public ShellViewModel(IWindowPositionService positionService, ISettingsService settingsService,
-    IThemeService themeService,
-    MenuViewModel menu, ProjectTreeViewModel projectTree, PropertiesViewModel properties)
+    IThemeService themeService, MenuViewModel menu, DockToolsViewModel dockTools)
   {
     _positionService = positionService;
     _settingsService = settingsService;
     _themeService = themeService;
     Menu = menu;
-    ProjectTree = projectTree;
-    Properties = properties;
-    Tools = new ToolViewModel[] { ProjectTree, Properties };
+    DockTools = dockTools;
   }
+
+  public DockToolsViewModel DockTools { get; }
 
   private void SetWindowPosition(Window shell)
   {
@@ -83,10 +81,4 @@ public class ShellViewModel : ViewModelBase
   }
 
   public MenuViewModel Menu { get; }
-
-  public ProjectTreeViewModel ProjectTree { get; }
-
-  public PropertiesViewModel Properties { get; }
-
-  public IEnumerable<ToolViewModel> Tools { get; }
 }

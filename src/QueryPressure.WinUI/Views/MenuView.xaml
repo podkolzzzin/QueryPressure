@@ -7,7 +7,9 @@
              xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
              xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
              xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
+             xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance d:Type=viewModels:MenuViewModel}"
              d:DesignHeight="20" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:EqualsConverter x:Key="EqualsConverter" />
@@ -20,6 +22,7 @@
             <MenuItem Header="{ex:Locale labels.Rename}" 
                       Command="{ex:CommandImport commands:RenameProjectCommand}"
                       CommandParameter="WORLD!"/>
+            <Separator/>
             <MenuItem Header="{ex:Locale labels.menu.file.exit}"/>
         </MenuItem>
         <MenuItem Header="{ex:Locale labels.menu.view.title}">
@@ -55,6 +58,17 @@
                                     </MultiBinding>
                                 </MenuItem.IsChecked>
                             </MenuItem>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </MenuItem>
+            <MenuItem Header="{ex:Locale labels.menu.view.tools}">
+                <ItemsControl ItemsSource="{Binding Tools, Mode=OneTime}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem Header="{ex:Locale Binding={Binding Title, StringFormat='labels.panels.{0}'}}"
+                                      IsChecked="{Binding IsVisible}"
+                                      IsCheckable="True"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

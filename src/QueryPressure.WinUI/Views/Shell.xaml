@@ -30,7 +30,7 @@
             <TextBlock Text="Hello World"/>
         </Grid>
 
-        <DockingManager Grid.Row="1" x:Name="DockManager" AnchorablesSource="{Binding Tools}">
+        <DockingManager Grid.Row="1" x:Name="DockManager" AnchorablesSource="{Binding DockTools.Tools}">
             <DockingManager.LayoutItemTemplateSelector>
                 <dockElements:PanesTemplateSelector>
                     <dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>

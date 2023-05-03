@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Windows.Input;
 using Autofac;
 using QueryPressure.App;
+using QueryPressure.WinUI.Common.Converters;
 using QueryPressure.WinUI.Extensions;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Language;
@@ -42,9 +43,11 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<SubscriptionManager>().As<ISubscriptionManager>().SingleInstance();
 
     builder.RegisterType<LocaleViewModel>().SingleInstance();
+    builder.RegisterType<LocaleStringValueConverter>().SingleInstance();
     builder.RegisterType<ThemeViewModel>().SingleInstance();
     builder.RegisterType<ProjectTreeViewModel>().SingleInstance();
     builder.RegisterType<PropertiesViewModel>().SingleInstance();
+    builder.RegisterType<DockToolsViewModel>().SingleInstance();
     builder.RegisterType<MenuViewModel>().SingleInstance();
     builder.RegisterType<ShellViewModel>().SingleInstance();
     builder.RegisterType<Shell>().SingleInstance();

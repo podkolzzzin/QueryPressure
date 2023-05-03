@@ -10,6 +10,7 @@
             title: View
             theme: Theme
             language: Language
+            tools: Tools
         about:
             title: About
             version: Version
@@ -34,12 +35,13 @@ uk-UA:
             title: Вид
             theme: Тема
             language: Мова
+            tools: Інструменти
         about:
             title: Про програму
             version: Версія
     panels:
-        project-tree: Project Tree
-        properties: Properties
+        project-tree: Дерево Проєкту
+        properties: Властивості
   languages:
     en-US: Англійська (США)
     uk-UA: Українська

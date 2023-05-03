@@ -9,8 +9,9 @@ namespace QueryPressure.WinUI.Common.Extensions;
 public class LocaleExtension : BaseMarkupExtension
 {
   private readonly LocaleViewModel? _viewModel;
-  private readonly string? _key;
   private readonly LocaleStringValueConverter _converter;
+  private readonly Binding _currentLanguageBinding;
+  private readonly string? _key;
 
   public Binding? Binding { get; set; }
 
@@ -22,7 +23,13 @@ public class LocaleExtension : BaseMarkupExtension
   {
     _key = key;
     _viewModel = ServiceProvider?.GetRequiredService<LocaleViewModel>();
-    _converter = new LocaleStringValueConverter(_viewModel);
+    _converter = ServiceProvider?.GetRequiredService<LocaleStringValueConverter>() ?? new LocaleStringValueConverter(_viewModel);
+    _currentLanguageBinding = new Binding
+    {
+      Source = _viewModel,
+      Mode = BindingMode.OneWay,
+      Path = new PropertyPath("CurrentLanguage"),
+    };
   }
 
   public override object ProvideValue(IServiceProvider serviceProvider)
@@ -32,16 +39,9 @@ public class LocaleExtension : BaseMarkupExtension
       return string.IsNullOrEmpty(_key) ? "en-US(dev)" : _key;
     }
 
-    var bindingCurrentLanguage = new Binding
-    {
-      Source = _viewModel,
-      Mode = BindingMode.OneWay,
-      Path = new PropertyPath("CurrentLanguage"),
-    };
-
     if (string.IsNullOrEmpty(_key) && Binding == null)
     {
-      return bindingCurrentLanguage;
+      return _currentLanguageBinding;
     }
 
     var firstBinding = string.IsNullOrEmpty(_key) && Binding != null
@@ -55,7 +55,7 @@ public class LocaleExtension : BaseMarkupExtension
 
     var multiBindingResult = new MultiBinding()
     {
-      Bindings = { firstBinding, bindingCurrentLanguage },
+      Bindings = { firstBinding, _currentLanguageBinding },
       Converter = _converter,
       ConverterParameter = Binding?.StringFormat
     };
