@@ -18,8 +18,18 @@
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuBrushKey}" Color="#2B2B2B" />
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuBarBrushKey}" Color="#2B2B2B" />
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrushKey}" Color="#3E3E3E" />
-    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="#DDDDDD" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ScrollBarBrushKey}" Color="#2B2B2B" />
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowFrameBrushKey}" Color="#1C1C1C" />
+
+    <SolidColorBrush x:Key="Menu.Dynamic.Border" Color="#FF999999"/>
+    <SolidColorBrush x:Key="Menu.Dynamic.Separator" Color="#FFD7D7D7"/>
+    <SolidColorBrush x:Key="Menu.Dynamic.Disabled.Foreground" Color="#FF707070"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Selected.Background}" Color="#3D26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Selected.Border}" Color="#FF26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Background" Color="#3D26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Border" Color="#FF26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Disabled.Background" Color="#0A000000"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Disabled.Border" Color="#21000000"/>
 
 </ResourceDictionary>

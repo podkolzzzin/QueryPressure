@@ -5,6 +5,10 @@
         file:
             title: File
             create-new: New
+            open: Open
+            save: Save
+            save-as: Save As...
+            close: Close
             exit: Exit
         view:
             title: View
@@ -30,6 +34,10 @@ uk-UA:
         file:
             title: Файл
             create-new: Створити
+            open: Відкрити
+            save: Зберегти
+            save-as: Зберегти як...
+            close: Закрити
             exit: Вихід
         view:
             title: Вид

@@ -19,63 +19,69 @@
         <MenuItem Header="{ex:Locale labels.menu.file.title}">
             <MenuItem Header="{ex:Locale labels.menu.file.create-new}" 
                       Command="{ex:CommandImport commands:CreateNewProjectCommand}"/>
-            <MenuItem Header="{ex:Locale labels.Rename}" 
-                      Command="{ex:CommandImport commands:RenameProjectCommand}"
-                      CommandParameter="WORLD!"/>
+            <Separator/>
+            <MenuItem Header="{ex:Locale labels.menu.file.open}" 
+                      Command="{ex:CommandImport commands:DialogOpenProjectCommand}"/>
+            <Separator/>
+            <MenuItem Header="{ex:Locale labels.menu.file.save}" />
+            <MenuItem Header="{ex:Locale labels.menu.file.save-as}" />
+            <Separator/>
+            <MenuItem Header="{ex:Locale labels.menu.file.close}" />
             <Separator/>
             <MenuItem Header="{ex:Locale labels.menu.file.exit}"/>
         </MenuItem>
         <MenuItem Header="{ex:Locale labels.menu.view.title}">
-            <MenuItem Header="{ex:Locale labels.menu.view.language}">
-                <ItemsControl ItemsSource="{Binding Languages, Mode=OneTime}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <MenuItem Header="{ex:Locale Binding = {Binding StringFormat='languages.{0}'}}"
-                                          Command="{ex:CommandImport commands:SetLanguageCommand}"
-                                          CommandParameter="{Binding }">
-                                <MenuItem.IsChecked>
-                                    <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
-                                        <Binding Mode="OneTime"/>
-                                        <ex:Locale/>
-                                    </MultiBinding>
-                                </MenuItem.IsChecked>
-                            </MenuItem>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <MenuItem Header="{ex:Locale labels.menu.view.language}" ItemsSource="{Binding Languages, Mode=OneTime}">
+                <MenuItem.ItemContainerStyle>
+                    <Style  TargetType="MenuItem">
+                        <Setter Property="Header" Value="{ex:Locale Binding = {Binding StringFormat='languages.{0}'}}"/>
+                        <Setter Property="Command" Value="{ex:CommandImport commands:SetLanguageCommand}"/>
+                        <Setter Property="CommandParameter" Value="{Binding }"/>
+                        <Setter Property="IsChecked">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
+                                    <Binding Mode="OneTime"/>
+                                    <ex:Locale/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
             </MenuItem>
-            <MenuItem Header="{ex:Locale labels.menu.view.theme}">
-                <ItemsControl ItemsSource="{Binding Themes, Mode=OneTime}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <MenuItem Header="{ex:Locale Binding = {Binding Converter={StaticResource EnumDescriptionConverter}}}"
-                                          Command="{ex:CommandImport commands:SetThemeCommand}"
-                                          CommandParameter="{Binding }">
-                                <MenuItem.IsChecked>
-                                    <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
-                                        <Binding Mode="OneTime"/>
-                                        <ex:Theme/>
-                                    </MultiBinding>
-                                </MenuItem.IsChecked>
-                            </MenuItem>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <MenuItem Header="{ex:Locale labels.menu.view.theme}" ItemsSource="{Binding Themes, Mode=OneTime}">
+                <MenuItem.ItemContainerStyle>
+                    <Style  TargetType="MenuItem">
+                        <Setter Property="Header" Value="{ex:Locale Binding = {Binding Converter={StaticResource EnumDescriptionConverter}}}"/>
+                        <Setter Property="Command" Value="{ex:CommandImport commands:SetThemeCommand}"/>
+                        <Setter Property="CommandParameter" Value="{Binding }"/>
+                        <Setter Property="IsChecked">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
+                                    <Binding Mode="OneTime"/>
+                                    <ex:Theme/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
             </MenuItem>
-            <MenuItem Header="{ex:Locale labels.menu.view.tools}">
-                <ItemsControl ItemsSource="{Binding Tools, Mode=OneTime}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <MenuItem Header="{ex:Locale Binding={Binding Title, StringFormat='labels.panels.{0}'}}"
-                                      IsChecked="{Binding IsVisible}"
-                                      IsCheckable="True"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <MenuItem Header="{ex:Locale labels.menu.view.tools}" ItemsSource="{Binding Tools, Mode=OneTime}">
+                <MenuItem.ItemContainerStyle>
+                    <Style  TargetType="MenuItem">
+                        <Setter Property="Header" Value="{ex:Locale Binding={Binding Title, StringFormat='labels.panels.{0}'}}"/>
+                        <Setter Property="IsChecked" Value="{Binding IsVisible}"/>
+                        <Setter Property="IsCheckable" Value="True"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
             </MenuItem>
         </MenuItem>
         <MenuItem Header="{ex:Locale labels.menu.about.title}">
             <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
+        </MenuItem>
+        <MenuItem Header="{ex:Locale dev.test}">
+            <MenuItem Header="{ex:Locale labels.Rename}" 
+                      Command="{ex:CommandImport commands:RenameProjectCommand}"
+                      CommandParameter="WORLD!"/>
         </MenuItem>
     </Menu>
 </UserControl>
