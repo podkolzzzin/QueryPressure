@@ -45,7 +45,7 @@
                 <dockElements:PanesStyleSelector>
                     <dockElements:PanesStyleSelector.ToolStyle>
                         <Style TargetType="{x:Type LayoutAnchorableItem}">
-                            <Setter Property="Title" Value="{Binding Model.Title, Mode=OneWay}" />
+                            <Setter Property="Title" Value="{ex:Locale Binding={Binding Model.Title, StringFormat='labels.panels.{0}'}}" />
                             <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
                             <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}" />
                             <Setter Property="ContentId" Value="{Binding Model.ContentId}" />

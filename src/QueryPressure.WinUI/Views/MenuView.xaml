@@ -4,9 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
-             xmlns:extensions="clr-namespace:QueryPressure.WinUI.Common.Extensions"
+             xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
              xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="800">
@@ -15,26 +14,26 @@
         <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </UserControl.Resources>
     <Menu>
-        <MenuItem Header="{extensions:Locale labels.menu.file.title}">
-            <MenuItem Header="{extensions:Locale labels.menu.file.create-new}" 
-                      Command="{extensions:CommandImport commands:CreateNewProjectCommand}"/>
-            <MenuItem Header="{extensions:Locale labels.Rename}" 
-                      Command="{extensions:CommandImport commands:RenameProjectCommand}"
+        <MenuItem Header="{ex:Locale labels.menu.file.title}">
+            <MenuItem Header="{ex:Locale labels.menu.file.create-new}" 
+                      Command="{ex:CommandImport commands:CreateNewProjectCommand}"/>
+            <MenuItem Header="{ex:Locale labels.Rename}" 
+                      Command="{ex:CommandImport commands:RenameProjectCommand}"
                       CommandParameter="WORLD!"/>
-            <MenuItem Header="{extensions:Locale labels.menu.file.exit}"/>
+            <MenuItem Header="{ex:Locale labels.menu.file.exit}"/>
         </MenuItem>
-        <MenuItem Header="{extensions:Locale labels.menu.view.title}">
-            <MenuItem Header="{extensions:Locale labels.menu.view.language}">
+        <MenuItem Header="{ex:Locale labels.menu.view.title}">
+            <MenuItem Header="{ex:Locale labels.menu.view.language}">
                 <ItemsControl ItemsSource="{Binding Languages, Mode=OneTime}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <MenuItem Header="{extensions:Locale Binding = {Binding StringFormat='languages.{0}'}}"
-                                          Command="{extensions:CommandImport commands:SetLanguageCommand}"
+                            <MenuItem Header="{ex:Locale Binding = {Binding StringFormat='languages.{0}'}}"
+                                          Command="{ex:CommandImport commands:SetLanguageCommand}"
                                           CommandParameter="{Binding }">
                                 <MenuItem.IsChecked>
                                     <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
                                         <Binding Mode="OneTime"/>
-                                        <extensions:Locale/>
+                                        <ex:Locale/>
                                     </MultiBinding>
                                 </MenuItem.IsChecked>
                             </MenuItem>
@@ -42,17 +41,17 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </MenuItem>
-            <MenuItem Header="{extensions:Locale labels.menu.view.theme}">
+            <MenuItem Header="{ex:Locale labels.menu.view.theme}">
                 <ItemsControl ItemsSource="{Binding Themes, Mode=OneTime}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <MenuItem Header="{extensions:Locale Binding = {Binding Converter={StaticResource EnumDescriptionConverter}}}"
-                                          Command="{extensions:CommandImport commands:SetThemeCommand}"
+                            <MenuItem Header="{ex:Locale Binding = {Binding Converter={StaticResource EnumDescriptionConverter}}}"
+                                          Command="{ex:CommandImport commands:SetThemeCommand}"
                                           CommandParameter="{Binding }">
                                 <MenuItem.IsChecked>
                                     <MultiBinding Converter="{StaticResource EqualsConverter}" Mode="OneWay">
                                         <Binding Mode="OneTime"/>
-                                        <extensions:Theme/>
+                                        <ex:Theme/>
                                     </MultiBinding>
                                 </MenuItem.IsChecked>
                             </MenuItem>
@@ -61,8 +60,8 @@
                 </ItemsControl>
             </MenuItem>
         </MenuItem>
-        <MenuItem Header="{extensions:Locale labels.menu.about.title}">
-            <MenuItem Header="{extensions:Locale labels.menu.about.version}"/>
+        <MenuItem Header="{ex:Locale labels.menu.about.title}">
+            <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
         </MenuItem>
     </Menu>
 </UserControl>

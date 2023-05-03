@@ -13,6 +13,9 @@
         about:
             title: About
             version: Version
+    panels:
+        project-tree: Project Tree
+        properties: Properties
   languages:
     en-US: English (USA)
     uk-UA: Ukrainian
@@ -34,6 +37,9 @@ uk-UA:
         about:
             title: Про програму
             version: Версія
+    panels:
+        project-tree: Project Tree
+        properties: Properties
   languages:
     en-US: Англійська (США)
     uk-UA: Українська
