@@ -18,7 +18,7 @@ public class ProjectNodeViewModel : BaseNodeViewModel, IDisposable
     {
       Nodes.Add(profileNode);
     }
-    
+
     _subscription = subscriptionManager
       .On(ModelAction.Edit, projectModel)
       .Subscribe(OnModelEdit);
