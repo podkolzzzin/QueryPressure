@@ -98,8 +98,8 @@
                 <Setter Property="BorderBrush" TargetName="templateRoot" Value="{DynamicResource MenuItem.Dynamic.Highlight.Border}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Disabled.Foreground}"/>
-                <Setter Property="Fill" TargetName="GlyphPanel" Value="{DynamicResource Menu.Disabled.Foreground}"/>
+                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
+                <Setter Property="Fill" TargetName="GlyphPanel" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -152,8 +152,8 @@
                 <Setter Property="BorderBrush" TargetName="templateRoot" Value="{DynamicResource MenuItem.Dynamic.Highlight.Border}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Disabled.Foreground}"/>
-                <Setter Property="Fill" TargetName="GlyphPanel" Value="{DynamicResource Menu.Disabled.Foreground}"/>
+                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
+                <Setter Property="Fill" TargetName="GlyphPanel" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
             </Trigger>
             <Trigger Property="ScrollViewer.CanContentScroll" SourceName="SubMenuScrollViewer" Value="false">
                 <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
@@ -193,8 +193,8 @@
                 <Setter Property="BorderBrush" TargetName="templateRoot" Value="{DynamicResource MenuItem.Dynamic.Highlight.Border}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Disabled.Foreground}"/>
-                <Setter Property="Fill" TargetName="Glyph" Value="{DynamicResource Menu.Disabled.Foreground}"/>
+                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
+                <Setter Property="Fill" TargetName="Glyph" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -255,9 +255,9 @@
                 <Setter Property="BorderBrush" TargetName="templateRoot" Value="{DynamicResource MenuItem.Dynamic.Highlight.Border}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Disabled.Foreground}"/>
-                <Setter Property="Fill" TargetName="Glyph" Value="{DynamicResource Menu.Disabled.Foreground}"/>
-                <Setter Property="Fill" TargetName="RightArrow" Value="{DynamicResource Menu.Disabled.Foreground}"/>
+                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
+                <Setter Property="Fill" TargetName="Glyph" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
+                <Setter Property="Fill" TargetName="RightArrow" Value="{DynamicResource Menu.Dynamic.Disabled.Foreground}"/>
             </Trigger>
             <Trigger Property="ScrollViewer.CanContentScroll" SourceName="SubMenuScrollViewer" Value="false">
                 <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
