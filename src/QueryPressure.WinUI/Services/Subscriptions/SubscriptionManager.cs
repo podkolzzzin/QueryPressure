@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
 
@@ -5,16 +6,16 @@ namespace QueryPressure.WinUI.Services.Subscriptions;
 
 public class SubscriptionManager : ISubscriptionManager, IDisposable
 {
-  private readonly Dictionary<string, Subject<IModel>> _subjects;
+  private readonly Dictionary<SubscriptionKey, Subject<IModel>> _subjects;
 
   public SubscriptionManager()
   {
-    _subjects = new Dictionary<string, Subject<IModel>>();
+    _subjects = new Dictionary<SubscriptionKey, Subject<IModel>>();
   }
 
-  public IObservableItem<IModel> On(ModelAction action, IModel model)
+  public IObservableItem<IModel> On(ModelAction action, IModel model, [CallerFilePath] string? caller = null)
   {
-    var key = GetKey(action, model);
+    var key = new SubscriptionKey(caller ?? string.Empty, GetWhat(action, model));
 
     if (_subjects.ContainsKey(key))
     {
@@ -27,24 +28,24 @@ public class SubscriptionManager : ISubscriptionManager, IDisposable
     return new ObservableModel(this, key, subject);
   }
 
-  private static string GetKey(ModelAction action, IModel model)
+  private static string GetWhat(ModelAction action, IModel model)
   {
     return $"{model.GetType().Name} - [{action.ToString().ToUpperInvariant()}] - {model.Id}";
   }
 
   public void Notify(ModelAction action, IModel model)
   {
-    var key = GetKey(action, model);
+    var what = GetWhat(action, model);
 
-    if (!_subjects.ContainsKey(key))
+    var keys = _subjects.Where(x => x.Key.What.Equals(what, StringComparison.Ordinal));
+
+    foreach (var key in keys)
     {
-      throw new InvalidOperationException($"The subscription key '{key}' does not exist");
+      key.Value.Notify(model);
     }
-
-    _subjects[key].Notify(model);
   }
 
-  public void Remove(string key)
+  public void Remove(SubscriptionKey key)
   {
     if (!_subjects.ContainsKey(key))
     {

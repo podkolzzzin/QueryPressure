@@ -1,5 +1,6 @@
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
+using QueryPressure.WinUI.Services.Selection;
 using QueryPressure.WinUI.Services.Subscriptions;
 using QueryPressure.WinUI.ViewModels.DockElements;
 
@@ -8,11 +9,14 @@ namespace QueryPressure.WinUI.ViewModels.ProjectTree;
 public class ProjectTreeViewModel : ToolViewModel, IDisposable
 {
   private readonly ISubscriptionManager _subscriptionManager;
+  private readonly ISelectionService _selectionService;
   private readonly ISubscription _subscription;
 
-  public ProjectTreeViewModel(IObservableItem<ProjectModel?> projectObserver, ISubscriptionManager subscriptionManager) : base("project-tree")
+  public ProjectTreeViewModel(IObservableItem<ProjectModel?> projectObserver, ISubscriptionManager subscriptionManager,
+    ISelectionService selectionService) : base("project-tree")
   {
     _subscriptionManager = subscriptionManager;
+    _selectionService = selectionService;
     Nodes = new List<BaseNodeViewModel>();
     _subscription = projectObserver.Subscribe(BuildTree);
   }
@@ -57,5 +61,10 @@ public class ProjectTreeViewModel : ToolViewModel, IDisposable
   public void Dispose()
   {
     _subscription.Dispose();
+  }
+
+  internal void SelectedNode(BaseNodeViewModel? nodeViewModel)
+  {
+    _selectionService.Set(nodeViewModel?.Model);
   }
 }

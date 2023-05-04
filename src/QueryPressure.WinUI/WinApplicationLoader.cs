@@ -7,6 +7,7 @@ using QueryPressure.WinUI.Extensions;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Project;
+using QueryPressure.WinUI.Services.Selection;
 using QueryPressure.WinUI.Services.Settings;
 using QueryPressure.WinUI.Services.Subscriptions;
 using QueryPressure.WinUI.Services.Theme;
@@ -41,6 +42,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
     builder.RegisterType<ProjectService>().As<IProjectService>().SingleInstance();
     builder.RegisterType<SubscriptionManager>().As<ISubscriptionManager>().SingleInstance();
+    builder.RegisterType<SelectionService>().As<ISelectionService>().SingleInstance();
 
     builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<LocaleStringValueConverter>().SingleInstance();
@@ -59,6 +61,7 @@ public class WinApplicationLoader : ApplicationLoader
     _subjects.Add(builder.RegisterSubject<LanguageItem>());
     _subjects.Add(builder.RegisterSubject<ApplicationTheme>());
     _subjects.Add(builder.RegisterSubject<ProjectModel?>());
+    _subjects.Add(builder.RegisterSubject<Selection>());
 
     return base.Load(builder);
   }

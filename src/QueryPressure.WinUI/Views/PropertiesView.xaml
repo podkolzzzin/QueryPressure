@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
              xmlns:properties="clr-namespace:QueryPressure.WinUI.ViewModels.Properties"
+             xmlns:propertiesViews="clr-namespace:QueryPressure.WinUI.Views.PropertiesViews"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=properties:PropertiesViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock>HELLO FROM PROPERTIES</TextBlock>
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type properties:ProjectPropertiesViewModel}">
+            <propertiesViews:ProjectPropertiesView DataContext="{Binding}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <ContentPresenter Content="{Binding Content}"/>
 </UserControl>

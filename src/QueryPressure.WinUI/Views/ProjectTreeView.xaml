@@ -8,14 +8,18 @@
              d:DataContext="{d:DesignInstance d:Type=projectTree:ProjectTreeViewModel}"
              d:DesignHeight="450" d:DesignWidth="300">
     <UserControl.Resources>
+
         <HierarchicalDataTemplate DataType="{x:Type projectTree:ProjectNodeViewModel}" ItemsSource="{Binding Nodes}">
             <TextBlock Text="{Binding Title}"/>
         </HierarchicalDataTemplate>
+
         <HierarchicalDataTemplate DataType="{x:Type projectTree:ProfileNodeViewModel}" ItemsSource="{Binding Nodes}">
             <TextBlock Text="{Binding Title}"/>
         </HierarchicalDataTemplate>
+
     </UserControl.Resources>
-    <TreeView ItemsSource="{Binding Nodes}">
+
+    <TreeView ItemsSource="{Binding Nodes}" SelectedItemChanged="TreeView_OnSelectedItemChanged">
         <TreeView.ItemContainerStyle>
             <Style TargetType="{x:Type TreeViewItem}">
                 <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -23,4 +27,5 @@
             </Style>
         </TreeView.ItemContainerStyle>
     </TreeView>
+
 </UserControl>

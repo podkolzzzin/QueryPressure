@@ -8,7 +8,7 @@ public class BaseNodeViewModel : ViewModelBase
   private bool _isExpanded;
   private bool _isSelected;
 
-  protected IModel Model;
+  public IModel Model;
 
   public BaseNodeViewModel(IModel model, bool isSupportSubNodes = false)
   {

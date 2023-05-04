@@ -1,4 +1,6 @@
+using System.Windows;
 using System.Windows.Controls;
+using QueryPressure.WinUI.ViewModels.ProjectTree;
 
 namespace QueryPressure.WinUI.Views
 {
@@ -10,6 +12,12 @@ namespace QueryPressure.WinUI.Views
     public ProjectTreeView()
     {
       InitializeComponent();
+    }
+
+    private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+      var viewModel = (ProjectTreeViewModel)DataContext;
+      viewModel.SelectedNode(e.NewValue as BaseNodeViewModel);
     }
   }
 }
