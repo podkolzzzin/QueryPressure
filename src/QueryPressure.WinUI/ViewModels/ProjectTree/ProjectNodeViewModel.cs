@@ -7,8 +7,18 @@ public class ProjectNodeViewModel : BaseNodeViewModel, IDisposable
 {
   private readonly ISubscription _subscription;
 
-  public ProjectNodeViewModel(ISubscriptionManager subscriptionManager, ProjectModel projectModel) : base(null, projectModel)
+  public ProjectNodeViewModel(ISubscriptionManager subscriptionManager, ProjectModel projectModel) : base(projectModel, true)
   {
+    if (Nodes is null)
+    {
+      throw new ArgumentNullException(nameof(Nodes));
+    }
+
+    foreach (var profileNode in projectModel.Profiles.Select(profile => new ProfileNodeViewModel(subscriptionManager, profile)))
+    {
+      Nodes.Add(profileNode);
+    }
+    
     _subscription = subscriptionManager
       .On(ModelAction.Edit, projectModel)
       .Subscribe(OnModelEdit);

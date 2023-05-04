@@ -3,11 +3,11 @@ using System.Windows.Controls;
 namespace QueryPressure.WinUI.Views
 {
   /// <summary>
-  /// Interaction logic for MenuView.xaml
+  /// Interaction logic for PropertiesView.xaml
   /// </summary>
-  public partial class MenuView : UserControl
+  public partial class PropertiesView : UserControl
   {
-    public MenuView()
+    public PropertiesView()
     {
       InitializeComponent();
     }

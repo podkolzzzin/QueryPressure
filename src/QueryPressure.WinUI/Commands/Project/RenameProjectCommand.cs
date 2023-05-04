@@ -3,7 +3,7 @@ using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Services.Project;
 using QueryPressure.WinUI.Services.Subscriptions;
 
-namespace QueryPressure.WinUI.Commands;
+namespace QueryPressure.WinUI.Commands.Project;
 
 public class RenameProjectCommand : CommandBase<string>
 {

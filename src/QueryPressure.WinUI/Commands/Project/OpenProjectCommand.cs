@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Services.Project;
 
-namespace QueryPressure.WinUI.Commands;
+namespace QueryPressure.WinUI.Commands.Project;
 
 public class OpenProjectCommand : AsyncCommandBase<string>
 {

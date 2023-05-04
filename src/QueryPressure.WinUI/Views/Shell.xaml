@@ -38,6 +38,11 @@
                             <local:ProjectTreeView DataContext="{Binding}"/>
                         </DataTemplate>
                     </dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>
+                    <dockElements:PanesTemplateSelector.PropertiesViewTemplate>
+                        <DataTemplate>
+                            <local:PropertiesView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.PropertiesViewTemplate>
                 </dockElements:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 
@@ -55,8 +60,6 @@
                     </dockElements:PanesStyleSelector.ToolStyle>
                 </dockElements:PanesStyleSelector>
             </DockingManager.LayoutItemContainerStyleSelector>
-
-
 
             <DockingManager.LayoutUpdateStrategy>
                 <dockElements:LayoutInitializer />

@@ -36,7 +36,10 @@ public class LocaleExtension : BaseMarkupExtension
   {
     if (_viewModel == null)
     {
-      return string.IsNullOrEmpty(_key) ? "en-US(dev)" : _key;
+      return new Binding(".")
+      {
+        Source = string.IsNullOrEmpty(_key) ? "en-US(dev)" : _key,
+      };
     }
 
     if (string.IsNullOrEmpty(_key) && Binding == null)

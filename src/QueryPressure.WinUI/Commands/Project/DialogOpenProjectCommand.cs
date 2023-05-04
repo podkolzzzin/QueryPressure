@@ -1,6 +1,6 @@
 using QueryPressure.WinUI.Common.Commands;
 
-namespace QueryPressure.WinUI.Commands;
+namespace QueryPressure.WinUI.Commands.Project;
 
 public class DialogOpenProjectCommand : CommandBase
 {

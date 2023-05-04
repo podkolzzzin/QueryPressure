@@ -8,6 +8,8 @@
              xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
              xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
              xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
+             xmlns:project="clr-namespace:QueryPressure.WinUI.Commands.Project"
+             xmlns:app="clr-namespace:QueryPressure.WinUI.Commands.App"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=viewModels:MenuViewModel}"
              d:DesignHeight="20" d:DesignWidth="800">
@@ -18,15 +20,16 @@
     <Menu>
         <MenuItem Header="{ex:Locale labels.menu.file.title}">
             <MenuItem Header="{ex:Locale labels.menu.file.create-new}" 
-                      Command="{ex:CommandImport commands:CreateNewProjectCommand}"/>
+                      Command="{ex:CommandImport project:CreateNewProjectCommand}"/>
             <Separator/>
             <MenuItem Header="{ex:Locale labels.menu.file.open}" 
-                      Command="{ex:CommandImport commands:DialogOpenProjectCommand}"/>
+                      Command="{ex:CommandImport project:DialogOpenProjectCommand}"/>
             <Separator/>
             <MenuItem Header="{ex:Locale labels.menu.file.save}" />
             <MenuItem Header="{ex:Locale labels.menu.file.save-as}" />
             <Separator/>
-            <MenuItem Header="{ex:Locale labels.menu.file.close}" />
+            <MenuItem Header="{ex:Locale labels.menu.file.close}"
+                      Command="{ex:CommandImport project:CloseProjectCommand}"/>
             <Separator/>
             <MenuItem Header="{ex:Locale labels.menu.file.exit}"/>
         </MenuItem>
@@ -35,7 +38,7 @@
                 <MenuItem.ItemContainerStyle>
                     <Style  TargetType="MenuItem">
                         <Setter Property="Header" Value="{ex:Locale Binding = {Binding StringFormat='languages.{0}'}}"/>
-                        <Setter Property="Command" Value="{ex:CommandImport commands:SetLanguageCommand}"/>
+                        <Setter Property="Command" Value="{ex:CommandImport app:SetLanguageCommand}"/>
                         <Setter Property="CommandParameter" Value="{Binding }"/>
                         <Setter Property="IsChecked">
                             <Setter.Value>
@@ -52,7 +55,7 @@
                 <MenuItem.ItemContainerStyle>
                     <Style  TargetType="MenuItem">
                         <Setter Property="Header" Value="{ex:Locale Binding = {Binding Converter={StaticResource EnumDescriptionConverter}}}"/>
-                        <Setter Property="Command" Value="{ex:CommandImport commands:SetThemeCommand}"/>
+                        <Setter Property="Command" Value="{ex:CommandImport app:SetThemeCommand}"/>
                         <Setter Property="CommandParameter" Value="{Binding }"/>
                         <Setter Property="IsChecked">
                             <Setter.Value>
@@ -80,7 +83,7 @@
         </MenuItem>
         <MenuItem Header="{ex:Locale dev.test}">
             <MenuItem Header="{ex:Locale labels.Rename}" 
-                      Command="{ex:CommandImport commands:RenameProjectCommand}"
+                      Command="{ex:CommandImport project:RenameProjectCommand}"
                       CommandParameter="WORLD!"/>
         </MenuItem>
     </Menu>

@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Subscriptions;
@@ -14,23 +13,46 @@ public class ProjectTreeViewModel : ToolViewModel, IDisposable
   public ProjectTreeViewModel(IObservableItem<ProjectModel?> projectObserver, ISubscriptionManager subscriptionManager) : base("project-tree")
   {
     _subscriptionManager = subscriptionManager;
-    Nodes = new ObservableCollection<BaseNodeViewModel>();
+    Nodes = new List<BaseNodeViewModel>();
     _subscription = projectObserver.Subscribe(BuildTree);
   }
 
   public void BuildTree(ProjectModel? project)
   {
-    Nodes.Clear();
+    if (Nodes.Any())
+    {
+      CleanTree(Nodes);
+    }
+    
+    Nodes = new List<BaseNodeViewModel>();
 
     if (project is null)
     {
+      OnOtherPropertyChanged(nameof(Nodes));
       return;
     }
 
     Nodes.Add(new ProjectNodeViewModel(_subscriptionManager, project));
+    OnOtherPropertyChanged(nameof(Nodes));
   }
 
-  public ObservableCollection<BaseNodeViewModel> Nodes { get; private set; }
+  private static void CleanTree(List<BaseNodeViewModel> nodes)
+  {
+    foreach (var node in nodes)
+    {
+      if (node.Nodes != null)
+      {
+        CleanTree(node.Nodes);
+      }
+
+      if (node is IDisposable disposable)
+      {
+        disposable.Dispose();
+      }
+    }
+  }
+
+  public List<BaseNodeViewModel> Nodes { get; private set; }
 
   public void Dispose()
   {

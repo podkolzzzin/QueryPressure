@@ -3,7 +3,7 @@ using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Settings;
 
-namespace QueryPressure.WinUI.Commands;
+namespace QueryPressure.WinUI.Commands.App;
 
 public class SetLanguageCommand : CommandBase<string>
 {

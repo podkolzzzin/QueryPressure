@@ -1,22 +1,22 @@
 using System.Windows.Controls;
 using System.Windows;
 using QueryPressure.WinUI.ViewModels.ProjectTree;
+using QueryPressure.WinUI.ViewModels.Properties;
 
 namespace QueryPressure.WinUI.ViewModels.DockElements;
 
-class PanesTemplateSelector : DataTemplateSelector
+public class PanesTemplateSelector : DataTemplateSelector
 {
-  public PanesTemplateSelector()
-  {
-  }
-
   public DataTemplate? ProjectTreeViewTemplate { get; set; }
+  public DataTemplate? PropertiesViewTemplate { get; set; }
 
   public override DataTemplate? SelectTemplate(object item, DependencyObject container)
   {
-    if (item is ProjectTreeViewModel)
-      return ProjectTreeViewTemplate;
-
-    return base.SelectTemplate(item, container);
+    return item switch
+    {
+      ProjectTreeViewModel => ProjectTreeViewTemplate,
+      PropertiesViewModel => PropertiesViewTemplate,
+      _ => base.SelectTemplate(item, container)
+    };
   }
 }

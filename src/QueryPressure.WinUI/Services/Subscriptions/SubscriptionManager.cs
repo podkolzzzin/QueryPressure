@@ -24,7 +24,7 @@ public class SubscriptionManager : ISubscriptionManager, IDisposable
     var subject = new Subject<IModel>();
     _subjects.Add(key, subject);
 
-    return new ObservableModel(this, subject);
+    return new ObservableModel(this, key, subject);
   }
 
   private static string GetKey(ModelAction action, IModel model)

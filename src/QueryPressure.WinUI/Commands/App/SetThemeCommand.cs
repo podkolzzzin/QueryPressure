@@ -3,7 +3,7 @@ using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Services.Settings;
 using QueryPressure.WinUI.Services.Theme;
 
-namespace QueryPressure.WinUI.Commands;
+namespace QueryPressure.WinUI.Commands.App;
 
 public class SetThemeCommand : CommandBase<ApplicationTheme>
 {
