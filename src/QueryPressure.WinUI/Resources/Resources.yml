@@ -22,7 +22,9 @@
         project-tree: Project Tree
         properties: Properties
     dialogs:
-        confirm-close-project: Are you sure that you want to close current project?
+        confirm-close-project:
+            title: Close Project
+            message: Are you sure that you want to close current project?
   languages:
     en-US: English (USA)
     uk-UA: Ukrainian
@@ -53,7 +55,9 @@ uk-UA:
         project-tree: Дерево Проєкту
         properties: Властивості
     dialogs:
-        confirm-close-project: Ви дійсно бажаєте закрити поточний проєкт?
+        confirm-close-project:
+            title: Закрити проєкт
+            message: Ви дійсно бажаєте закрити поточний проєкт?
   languages:
     en-US: Англійська (США)
     uk-UA: Українська
