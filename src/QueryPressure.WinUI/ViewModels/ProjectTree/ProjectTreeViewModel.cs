@@ -23,7 +23,7 @@ public class ProjectTreeViewModel : ToolViewModel, IDisposable
     {
       CleanTree(Nodes);
     }
-    
+
     Nodes = new List<BaseNodeViewModel>();
 
     if (project is null)
