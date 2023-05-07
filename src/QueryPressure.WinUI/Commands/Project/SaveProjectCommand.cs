@@ -15,7 +15,7 @@ public class SaveProjectCommand : AsyncCommandBase
   public override bool CanExecute(object? parameter)
   {
     var parameterPath = parameter?.ToString();
-    return _projectService.Project is not null && (string.IsNullOrEmpty(parameterPath) || _projectService.Project.Path != null);
+    return _projectService.Project is not null && (!string.IsNullOrEmpty(parameterPath) || _projectService.Project.Path != null);
   }
 
   protected override async Task ExecuteAsync(object? parameter, CancellationToken token)
@@ -26,6 +26,7 @@ public class SaveProjectCommand : AsyncCommandBase
 
     if (string.IsNullOrEmpty(path))
     {
+
       throw new ArgumentNullException(nameof(path));
     }
 

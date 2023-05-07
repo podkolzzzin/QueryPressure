@@ -8,7 +8,19 @@ namespace QueryPressure.WinUI.Common.Commands
   {
     public abstract bool CanExecute(object? parameter);
 
-    public abstract void Execute(object? parameter);
+    protected abstract void ExecuteInternal(object? parameter);
+
+    public virtual void Execute(object? parameter)
+    {
+      try
+      {
+        ExecuteInternal(parameter);
+      }
+      catch (Exception exception)
+      {
+        MessageBox.Show($"Failed to execute command. {exception.Message}", "Unhandled Error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
 
     public event EventHandler? CanExecuteChanged
     {
@@ -39,6 +51,10 @@ namespace QueryPressure.WinUI.Common.Commands
       }
     }
 
+    protected sealed override void ExecuteInternal(object? parameter)
+    {
+    }
+
     public sealed override void Execute(object? parameter)
     {
       if (parameter == null)
@@ -61,6 +77,7 @@ namespace QueryPressure.WinUI.Common.Commands
     {
       return parameter != null;
     }
+
     protected abstract void ExecuteInternal(TParameter parameter);
   }
 }

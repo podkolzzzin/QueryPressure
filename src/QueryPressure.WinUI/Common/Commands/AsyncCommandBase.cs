@@ -4,7 +4,7 @@ namespace QueryPressure.WinUI.Common.Commands;
 
 public abstract class AsyncCommandBase : CommandBase
 {
-  public sealed override void Execute(object? parameter)
+  protected sealed override void ExecuteInternal(object? parameter)
   {
     Task.Run(async () => await ExecuteAsync(parameter, CancellationToken.None))
       .Wait(TimeSpan.FromSeconds(30), CancellationToken.None);

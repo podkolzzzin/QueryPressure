@@ -15,7 +15,7 @@ public class DialogOpenProjectCommand : CommandBase
 
   public override bool CanExecute(object? parameter) => true;
 
-  public override void Execute(object? parameter)
+  protected override void ExecuteInternal(object? parameter)
   {
     var dialog = new OpenFileDialog
     {

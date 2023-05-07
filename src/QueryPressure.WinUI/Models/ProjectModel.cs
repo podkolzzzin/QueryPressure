@@ -26,5 +26,5 @@ public class ProjectModel : IModel
 
   public string Name { get; set; }
 
-  public List<ProfileModel> Profiles { get; }
+  public List<ProfileModel> Profiles { get; set; }
 }

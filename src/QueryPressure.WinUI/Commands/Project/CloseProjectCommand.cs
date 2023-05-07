@@ -18,7 +18,7 @@ public class CloseProjectCommand : CommandBase
 
   public override bool CanExecute(object? parameter) => _projectService.Project is not null;
 
-  public override void Execute(object? parameter)
+  protected override void ExecuteInternal(object? parameter)
   {
     var strings = _languageService.GetStrings();
     var dialog = MessageBox.Show(
