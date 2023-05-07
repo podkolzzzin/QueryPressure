@@ -24,7 +24,7 @@ public class ProjectPropertiesViewModel : ViewModelBase, IDisposable
   {
     var model = (ProjectModel) value;
     Name = model.Name;
-    Path = model.Path?.Name ?? "<not set>";
+    Path = model.Path?.FullName ?? "<not set>";
   }
 
   public string? Name

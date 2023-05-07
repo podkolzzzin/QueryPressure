@@ -2,6 +2,17 @@ using Microsoft.Extensions.Logging;
 
 namespace QueryPressure.WinUI.Common.Commands;
 
+public abstract class AsyncCommandBase : CommandBase
+{
+  public sealed override void Execute(object? parameter)
+  {
+    Task.Run(async () => await ExecuteAsync(parameter, CancellationToken.None))
+      .Wait(TimeSpan.FromSeconds(30), CancellationToken.None);
+  }
+
+  protected abstract Task ExecuteAsync(object? parameter, CancellationToken token);
+}
+
 public abstract class AsyncCommandBase<TParameter> : CommandBase<TParameter>
 {
   protected AsyncCommandBase(ILogger logger) : base(logger)

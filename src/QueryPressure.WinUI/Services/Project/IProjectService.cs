@@ -4,8 +4,15 @@ namespace QueryPressure.WinUI.Services.Project;
 
 public interface IProjectService
 {
-  Task OpenProjectAsync(string parameter, CancellationToken token);
+  ProjectModel? Project { get; }
+
+  Task OpenAsync(string path, CancellationToken token);
+
+  Task SaveAsync(string path, CancellationToken token);
+
+  Task SaveAsync(CancellationToken token);
+
   void CreateNew();
-  public ProjectModel? Project { get; }
+
   void Close();
 }

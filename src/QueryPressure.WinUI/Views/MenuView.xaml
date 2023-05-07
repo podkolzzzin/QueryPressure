@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
              xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
-             xmlns:commands="clr-namespace:QueryPressure.WinUI.Commands"
              xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
              xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
              xmlns:project="clr-namespace:QueryPressure.WinUI.Commands.Project"
@@ -25,8 +24,10 @@
             <MenuItem Header="{ex:Locale labels.menu.file.open}" 
                       Command="{ex:CommandImport project:DialogOpenProjectCommand}"/>
             <Separator/>
-            <MenuItem Header="{ex:Locale labels.menu.file.save}" />
-            <MenuItem Header="{ex:Locale labels.menu.file.save-as}" />
+            <MenuItem Header="{ex:Locale labels.menu.file.save}"
+                      Command="{ex:CommandImport project:SaveProjectCommand}"/>
+            <MenuItem Header="{ex:Locale labels.menu.file.save-as}"
+                      Command="{ex:CommandImport project:DialogSaveProjectCommand}"/>
             <Separator/>
             <MenuItem Header="{ex:Locale labels.menu.file.close}"
                       Command="{ex:CommandImport project:CloseProjectCommand}"/>
