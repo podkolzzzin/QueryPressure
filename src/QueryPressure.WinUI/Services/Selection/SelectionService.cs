@@ -5,7 +5,7 @@ namespace QueryPressure.WinUI.Services.Selection;
 
 public class SelectionService : ISelectionService
 {
-  
+
   private readonly ISubject<Selection> _subject;
   private Selection _selection;
 

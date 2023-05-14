@@ -22,7 +22,7 @@ public class ProjectPropertiesViewModel : ViewModelBase, IDisposable
 
   private void OnModelEdit(IModel value)
   {
-    var model = (ProjectModel) value;
+    var model = (ProjectModel)value;
     Name = model.Name;
     Path = model.Path?.FullName ?? "<not set>";
   }
