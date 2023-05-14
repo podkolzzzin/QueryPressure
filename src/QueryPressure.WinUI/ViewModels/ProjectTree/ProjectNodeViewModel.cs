@@ -14,7 +14,7 @@ public class ProjectNodeViewModel : BaseNodeViewModel, IDisposable
       throw new ArgumentNullException(nameof(Nodes));
     }
 
-    foreach (var profileNode in projectModel.Profiles.Select(profile => new ProfileNodeViewModel(subscriptionManager, profile)))
+    foreach (var profileNode in projectModel.Scenarios.Select(profile => new ScenarioNodeViewModel(subscriptionManager, profile)))
     {
       Nodes.Add(profileNode);
     }

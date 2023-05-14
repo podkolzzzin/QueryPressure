@@ -13,7 +13,7 @@
             <TextBlock Text="{Binding Title}"/>
         </HierarchicalDataTemplate>
 
-        <HierarchicalDataTemplate DataType="{x:Type projectTree:ProfileNodeViewModel}" ItemsSource="{Binding Nodes}">
+        <HierarchicalDataTemplate DataType="{x:Type projectTree:ScenarioNodeViewModel}" ItemsSource="{Binding Nodes}">
             <TextBlock Text="{Binding Title}"/>
         </HierarchicalDataTemplate>
 

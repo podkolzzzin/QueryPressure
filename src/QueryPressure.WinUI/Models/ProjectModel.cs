@@ -14,7 +14,7 @@ public class ProjectModel : IModel
   {
     Id = id;
     Name = name;
-    Profiles = new List<ProfileModel>();
+    Scenarios = new List<ScenarioModel>();
   }
 
   [JsonIgnore]
@@ -26,5 +26,5 @@ public class ProjectModel : IModel
 
   public string Name { get; set; }
 
-  public List<ProfileModel> Profiles { get; set; }
+  public List<ScenarioModel> Scenarios { get; set; }
 }

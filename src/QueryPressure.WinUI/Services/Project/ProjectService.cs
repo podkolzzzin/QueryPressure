@@ -89,11 +89,11 @@ public class ProjectService : IProjectService
       Name = "New Project"
     };
 
-    var profile1 = new ProfileModel { Id = Guid.NewGuid(), Name = "Profile 1" };
-    var profile2 = new ProfileModel { Id = Guid.NewGuid(), Name = "Profile 2" };
+    var scenario1 = new ScenarioModel { Id = Guid.NewGuid(), Name = "Scenario 1" };
+    var scenario2 = new ScenarioModel { Id = Guid.NewGuid(), Name = "Scenario 2" };
 
-    Project.Profiles.Add(profile1);
-    Project.Profiles.Add(profile2);
+    Project.Scenarios.Add(scenario1);
+    Project.Scenarios.Add(scenario2);
 
     _subject.Notify(Project);
   }

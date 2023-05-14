@@ -1,3 +1,4 @@
+using QueryPressure.Core.Interfaces;
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
@@ -9,12 +10,14 @@ namespace QueryPressure.WinUI.ViewModels.Properties;
 public class PropertiesViewModel : ToolViewModel, IDisposable
 {
   private readonly ISubscriptionManager _subscriptionManager;
+  private readonly IProviderInfo[] _providers;
   private readonly ISubscription _selectionSubscription;
   private ViewModelBase? _content;
 
-  public PropertiesViewModel(ISubscriptionManager subscriptionManager, IObservableItem<Selection> selectionObservable) : base("properties")
+  public PropertiesViewModel(ISubscriptionManager subscriptionManager, IObservableItem<Selection> selectionObservable, IProviderInfo[] providers) : base("properties")
   {
     _subscriptionManager = subscriptionManager;
+    _providers = providers;
     _selectionSubscription = selectionObservable.Subscribe(UpdateContentViewModel);
     UpdateContentViewModel(selectionObservable.CurrentValue);
   }
@@ -29,7 +32,7 @@ public class PropertiesViewModel : ToolViewModel, IDisposable
     Content = selection.Model switch
     {
       ProjectModel projectModel => new ProjectPropertiesViewModel(_subscriptionManager, projectModel),
-      ProfileModel profileModel => new ProfilePropertiesViewModel(_subscriptionManager, profileModel),
+      ScenarioModel profileModel => new ScenarioPropertiesViewModel(_subscriptionManager, profileModel, _providers),
       _ => null
     };
   }

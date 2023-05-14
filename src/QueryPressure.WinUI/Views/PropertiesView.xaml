@@ -13,6 +13,9 @@
         <DataTemplate DataType="{x:Type properties:ProjectPropertiesViewModel}">
             <propertiesViews:ProjectPropertiesView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type properties:ScenarioPropertiesViewModel}">
+            <propertiesViews:ScenarioPropertiesView DataContext="{Binding}"/>
+        </DataTemplate>
     </UserControl.Resources>
     <ContentPresenter Content="{Binding Content}"/>
 </UserControl>

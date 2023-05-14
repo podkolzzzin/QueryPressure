@@ -4,14 +4,14 @@ using QueryPressure.WinUI.Services.Subscriptions;
 
 namespace QueryPressure.WinUI.ViewModels.ProjectTree;
 
-public class ProfileNodeViewModel : BaseNodeViewModel, IDisposable
+public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
 {
   private readonly ISubscription _subscription;
 
-  public ProfileNodeViewModel(ISubscriptionManager subscriptionManager, ProfileModel profileModel) : base(profileModel, true)
+  public ScenarioNodeViewModel(ISubscriptionManager subscriptionManager, ScenarioModel scenarioModel) : base(scenarioModel, true)
   {
     _subscription = subscriptionManager
-      .On(ModelAction.Edit, profileModel)
+      .On(ModelAction.Edit, scenarioModel)
       .Subscribe(OnModelEdit);
   }
 
@@ -21,9 +21,9 @@ public class ProfileNodeViewModel : BaseNodeViewModel, IDisposable
     OnOtherPropertyChanged(nameof(Title));
   }
 
-  public string Title => ProfileModel.Name;
+  public string Title => ScenarioModel.Name;
 
-  private ProfileModel ProfileModel => (ProfileModel)Model;
+  private ScenarioModel ScenarioModel => (ScenarioModel)Model;
 
   public void Dispose()
   {
