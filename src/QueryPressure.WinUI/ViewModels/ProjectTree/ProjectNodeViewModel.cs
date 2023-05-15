@@ -3,18 +3,19 @@ using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Subscriptions;
 
 namespace QueryPressure.WinUI.ViewModels.ProjectTree;
+
 public class ProjectNodeViewModel : BaseNodeViewModel, IDisposable
 {
   private readonly ISubscription _subscription;
 
-  public ProjectNodeViewModel(ISubscriptionManager subscriptionManager, ProjectModel projectModel) : base(projectModel, true)
+  public ProjectNodeViewModel(ISubscriptionManager subscriptionManager, INodeCreator nodeCreator, ProjectModel projectModel) : base(projectModel, true)
   {
     if (Nodes is null)
     {
       throw new ArgumentNullException(nameof(Nodes));
     }
 
-    foreach (var profileNode in projectModel.Scenarios.Select(profile => new ScenarioNodeViewModel(subscriptionManager, profile)))
+    foreach (var profileNode in projectModel.Scenarios.Select(nodeCreator.Create))
     {
       Nodes.Add(profileNode);
     }

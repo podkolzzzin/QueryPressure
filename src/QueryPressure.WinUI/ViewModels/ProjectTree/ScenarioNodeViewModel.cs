@@ -1,3 +1,5 @@
+using System.Windows.Input;
+using QueryPressure.WinUI.Commands.Scenario;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Subscriptions;
@@ -6,10 +8,12 @@ namespace QueryPressure.WinUI.ViewModels.ProjectTree;
 
 public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
 {
+  private readonly OpenScenarioScriptCommand _openScenarioScriptCommand;
   private readonly ISubscription _subscription;
 
-  public ScenarioNodeViewModel(ISubscriptionManager subscriptionManager, ScenarioModel scenarioModel) : base(scenarioModel, true)
+  public ScenarioNodeViewModel(ISubscriptionManager subscriptionManager, OpenScenarioScriptCommand openScenarioScriptCommand, ScenarioModel scenarioModel) : base(scenarioModel, true)
   {
+    _openScenarioScriptCommand = openScenarioScriptCommand;
     _subscription = subscriptionManager
       .On(ModelAction.Edit, scenarioModel)
       .Subscribe(OnModelEdit);
@@ -24,6 +28,14 @@ public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
   public string Title => ScenarioModel.Name;
 
   private ScenarioModel ScenarioModel => (ScenarioModel)Model;
+
+  public override void Click(MouseButtonEventArgs args, bool isDoubleClick = false)
+  {
+    if (isDoubleClick)
+    {
+      _openScenarioScriptCommand.Execute(ScenarioModel);
+    }
+  }
 
   public void Dispose()
   {

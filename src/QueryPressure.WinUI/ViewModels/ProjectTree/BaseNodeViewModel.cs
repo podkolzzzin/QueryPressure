@@ -1,3 +1,4 @@
+using System.Windows.Input;
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Models;
 
@@ -34,4 +35,7 @@ public class BaseNodeViewModel : ViewModelBase
     set => SetField(ref _isSelected, value);
   }
 
+  public virtual void Click(MouseButtonEventArgs args,bool isDoubleClick = false)
+  {
+  }
 }

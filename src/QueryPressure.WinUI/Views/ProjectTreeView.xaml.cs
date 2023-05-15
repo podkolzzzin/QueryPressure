@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using QueryPressure.WinUI.ViewModels.ProjectTree;
 
 namespace QueryPressure.WinUI.Views
@@ -18,6 +19,22 @@ namespace QueryPressure.WinUI.Views
     {
       var viewModel = (ProjectTreeViewModel)DataContext;
       viewModel.SelectedNode(e.NewValue as BaseNodeViewModel);
+    }
+
+    private void OnItemDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+      if (sender is not TreeViewItem treeItem)
+      {
+        return;
+      }
+
+      if (treeItem.DataContext is not BaseNodeViewModel nodeViewModel)
+      {
+        return;
+      }
+
+      nodeViewModel.Click(e, true);
+
     }
   }
 }

@@ -2,6 +2,37 @@ using System.Windows.Input;
 
 namespace QueryPressure.WinUI.Common.Commands;
 
+public class DelegateCommand : ICommand
+{
+  private readonly Action _execute;
+  private readonly Predicate<object?>? _canExecute;
+
+  public DelegateCommand(Action execute, Predicate<object?>? canExecute = null)
+  {
+    _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+    _canExecute = canExecute;
+  }
+
+  public bool CanExecute(object? parameter)
+  {
+    return _canExecute is null || _canExecute(parameter);
+  }
+
+  public void Execute(object? parameter)
+  {
+    if (CanExecute(parameter))
+    {
+      _execute();
+    }
+  }
+
+  public event EventHandler? CanExecuteChanged
+  {
+    add => CommandManager.RequerySuggested += value;
+    remove => CommandManager.RequerySuggested -= value;
+  }
+}
+
 public class DelegateCommand<TParameter> : ICommand
 {
   private readonly Action<TParameter> _execute;

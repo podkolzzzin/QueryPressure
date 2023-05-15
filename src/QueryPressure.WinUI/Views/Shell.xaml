@@ -8,6 +8,7 @@
         xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
         xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
         xmlns:dockElements="clr-namespace:QueryPressure.WinUI.ViewModels.DockElements"
+        xmlns:scenario="clr-namespace:QueryPressure.WinUI.Commands.Scenario"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
         Title="{ex:Locale labels.title}"
@@ -16,6 +17,7 @@
         MinWidth="300" MinHeight="300">
     <Window.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,7 +32,10 @@
             <TextBlock Text="Hello World"/>
         </Grid>
 
-        <DockingManager Grid.Row="1" x:Name="DockManager" AnchorablesSource="{Binding DockTools.Tools}">
+        <DockingManager Grid.Row="1" x:Name="DockManager" 
+                        ActiveContent="{Binding DockTools.ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}"
+                        AnchorablesSource="{Binding DockTools.Tools}"
+                        DocumentsSource="{Binding DockTools.Files}">
             <DockingManager.LayoutItemTemplateSelector>
                 <dockElements:PanesTemplateSelector>
                     <dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>
@@ -43,6 +48,11 @@
                             <local:PropertiesView DataContext="{Binding}"/>
                         </DataTemplate>
                     </dockElements:PanesTemplateSelector.PropertiesViewTemplate>
+                    <dockElements:PanesTemplateSelector.ScriptViewTemplate>
+                        <DataTemplate>
+                            <local:ScriptView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.ScriptViewTemplate>
                 </dockElements:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 
@@ -58,6 +68,15 @@
                             <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
                         </Style>
                     </dockElements:PanesStyleSelector.ToolStyle>
+                    <dockElements:PanesStyleSelector.FileStyle>
+                        <Style TargetType="{x:Type LayoutItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
+                        </Style>
+                    </dockElements:PanesStyleSelector.FileStyle>
                 </dockElements:PanesStyleSelector>
             </DockingManager.LayoutItemContainerStyleSelector>
 

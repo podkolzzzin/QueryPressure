@@ -10,7 +10,7 @@
     <UserControl.Resources>
 
         <HierarchicalDataTemplate DataType="{x:Type projectTree:ProjectNodeViewModel}" ItemsSource="{Binding Nodes}">
-            <TextBlock Text="{Binding Title}"/>
+            <TextBlock Text="{Binding Title}" />
         </HierarchicalDataTemplate>
 
         <HierarchicalDataTemplate DataType="{x:Type projectTree:ScenarioNodeViewModel}" ItemsSource="{Binding Nodes}">
@@ -24,6 +24,7 @@
             <Style TargetType="{x:Type TreeViewItem}">
                 <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                 <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                <EventSetter Event="MouseDoubleClick" Handler="OnItemDoubleClick" />
             </Style>
         </TreeView.ItemContainerStyle>
     </TreeView>

@@ -47,6 +47,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<LocaleStringValueConverter>().SingleInstance();
     builder.RegisterType<ThemeViewModel>().SingleInstance();
+    builder.RegisterType<NodeCreator>().As<INodeCreator>();
     builder.RegisterType<ProjectTreeViewModel>().SingleInstance();
     builder.RegisterType<PropertiesViewModel>().SingleInstance();
     builder.RegisterType<DockToolsViewModel>().SingleInstance();

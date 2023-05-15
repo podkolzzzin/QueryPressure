@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace QueryPressure.WinUI.ViewModels.DockElements;
 
-class PanesStyleSelector : StyleSelector
+public class PanesStyleSelector : StyleSelector
 {
   public Style? ToolStyle { get; set; }
 
@@ -11,9 +11,11 @@ class PanesStyleSelector : StyleSelector
 
   public override Style? SelectStyle(object item, DependencyObject container)
   {
-    if (item is ToolViewModel)
-      return ToolStyle;
-
-    return base.SelectStyle(item, container);
+    return item switch
+    {
+      ToolViewModel => ToolStyle,
+      ScriptViewModel => FileStyle,
+      _ => base.SelectStyle(item, container)
+    };
   }
 }
