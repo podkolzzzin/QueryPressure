@@ -34,7 +34,7 @@ public class ScriptViewModel : PaneViewModel, IDisposable
 
   private void OnScenarioChanged(IModel value)
   {
-    _model = (ScenarioModel) value;
+    _model = (ScenarioModel)value;
 
     if (!ContentId.Equals(_model.Id.ToString()))
     {

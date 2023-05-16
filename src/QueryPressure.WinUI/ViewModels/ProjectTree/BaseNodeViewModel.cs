@@ -35,7 +35,7 @@ public class BaseNodeViewModel : ViewModelBase
     set => SetField(ref _isSelected, value);
   }
 
-  public virtual void Click(MouseButtonEventArgs args,bool isDoubleClick = false)
+  public virtual void Click(MouseButtonEventArgs args, bool isDoubleClick = false)
   {
   }
 }

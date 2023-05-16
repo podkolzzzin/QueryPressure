@@ -4,11 +4,10 @@ using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Subscriptions;
 using QueryPressure.WinUI.ViewModels;
-using SharpCompress.Common;
 
 namespace QueryPressure.WinUI.Commands.Scenario;
 
-public class OpenScenarioScriptCommand :  CommandBase<ScenarioModel>
+public class OpenScenarioScriptCommand : CommandBase<ScenarioModel>
 {
   private readonly ISubscriptionManager _subscriptionManager;
   private readonly ILanguageService _languageService;

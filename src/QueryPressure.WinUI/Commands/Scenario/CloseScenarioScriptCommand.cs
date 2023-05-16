@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.ViewModels;
@@ -9,16 +8,12 @@ public class CloseScenarioScriptCommand : CommandBase
 {
   private readonly DockToolsViewModel _dockToolsViewModel;
 
-  public CloseScenarioScriptCommand(ILogger<CloseScenarioScriptCommand> logger, DockToolsViewModel dockToolsViewModel) 
+  public CloseScenarioScriptCommand(DockToolsViewModel dockToolsViewModel)
   {
     _dockToolsViewModel = dockToolsViewModel;
   }
 
-
-  public override bool CanExecute(object? parameter)
-  {
-    return true;
-  }
+  public override bool CanExecute(object? parameter) => true;
 
   protected override void ExecuteInternal(object? parameter)
   {
