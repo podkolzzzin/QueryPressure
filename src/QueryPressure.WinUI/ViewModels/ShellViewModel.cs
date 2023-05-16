@@ -1,5 +1,6 @@
 using System.Windows;
 using AvalonDock;
+using AvalonDock.Layout;
 using AvalonDock.Layout.Serialization;
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Services.Settings;
@@ -51,7 +52,10 @@ public class ShellViewModel : ViewModelBase
     var serializer = new XmlLayoutSerializer(dockManager);
     serializer.LayoutSerializationCallback += (s, args) =>
     {
-      args.Content = args.Content;
+      if (args.Model is LayoutDocument)
+      {
+        args.Cancel = true;
+      }
     };
 
     return serializer;

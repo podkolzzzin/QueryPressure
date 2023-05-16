@@ -35,5 +35,6 @@ public class CloseScenarioScriptCommand : CommandBase
     }
 
     _dockToolsViewModel.Files.Remove(fileViewModel);
+    fileViewModel.Dispose();
   }
 }

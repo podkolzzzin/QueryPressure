@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views.PropertiesViews"
              xmlns:properties="clr-namespace:QueryPressure.WinUI.ViewModels.Properties"
+             xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=properties:ProjectPropertiesViewModel}"
              d:DesignHeight="450" d:DesignWidth="300"
@@ -19,10 +20,10 @@
             <RowDefinition Height="Auto" MinHeight="24"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Name:"/>
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.project.name}"/>
         <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=LostFocus}"/>
 
-        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Path:"/>
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.project.path}"/>
         <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path, Mode=OneWay}"/>
 
     </Grid>

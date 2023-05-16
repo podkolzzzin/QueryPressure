@@ -17,5 +17,7 @@
             <propertiesViews:ScenarioPropertiesView DataContext="{Binding}"/>
         </DataTemplate>
     </UserControl.Resources>
-    <ContentPresenter Content="{Binding Content}"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ContentPresenter Content="{Binding Content}"/>
+    </ScrollViewer>
 </UserControl>

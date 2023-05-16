@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views.PropertiesViews"
              xmlns:properties="clr-namespace:QueryPressure.WinUI.ViewModels.Properties"
+             xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=properties:ScenarioPropertiesViewModel}"
              d:DesignHeight="450" d:DesignWidth="300"
@@ -20,17 +21,17 @@
             <RowDefinition Height="Auto" MinHeight="24"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Name:"/>
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.name}"/>
         <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=LostFocus}"/>
 
-        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Provider:"/>
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.provider}"/>
         <ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" 
                   ItemsSource="{Binding Providers}"
                   SelectedItem="{Binding Provider}"/>
 
-        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="Connection String:"/>
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.connection-string}"/>
         <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" VerticalAlignment="Center">
-            <Button DockPanel.Dock="Right" Padding="8 0" Margin="4 0 0 0" Content="Test"/>
+            <Button DockPanel.Dock="Right" Padding="8 0" Margin="4 0 0 0" Content="{ex:Locale labels.properties.scenario.test}"/>
             <TextBox DockPanel.Dock="Left" Text="{Binding ConnectionString, UpdateSourceTrigger=LostFocus}"/>
         </DockPanel>
 

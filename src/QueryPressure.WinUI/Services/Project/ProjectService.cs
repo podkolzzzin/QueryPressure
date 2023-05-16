@@ -3,6 +3,7 @@ using System.IO.Compression;
 using System.Text.Json;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
+using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Subscriptions;
 
 namespace QueryPressure.WinUI.Services.Project;
@@ -11,11 +12,13 @@ public class ProjectService : IProjectService
 {
   private readonly ISubject<ProjectModel?> _subject;
   private readonly ISubscriptionManager _subscriptionManager;
+  private readonly ILanguageService _languageService;
 
-  public ProjectService(ISubject<ProjectModel?> subject, ISubscriptionManager subscriptionManager)
+  public ProjectService(ISubject<ProjectModel?> subject, ISubscriptionManager subscriptionManager, ILanguageService languageService)
   {
     _subject = subject;
     _subscriptionManager = subscriptionManager;
+    _languageService = languageService;
     Project = null;
   }
 
@@ -83,14 +86,17 @@ public class ProjectService : IProjectService
 
   public void CreateNew()
   {
+    var strings = _languageService.GetStrings();
     Project = new ProjectModel
     {
       Id = Guid.NewGuid(),
-      Name = "New Project"
+      Name = strings["labels.project.new-name"]
     };
 
-    var scenario1 = new ScenarioModel { Id = Guid.NewGuid(), Name = "Scenario 1" };
-    var scenario2 = new ScenarioModel { Id = Guid.NewGuid(), Name = "Scenario 2" };
+    var newScenarioNamePrefix = strings["labels.scenario.new-name"];
+
+    var scenario1 = new ScenarioModel { Id = Guid.NewGuid(), Name = $"{newScenarioNamePrefix} 1" };
+    var scenario2 = new ScenarioModel { Id = Guid.NewGuid(), Name = $"{newScenarioNamePrefix} 2" };
 
     Project.Scenarios.Add(scenario1);
     Project.Scenarios.Add(scenario2);

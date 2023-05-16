@@ -25,6 +25,20 @@
         confirm-close-project:
             title: Close Project
             message: Are you sure that you want to close current project?
+    project:
+        new-name: New Project
+    scenario:
+        new-name: New Scenario
+        script: Script
+    properties:
+        project:
+            name: "Name:"
+            path: "Path:"
+        scenario:
+            name: "Name:"
+            provider: "Provider:"
+            connection-string: "Connection String:"
+            test: Test
   languages:
     en-US: English (USA)
     uk-UA: Ukrainian
@@ -58,6 +72,20 @@ uk-UA:
         confirm-close-project:
             title: Закрити проєкт
             message: Ви дійсно бажаєте закрити поточний проєкт?
+    project:
+        new-name: Новий Проект
+    scenario:
+        new-name: Новий Сценарій
+        script: Скрипт
+    properties:
+        project:
+            name: "Ім'я:"
+            path: "Шлях:"
+        scenario:
+            name: "Ім'я:"
+            provider: "Провайдер:"
+            connection-string: "Рядок з'єднання:"
+            test: Тест
   languages:
     en-US: Англійська (США)
     uk-UA: Українська

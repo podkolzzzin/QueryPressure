@@ -5,7 +5,6 @@ namespace QueryPressure.WinUI.ViewModels.DockElements;
 
 class LayoutInitializer : ILayoutUpdateStrategy
 {
-
   private static bool BeforeInsertContent(LayoutRoot layout, LayoutContent anchorableToShow)
   {
     var viewModel = (PaneViewModel)anchorableToShow.Content;

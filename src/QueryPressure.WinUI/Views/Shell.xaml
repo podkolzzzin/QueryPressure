@@ -23,14 +23,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <local:MenuView DataContext="{Binding Menu}"></local:MenuView>
-
-        <Grid Grid.Row="2" DockPanel.Dock="Bottom" Height="20">
-            <TextBlock Text="Hello World"/>
-        </Grid>
 
         <DockingManager Grid.Row="1" x:Name="DockManager" 
                         ActiveContent="{Binding DockTools.ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}"
