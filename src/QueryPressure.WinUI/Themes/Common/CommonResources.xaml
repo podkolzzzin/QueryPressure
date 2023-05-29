@@ -4,6 +4,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Menu/MenuItemStyle.xaml"/>
         <ResourceDictionary Source="Menu/MenuStyle.xaml"/>
+        <ResourceDictionary Source="Editor/EditorResources.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

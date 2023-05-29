@@ -5,15 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
              xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
+             xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=viewModels:ScriptViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="HELLO WORLD!"/>
-        <TextBox Grid.Row="1" Text="{Binding Script}" AcceptsReturn="True" />
+        <avalon:TextEditor
+            Margin="4"
+            ShowLineNumbers="true"
+            Document="{Binding Document, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+            IsModified="{Binding IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SyntaxHighlighting="{Binding HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+        </avalon:TextEditor>
     </Grid>
 </UserControl>

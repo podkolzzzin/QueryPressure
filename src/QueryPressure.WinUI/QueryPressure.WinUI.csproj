@@ -15,6 +15,9 @@
       <None Remove="appsettings.Production.json" />
       <None Remove="Resources\default.dock.layout.config" />
       <None Remove="Resources\Resources.yml" />
+      <None Remove="Themes\Common\Syntax\TSQL-Mode.xshd" />
+      <None Remove="Themes\Dark\DarkSyntax.xshtd" />
+      <None Remove="Themes\Light\LightSyntax.xshtd" />
     </ItemGroup>
 
     <ItemGroup>
@@ -32,10 +35,14 @@
     <ItemGroup>
       <EmbeddedResource Include="Resources\default.dock.layout.config" />
       <EmbeddedResource Include="Resources\Resources.yml" />
+      <EmbeddedResource Include="Themes\Common\Syntax\TSQL-Mode.xshd" />
+      <EmbeddedResource Include="Themes\Dark\DarkSyntax.xshtd" />
+      <EmbeddedResource Include="Themes\Light\LightSyntax.xshtd" />
     </ItemGroup>
     
     <ItemGroup>
         <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+        <PackageReference Include="AvalonEdit" />
         <PackageReference Include="Dirkster.AvalonDock" />
         <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" />
         <PackageReference Include="Microsoft.Extensions.Hosting" />

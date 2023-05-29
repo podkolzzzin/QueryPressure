@@ -32,4 +32,15 @@
     <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Disabled.Background" Color="#0A000000"/>
     <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Disabled.Border" Color="#21000000"/>
 
+    <!-- Accent Color Brush Definition
+       - Look for references on ControlAccentBrushKey to find where this is being set in code -->
+    <Color x:Key="Editor.ControlAccentColorKey">#1ba1e2</Color>
+    <SolidColorBrush x:Key="Editor.EditorBackground" Color="White"/>
+    <SolidColorBrush x:Key="Editor.EditorForeground" Color="Black"/>
+    <SolidColorBrush x:Key="Editor.EditorLineNumbersForeground" Color="Black"/>
+    <SolidColorBrush x:Key="Editor.EditorNonPrintableCharacterBrush" Color="#3F8080FF"/>
+    <!-- Style hyperlink displayed within text in text editor -->
+    <SolidColorBrush x:Key="Editor.EditorLinkTextForegroundBrush" Color="#FF4040FF"/>
+    <SolidColorBrush x:Key="Editor.EditorLinkTextBackgroundBrush" Color="#00000000"/>
+
 </ResourceDictionary>
