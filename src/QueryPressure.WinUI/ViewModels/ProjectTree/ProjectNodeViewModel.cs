@@ -25,7 +25,7 @@ public class ProjectNodeViewModel : BaseNodeViewModel, IDisposable
       .Subscribe(OnModelEdit);
   }
 
-  private void OnModelEdit(IModel value)
+  private void OnModelEdit(object? sender, IModel value)
   {
     Model = value;
     OnOtherPropertyChanged(nameof(Title));

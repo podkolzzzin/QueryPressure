@@ -35,7 +35,7 @@ public class LanguageService : ILanguageService
   {
     _currentLocale = locale;
     _cache = _resourceManager.GetResources(locale, ResourceFormat.Plain);
-    _subject.Notify(new LanguageItem(locale, _cache));
+    _subject.Notify(this, new LanguageItem(locale, _cache));
   }
 
   public IReadOnlyList<string> GetAvailableLanguages() => new[] { "en-US", "uk-UA" };

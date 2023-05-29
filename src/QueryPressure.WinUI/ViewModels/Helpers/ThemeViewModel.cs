@@ -23,7 +23,7 @@ namespace QueryPressure.WinUI.ViewModels.Helpers
       }
     }
 
-    private void OnValueChanged(ApplicationTheme value)
+    private void OnValueChanged(object? sender, ApplicationTheme value)
     {
       CurrentTheme = value;
     }

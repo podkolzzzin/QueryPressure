@@ -29,19 +29,19 @@ public class ScenarioPropertiesViewModel : ViewModelBase, IDisposable
       .On(ModelAction.ChildrenChanged, scenarioModel)
       .Subscribe(OnScenarioExecuted);
 
-    OnModelEdit(scenarioModel);
-    OnScenarioExecuted(scenarioModel);
+    OnModelEdit(null, scenarioModel);
+    OnScenarioExecuted(null, scenarioModel);
   }
 
   public string[] Providers { get; set; }
 
-  private void OnScenarioExecuted(IModel value)
+  private void OnScenarioExecuted(object? sender, IModel value)
   {
     var model = (ScenarioModel)value;
     CanEdit = !model.IsReadOnly;
   }
 
-  private void OnModelEdit(IModel value)
+  private void OnModelEdit(object? sender, IModel value)
   {
     var model = (ScenarioModel)value;
     Name = model.Name;

@@ -1,4 +1,5 @@
 using QueryPressure.Core.Interfaces;
+using QueryPressure.WinUI.Commands.App;
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
@@ -10,19 +11,22 @@ namespace QueryPressure.WinUI.ViewModels.Properties;
 public class PropertiesViewModel : ToolViewModel, IDisposable
 {
   private readonly ISubscriptionManager _subscriptionManager;
+  private readonly EditModelCommand _editModelCommand;
   private readonly IProviderInfo[] _providers;
   private readonly ISubscription _selectionSubscription;
   private ViewModelBase? _content;
 
-  public PropertiesViewModel(ISubscriptionManager subscriptionManager, IObservableItem<Selection> selectionObservable, IProviderInfo[] providers) : base("properties")
+  public PropertiesViewModel(ISubscriptionManager subscriptionManager, IObservableItem<Selection> selectionObservable, 
+    EditModelCommand editModelCommand, IProviderInfo[] providers) : base("properties")
   {
     _subscriptionManager = subscriptionManager;
+    _editModelCommand = editModelCommand;
     _providers = providers;
     _selectionSubscription = selectionObservable.Subscribe(UpdateContentViewModel);
-    UpdateContentViewModel(selectionObservable.CurrentValue);
+    UpdateContentViewModel(null, selectionObservable.CurrentValue);
   }
 
-  private void UpdateContentViewModel(Selection selection)
+  private void UpdateContentViewModel(object? sender, Selection selection)
   {
     if (Content is IDisposable disposable)
     {
@@ -31,7 +35,7 @@ public class PropertiesViewModel : ToolViewModel, IDisposable
 
     Content = selection.Model switch
     {
-      ProjectModel projectModel => new ProjectPropertiesViewModel(_subscriptionManager, projectModel),
+      ProjectModel projectModel => new ProjectPropertiesViewModel(_subscriptionManager, _editModelCommand, projectModel),
       ScenarioModel profileModel => new ScenarioPropertiesViewModel(_subscriptionManager, profileModel, _providers),
       _ => null
     };

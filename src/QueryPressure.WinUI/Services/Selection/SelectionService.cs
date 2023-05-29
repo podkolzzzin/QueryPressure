@@ -18,7 +18,7 @@ public class SelectionService : ISelectionService
   public void Set(IModel? model)
   {
     _selection.Model = model;
-    _subject.Notify(_selection);
+    _subject.Notify(this, _selection);
   }
 
   public IModel? Get()

@@ -33,7 +33,7 @@ public class SubscriptionManager : ISubscriptionManager, IDisposable
     return $"{model.GetType().Name} - [{action.ToString().ToUpperInvariant()}] - {model.Id}";
   }
 
-  public void Notify(ModelAction action, IModel model)
+  public void Notify(object? sender, ModelAction action, IModel model)
   {
     var what = GetWhat(action, model);
 
@@ -41,7 +41,7 @@ public class SubscriptionManager : ISubscriptionManager, IDisposable
 
     foreach (var key in keys)
     {
-      key.Value.Notify(model);
+      key.Value.Notify(sender, model);
     }
   }
 

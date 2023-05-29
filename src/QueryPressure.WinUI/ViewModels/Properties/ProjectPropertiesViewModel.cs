@@ -1,27 +1,33 @@
-using QueryPressure.WinUI.Common;
+using QueryPressure.WinUI.Commands.App;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Subscriptions;
 
 namespace QueryPressure.WinUI.ViewModels.Properties;
 
-public class ProjectPropertiesViewModel : ViewModelBase, IDisposable
+public class ProjectPropertiesViewModel : BaseModelPropertiesViewModel<ProjectModel>, IDisposable
 {
   private readonly ISubscription _subscription;
   private string? _name;
   private string? _path;
 
-  public ProjectPropertiesViewModel(ISubscriptionManager subscriptionManager, ProjectModel projectModel)
+  public ProjectPropertiesViewModel(ISubscriptionManager subscriptionManager, EditModelCommand editModelCommand, ProjectModel projectModel)
+    : base(editModelCommand, projectModel)
   {
     _subscription = subscriptionManager
       .On(ModelAction.Edit, projectModel)
       .Subscribe(OnModelEdit);
 
-    OnModelEdit(projectModel);
+    OnModelEdit(null, projectModel);
   }
 
-  private void OnModelEdit(IModel value)
+  private void OnModelEdit(object? sender, IModel value)
   {
+    if (sender == this)
+    {
+      return;
+    }
+
     var model = (ProjectModel)value;
     Name = model.Name;
     Path = model.Path?.FullName ?? "<not set>";
@@ -30,13 +36,20 @@ public class ProjectPropertiesViewModel : ViewModelBase, IDisposable
   public string? Name
   {
     get => _name;
-    set => SetField(ref _name, value);
+    set => SetModelField(ref _name, value, GetRenamedModel);
   }
+
+  private static ProjectModel GetRenamedModel(ProjectModel model, string? value)
+  {
+    model.Name = value;
+    return model;
+  }
+
 
   public string? Path
   {
     get => _path;
-    set => SetField(ref _path, value);
+    private set => SetField(ref _path, value);
   }
 
   public void Dispose()

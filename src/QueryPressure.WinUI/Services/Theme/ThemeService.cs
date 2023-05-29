@@ -32,7 +32,7 @@ public class ThemeService : IThemeService
     _application.Resources.MergedDictionaries.Clear();
     _application.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri(@"Themes/Common/CommonResources.xaml", UriKind.Relative) });
     _application.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri(themeUri, UriKind.Relative) });
-    _subject.Notify(theme);
+    _subject.Notify(this, theme);
   }
 
   public void SetWindowTheme(Window? window, ApplicationTheme theme)

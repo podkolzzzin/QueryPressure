@@ -24,7 +24,7 @@ public class ProjectTreeViewModel : ToolViewModel, IDisposable
     _subscription = projectObserver.Subscribe(BuildTree);
   }
 
-  public void BuildTree(ProjectModel? project)
+  public void BuildTree(object? sender, ProjectModel? project)
   {
     if (Nodes.Any())
     {

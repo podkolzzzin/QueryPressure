@@ -30,11 +30,11 @@ public class ScriptViewModel : PaneViewModel, IDisposable
       .Subscribe(OnScenarioChanged);
 
     ContentId = scenarioModel.Id.ToString();
-    OnScenarioChanged(scenarioModel);
+    OnScenarioChanged(null, scenarioModel);
     CloseCommand = new DelegateCommand(() => closeScenarioScriptCommand.Execute(_model));
   }
 
-  private void OnScenarioChanged(IModel value)
+  private void OnScenarioChanged(object? sender, IModel value)
   {
     _model = (ScenarioModel)value;
 
@@ -59,7 +59,7 @@ public class ScriptViewModel : PaneViewModel, IDisposable
 
   public ICommand CloseCommand { get; }
 
-  public TextDocument Document
+  public TextDocument? Document
   {
     get => _document;
     set => SetField(ref _document, value);
@@ -71,7 +71,7 @@ public class ScriptViewModel : PaneViewModel, IDisposable
     set => SetField(ref _isDirty, value);
   }
 
-  public IHighlightingDefinition HighlightingDefinition
+  public IHighlightingDefinition? HighlightingDefinition
   {
     get => _highlightingDefinition;
     set => SetField(ref _highlightingDefinition, value);

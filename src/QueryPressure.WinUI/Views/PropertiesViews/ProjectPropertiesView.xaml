@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.project.name}"/>
-        <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=LostFocus}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.project.path}"/>
         <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path, Mode=OneWay}"/>

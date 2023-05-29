@@ -54,7 +54,7 @@ public class ProjectService : IProjectService
 
     Project.Path = fileInfo;
 
-    _subject.Notify(Project);
+    _subject.Notify(this, Project);
   }
 
   public async Task SaveAsync(string path, CancellationToken token)
@@ -76,7 +76,7 @@ public class ProjectService : IProjectService
     await JsonSerializer.SerializeAsync(compressor, Project, cancellationToken: token);
 
     Project.Path = fileInfo;
-    _subscriptionManager.Notify(ModelAction.Edit, Project);
+    _subscriptionManager.Notify(this, ModelAction.Edit, Project);
   }
 
   public async Task SaveAsync(CancellationToken token)
@@ -101,13 +101,13 @@ public class ProjectService : IProjectService
     Project.Scenarios.Add(scenario1);
     Project.Scenarios.Add(scenario2);
 
-    _subject.Notify(Project);
+    _subject.Notify(this, Project);
   }
 
 
   public void Close()
   {
     Project = null;
-    _subject.Notify(Project);
+    _subject.Notify(this, Project);
   }
 }

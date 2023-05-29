@@ -26,7 +26,7 @@ public class LocaleViewModel : ViewModelBase, IDisposable
     }
   }
 
-  private void OnLanguageValueChanged(LanguageItem value)
+  private void OnLanguageValueChanged(object? sender, LanguageItem value)
   {
     Strings = value.Strings;
     CurrentLanguage = value.Locale;

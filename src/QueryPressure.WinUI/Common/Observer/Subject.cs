@@ -1,6 +1,6 @@
 namespace QueryPressure.WinUI.Common.Observer;
 
-public delegate void OnSubjectNext<in TPayload>(TPayload value);
+public delegate void OnSubjectNext<in TPayload>(object? sender, TPayload value);
 
 public class Subject<TPayload> : ISubject<TPayload>, IObservableItem<TPayload>, IDisposable
 {
@@ -13,12 +13,12 @@ public class Subject<TPayload> : ISubject<TPayload>, IObservableItem<TPayload>, 
 
   public TPayload? CurrentValue { get; private set; }
 
-  public void Notify(TPayload payload)
+  public void Notify(object? sender, TPayload payload)
   {
     SetCurrentValue(payload);
     foreach (var subscription in _subscriptions)
     {
-      subscription.Value.Invoke(payload);
+      subscription.Value.Invoke(sender, payload);
     }
   }
 

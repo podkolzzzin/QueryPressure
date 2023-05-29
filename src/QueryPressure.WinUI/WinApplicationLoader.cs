@@ -1,10 +1,12 @@
 using System.Reflection;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Autofac;
 using QueryPressure.App;
 using QueryPressure.WinUI.Common.Converters;
 using QueryPressure.WinUI.Extensions;
 using QueryPressure.WinUI.Models;
+using QueryPressure.WinUI.Services;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Project;
 using QueryPressure.WinUI.Services.Selection;
@@ -43,6 +45,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<ProjectService>().As<IProjectService>().SingleInstance();
     builder.RegisterType<SubscriptionManager>().As<ISubscriptionManager>().SingleInstance();
     builder.RegisterType<SelectionService>().As<ISelectionService>().SingleInstance();
+    builder.RegisterType<DispatcherService>().As<IDispatcherService>().SingleInstance();
 
     builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<LocaleStringValueConverter>().SingleInstance();

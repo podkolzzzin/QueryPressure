@@ -27,6 +27,6 @@ public class RenameProjectCommand : CommandBase<string>
     }
 
     currentProject.Name = $"New Name ({DateTime.Now:G}) + {parameter}";
-    _subscriptionManager.Notify(ModelAction.Edit, currentProject);
+    _subscriptionManager.Notify(this, ModelAction.Edit, currentProject);
   }
 }
