@@ -42,7 +42,7 @@ app.MapGet("/api/profiles", GetCreatorMetadata<IProfileCreator, IProfile>);
 app.MapGet("/api/limits", GetCreatorMetadata<ILimitCreator, ILimit>);
 
 app.MapPost("/api/execution", (ExecutionRequest request, ProviderManager manager) =>
-  manager.GetProvider(request.Provider).StartExecutionAsync(request));
+  manager.GetProvider(request.Provider).StartExecution(request));
 
 app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) =>
   manager.GetResources(locale, ResourceFormat.Html));
