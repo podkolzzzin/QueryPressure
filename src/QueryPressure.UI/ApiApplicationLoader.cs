@@ -32,7 +32,7 @@ public class ApiApplicationLoader : ApplicationLoader
       .AsSelf()
       .InstancePerLifetimeScope()
       .WithAttributeFiltering();
-    
+
     return base.Load(builder);
   }
 }

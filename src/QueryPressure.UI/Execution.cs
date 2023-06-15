@@ -15,18 +15,18 @@ internal class Execution // TODO: interesting idea for refactoring: use MediatR 
   private readonly IExecutionResultStore _store;
   private readonly ILiveMetricProvider[] _liveMetricProviders;
   private readonly IScenarioBuilder _builder;
-  
+
   public Execution(
-    ApplicationArguments args, 
-    Guid id, 
-    [KeyFilter(DashboardVisualizer.Key)]IMetricsVisualizer visualizer,
+    ApplicationArguments args,
+    Guid id,
+    [KeyFilter(DashboardVisualizer.Key)] IMetricsVisualizer visualizer,
     IHubService<DashboardHub> hubService,
-    IExecutionResultStore store, 
+    IExecutionResultStore store,
     ILiveMetricProvider[] liveMetricProviders,
-    IScenarioBuilder builder) 
+    IScenarioBuilder builder)
   {
     Id = id;
-    
+
     _args = args;
     _visualizer = visualizer;
     _hubService = hubService;
@@ -34,7 +34,7 @@ internal class Execution // TODO: interesting idea for refactoring: use MediatR 
     _liveMetricProviders = liveMetricProviders;
     _builder = builder;
   }
-  
+
   public Guid Id { get; }
 
   public async Task ExecuteAsync(CancellationToken cancellationToken)
@@ -48,7 +48,7 @@ internal class Execution // TODO: interesting idea for refactoring: use MediatR 
       NotifyAsync(liveVisualization);
     }
   }
-  
+
   private void NotifyAsync(IVisualization liveVisualization)
   {
     Console.WriteLine(liveVisualization.ToJson());

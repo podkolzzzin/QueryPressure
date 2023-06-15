@@ -22,7 +22,7 @@ public class SequentialLoadProfile : IProfile, IExecutionHook
 
     var tcs = _taskCompletionSource;
     _taskCompletionSource = null;
-    
+
     tcs.SetResult();
     tcs.Dispose();
 

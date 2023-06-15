@@ -4,7 +4,7 @@ internal class TaskCompletionSourceWithCancellation : TaskCompletionSource, IDis
 {
   private readonly CancellationToken _cancellationToken;
   private readonly IDisposable _registration;
-  
+
   public TaskCompletionSourceWithCancellation(CancellationToken cancellationToken)
   {
     _cancellationToken = cancellationToken;

@@ -9,7 +9,7 @@ namespace QueryPressure.UI;
 public class Provider
 {
   private record ExecutionData(Execution Execution, Task Task, CancellationTokenSource CancellationTokenSource);
-  
+
   private readonly ILifetimeScope _scope;
   private readonly ICreator<IConnectionProvider> _creator;
   private readonly ConcurrentDictionary<Guid, ExecutionData> _executions = new();
@@ -48,7 +48,7 @@ public class Provider
 
     return id;
   }
-  
+
   private async Task ExecuteAsync(ILifetimeScope scope, Execution execution, CancellationToken cancellationToken)
   {
     await using (scope)
@@ -57,27 +57,34 @@ public class Provider
       _executions.TryRemove(execution.Id, out _);
     }
   }
-  
+
   private static ApplicationArguments CreateArguments(ExecutionRequest request)
   {
-    var appArgs = new ApplicationArguments() {
-      ["connection"] = new() {
+    var appArgs = new ApplicationArguments()
+    {
+      ["connection"] = new()
+      {
         Type = request.Provider,
-        Arguments = new() {
+        Arguments = new()
+        {
           ["connectionString"] = request.ConnectionString,
         }
       },
-      ["profile"] = new() {
+      ["profile"] = new()
+      {
         Type = request.Profile.Type,
         Arguments = request.Profile.Arguments.ToDictionary(x => x.Name, x => x.Value),
       },
-      ["limit"] = new() {
+      ["limit"] = new()
+      {
         Type = request.Limit.Type,
         Arguments = request.Limit.Arguments.ToDictionary(x => x.Name, x => x.Value),
       },
-      ["script"] = new() {
+      ["script"] = new()
+      {
         Type = "text",
-        Arguments = new() {
+        Arguments = new()
+        {
           ["text"] = request.Script
         }
       }
