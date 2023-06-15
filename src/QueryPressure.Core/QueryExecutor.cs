@@ -39,6 +39,10 @@ public class QueryExecutor
       while (!token.IsCancellationRequested)
       {
         await _loadProfile.WhenNextCanBeExecutedAsync(token);
+        // while (!task.IsCompleted)
+        // {
+        //   await Task.Delay(100, token);
+        // }
 
         if (token.IsCancellationRequested)
         {

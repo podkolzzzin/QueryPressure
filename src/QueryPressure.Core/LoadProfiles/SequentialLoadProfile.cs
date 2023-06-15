@@ -4,14 +4,14 @@ namespace QueryPressure.Core.LoadProfiles;
 
 public class SequentialLoadProfile : IProfile, IExecutionHook
 {
-  private TaskCompletionSource? _taskCompletionSource;
+  private TaskCompletionSourceWithCancellation? _taskCompletionSource;
 
   public async Task WhenNextCanBeExecutedAsync(CancellationToken cancellationToken)
   {
     if (_taskCompletionSource != null)
       await _taskCompletionSource.Task;
 
-    _taskCompletionSource = new();
+    _taskCompletionSource = new(cancellationToken);
   }
 
   public Task OnQueryExecutedAsync(ExecutionResult _, CancellationToken cancellationToken)
@@ -19,7 +19,13 @@ public class SequentialLoadProfile : IProfile, IExecutionHook
     if (_taskCompletionSource == null)
       throw new InvalidOperationException(
           $"{nameof(OnQueryExecutedAsync)} is called before first {nameof(WhenNextCanBeExecutedAsync)} called.");
-    _taskCompletionSource.SetResult();
+
+    var tcs = _taskCompletionSource;
+    _taskCompletionSource = null;
+    
+    tcs.SetResult();
+    tcs.Dispose();
+
 
     return Task.CompletedTask;
   }

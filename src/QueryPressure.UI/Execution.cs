@@ -1,9 +1,11 @@
 using Autofac.Features.AttributeFilters;
+using MongoDB.Bson;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
-using QueryPressure.UI;
 using QueryPressure.UI.Hubs;
+
+namespace QueryPressure.UI;
 
 internal class Execution // TODO: interesting idea for refactoring: use MediatR to send notifications and reuse this class in CLI
 {
@@ -49,6 +51,7 @@ internal class Execution // TODO: interesting idea for refactoring: use MediatR 
   
   private void NotifyAsync(IVisualization liveVisualization)
   {
+    Console.WriteLine(liveVisualization.ToJson());
     _hubService.SendMessageToAllAsync("live-metrics", liveVisualization);
   }
 }
