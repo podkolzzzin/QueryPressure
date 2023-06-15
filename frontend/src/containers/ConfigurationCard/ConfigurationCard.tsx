@@ -27,7 +27,8 @@ export function ConfigurationCard({ selectedProvider, script, toggleTheme }: Con
       script: script,
       profile: selectedProfile,
       limit: selectedLimit
-    }).then(() => {
+    }).then((id) => {
+      window.open(`/execution/${id}`, '_blank');
       /* TODO: processing result */
     });
   }

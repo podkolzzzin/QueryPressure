@@ -52,6 +52,6 @@ internal class Execution // TODO: interesting idea for refactoring: use MediatR 
   private void NotifyAsync(IVisualization liveVisualization)
   {
     Console.WriteLine(liveVisualization.ToJson());
-    _hubService.SendMessageToAllAsync("live-metrics", liveVisualization);
+    _hubService.NotifyExecutionAsync(Id.ToString(), liveVisualization);
   }
 }
