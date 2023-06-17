@@ -22,17 +22,17 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.name}"/>
-        <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=LostFocus}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.provider}"/>
         <ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" 
                   ItemsSource="{Binding Providers}"
-                  SelectedItem="{Binding Provider}"/>
+                  SelectedItem="{Binding Provider, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.connection-string}"/>
         <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" VerticalAlignment="Center">
             <Button DockPanel.Dock="Right" Padding="8 0" Margin="4 0 0 0" Content="{ex:Locale labels.properties.scenario.test}"/>
-            <TextBox DockPanel.Dock="Left" Text="{Binding ConnectionString, UpdateSourceTrigger=LostFocus}"/>
+            <TextBox DockPanel.Dock="Left" Text="{Binding ConnectionString, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
 
     </Grid>
