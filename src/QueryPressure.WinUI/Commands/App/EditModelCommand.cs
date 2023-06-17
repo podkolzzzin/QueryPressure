@@ -31,7 +31,7 @@ public class EditModelCommand : CommandBase<EditModelCommandParameter>
   {
     if (delay == default)
     {
-      delay = TimeSpan.FromSeconds(0.5);
+      delay = TimeSpan.FromSeconds(1);
     }
 
     _timer?.Dispose();

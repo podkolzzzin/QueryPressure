@@ -1,4 +1,5 @@
 using QueryPressure.Core.Interfaces;
+using QueryPressure.WinUI.Commands.App;
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
@@ -6,7 +7,7 @@ using QueryPressure.WinUI.Services.Subscriptions;
 
 namespace QueryPressure.WinUI.ViewModels.Properties;
 
-public class ScenarioPropertiesViewModel : ViewModelBase, IDisposable
+public class ScenarioPropertiesViewModel : BaseModelPropertiesViewModel<ScenarioModel>, IDisposable
 {
   private readonly ISubscription _subscription;
   private readonly ISubscription _scenarioExecutedSubscription;
@@ -16,7 +17,8 @@ public class ScenarioPropertiesViewModel : ViewModelBase, IDisposable
   private string? _provider;
 
 
-  public ScenarioPropertiesViewModel(ISubscriptionManager subscriptionManager, ScenarioModel scenarioModel, IProviderInfo[] providers)
+  public ScenarioPropertiesViewModel(ISubscriptionManager subscriptionManager, EditModelCommand editModelCommand, ScenarioModel scenarioModel, IProviderInfo[] providers) 
+    : base(editModelCommand, scenarioModel)
   {
     Providers = providers.Select(x => x.Name).ToArray();
     Provider = Providers.FirstOrDefault();
@@ -58,19 +60,19 @@ public class ScenarioPropertiesViewModel : ViewModelBase, IDisposable
   public string? Name
   {
     get => _name;
-    set => SetField(ref _name, value);
+    set => SetModelField(ref _name, value);
   }
 
   public string? Provider
   {
     get => _provider;
-    set => SetField(ref _provider, value);
+    set => SetModelField(ref _provider, value);
   }
 
   public string? ConnectionString
   {
     get => _connectionString;
-    set => SetField(ref _connectionString, value);
+    set => SetModelField(ref _connectionString, value);
   }
 
   public void Dispose()

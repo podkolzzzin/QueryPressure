@@ -36,7 +36,7 @@ public class PropertiesViewModel : ToolViewModel, IDisposable
     Content = selection.Model switch
     {
       ProjectModel projectModel => new ProjectPropertiesViewModel(_subscriptionManager, _editModelCommand, projectModel),
-      ScenarioModel profileModel => new ScenarioPropertiesViewModel(_subscriptionManager, profileModel, _providers),
+      ScenarioModel profileModel => new ScenarioPropertiesViewModel(_subscriptionManager, _editModelCommand, profileModel, _providers),
       _ => null
     };
   }

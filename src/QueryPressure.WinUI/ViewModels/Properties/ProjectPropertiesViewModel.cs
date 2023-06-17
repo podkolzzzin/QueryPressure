@@ -36,15 +36,8 @@ public class ProjectPropertiesViewModel : BaseModelPropertiesViewModel<ProjectMo
   public string? Name
   {
     get => _name;
-    set => SetModelField(ref _name, value, GetRenamedModel);
+    set => SetModelField(ref _name, value);
   }
-
-  private static ProjectModel GetRenamedModel(ProjectModel model, string? value)
-  {
-    model.Name = value;
-    return model;
-  }
-
 
   public string? Path
   {
