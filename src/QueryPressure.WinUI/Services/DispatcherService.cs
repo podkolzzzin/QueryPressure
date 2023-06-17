@@ -24,7 +24,7 @@ public class DispatcherService : IDispatcherService
     {
       return _dispatcher.InvokeAsync(action).Task;
     }
-      
+
     action();
     return Task.CompletedTask;
   }

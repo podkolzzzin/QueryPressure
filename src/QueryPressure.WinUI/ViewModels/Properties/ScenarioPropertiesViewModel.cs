@@ -17,7 +17,7 @@ public class ScenarioPropertiesViewModel : BaseModelPropertiesViewModel<Scenario
   private string? _provider;
 
 
-  public ScenarioPropertiesViewModel(ISubscriptionManager subscriptionManager, EditModelCommand editModelCommand, ScenarioModel scenarioModel, IProviderInfo[] providers) 
+  public ScenarioPropertiesViewModel(ISubscriptionManager subscriptionManager, EditModelCommand editModelCommand, ScenarioModel scenarioModel, IProviderInfo[] providers)
     : base(editModelCommand, scenarioModel)
   {
     Providers = providers.Select(x => x.Name).ToArray();

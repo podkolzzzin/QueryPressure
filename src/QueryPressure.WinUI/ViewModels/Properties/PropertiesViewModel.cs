@@ -16,7 +16,7 @@ public class PropertiesViewModel : ToolViewModel, IDisposable
   private readonly ISubscription _selectionSubscription;
   private ViewModelBase? _content;
 
-  public PropertiesViewModel(ISubscriptionManager subscriptionManager, IObservableItem<Selection> selectionObservable, 
+  public PropertiesViewModel(ISubscriptionManager subscriptionManager, IObservableItem<Selection> selectionObservable,
     EditModelCommand editModelCommand, IProviderInfo[] providers) : base("properties")
   {
     _subscriptionManager = subscriptionManager;
