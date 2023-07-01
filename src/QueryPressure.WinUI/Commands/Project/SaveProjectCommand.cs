@@ -3,7 +3,7 @@ using QueryPressure.WinUI.Services.Project;
 
 namespace QueryPressure.WinUI.Commands.Project;
 
-public class SaveProjectCommand : AsyncCommandBase
+public class SaveProjectCommand : CommandBase
 {
   private readonly IProjectService _projectService;
 
@@ -18,7 +18,7 @@ public class SaveProjectCommand : AsyncCommandBase
     return _projectService.Project is not null && (!string.IsNullOrEmpty(parameterPath) || _projectService.Project.Path != null);
   }
 
-  protected override async Task ExecuteAsync(object? parameter, CancellationToken token)
+  protected override void ExecuteInternal(object? parameter)
   {
     var parameterPath = parameter?.ToString();
 
@@ -30,6 +30,6 @@ public class SaveProjectCommand : AsyncCommandBase
       throw new ArgumentNullException(nameof(path));
     }
 
-    await _projectService.SaveAsync(path, token);
+    _projectService.SaveAsync(path);
   }
 }

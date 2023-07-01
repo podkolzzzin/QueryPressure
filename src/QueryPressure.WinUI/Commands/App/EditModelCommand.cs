@@ -23,8 +23,7 @@ public class EditModelCommand : CommandBase<EditModelCommandParameter>
 
   protected override void ExecuteInternal(EditModelCommandParameter parameter)
   {
-    _dispatcherService.InvokeAsync(() =>
-      _subscriptionManager.Notify(parameter.Sender, ModelAction.Edit, parameter.Model)).Wait(TimeSpan.FromSeconds(30));
+    _dispatcherService.Invoke(() => _subscriptionManager.Notify(parameter.Sender, ModelAction.Edit, parameter.Model));
   }
 
   public void DeBounce(EditModelCommandParameter parameter, TimeSpan delay = default)

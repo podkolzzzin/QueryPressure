@@ -4,9 +4,11 @@ namespace QueryPressure.WinUI.Services;
 
 public interface IDispatcherService
 {
+  void Invoke(Action action);
+  TResult Invoke<TResult>(Func<TResult> function);
 
-  Task<TResult> InvokeAsync<TResult>(Func<TResult> function);
-  Task InvokeAsync(Action action);
+  Task<TResult> InvokeAsync<TResult>(Func<TResult> function, CancellationToken token);
+  Task InvokeAsync(Action action, CancellationToken token);
 }
 
 public class DispatcherService : IDispatcherService
@@ -18,20 +20,43 @@ public class DispatcherService : IDispatcherService
     _dispatcher = Dispatcher.CurrentDispatcher;
   }
 
-  public Task InvokeAsync(Action action)
+  public void Invoke(Action action)
   {
     if (!_dispatcher.CheckAccess())
     {
-      return _dispatcher.InvokeAsync(action).Task;
+      _dispatcher.Invoke(action, DispatcherPriority.Background);
+      return;
+    }
+
+    action();
+  }
+
+  public TResult Invoke<TResult>(Func<TResult> function)
+  {
+    if (!_dispatcher.CheckAccess())
+    {
+      return _dispatcher.Invoke(function, DispatcherPriority.Background);
+    }
+
+    return function();
+  }
+
+  public Task InvokeAsync(Action action, CancellationToken token)
+  {
+    if (!_dispatcher.CheckAccess())
+    {
+      return _dispatcher.InvokeAsync(action, DispatcherPriority.Background, token).Task;
     }
 
     action();
     return Task.CompletedTask;
   }
 
-  public Task<TResult> InvokeAsync<TResult>(Func<TResult> function)
+  public Task<TResult> InvokeAsync<TResult>(Func<TResult> function, CancellationToken token)
   {
-    return _dispatcher.CheckAccess() ? Task.FromResult(function()) : _dispatcher.InvokeAsync(function).Task;
+    return _dispatcher.CheckAccess()
+      ? Task.FromResult(function())
+      : _dispatcher.InvokeAsync(function, DispatcherPriority.Background, token).Task;
   }
 }
 

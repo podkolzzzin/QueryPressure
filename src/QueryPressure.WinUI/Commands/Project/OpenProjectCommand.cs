@@ -5,7 +5,7 @@ using QueryPressure.WinUI.Services.Project;
 
 namespace QueryPressure.WinUI.Commands.Project;
 
-public class OpenProjectCommand : AsyncCommandBase<string>
+public class OpenProjectCommand : CommandBase<string>
 {
   private readonly IProjectService _projectService;
   private readonly CloseProjectCommand _closeProjectCommand;
@@ -24,7 +24,7 @@ public class OpenProjectCommand : AsyncCommandBase<string>
     return isCorrectExtension && File.Exists(parameter);
   }
 
-  protected override async Task ExecuteAsync(string parameter, CancellationToken token)
+  protected override void ExecuteInternal(string parameter)
   {
     if (_projectService.Project is not null)
     {
@@ -36,6 +36,6 @@ public class OpenProjectCommand : AsyncCommandBase<string>
       throw new InvalidOperationException("Failed to close project");
     }
 
-    await _projectService.OpenAsync(parameter, token);
+    _projectService.OpenAsync(parameter);
   }
 }

@@ -6,11 +6,11 @@ public interface IProjectService
 {
   ProjectModel? Project { get; }
 
-  Task OpenAsync(string path, CancellationToken token);
+  Task OpenAsync(string path, CancellationToken token = default);
 
-  Task SaveAsync(string path, CancellationToken token);
+  Task SaveAsync(string path, CancellationToken token = default);
 
-  Task SaveAsync(CancellationToken token);
+  Task SaveAsync(CancellationToken token = default);
 
   void CreateNew();
 
