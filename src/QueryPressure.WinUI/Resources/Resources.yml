@@ -39,6 +39,8 @@
             provider: "Provider:"
             connection-string: "Connection String:"
             test: Test
+            profile: Profile
+            limit: Limit
   languages:
     en-US: English (USA)
     uk-UA: Ukrainian
@@ -86,6 +88,8 @@ uk-UA:
             provider: "Провайдер:"
             connection-string: "Рядок з'єднання:"
             test: Тест
+            profile: Профайл
+            limit: Ліміт
   languages:
     en-US: Англійська (США)
     uk-UA: Українська

@@ -1,3 +1,4 @@
+using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.WinUI.Commands.App;
 using QueryPressure.WinUI.Common;
@@ -13,15 +14,19 @@ public class PropertiesViewModel : ToolViewModel, IDisposable
   private readonly ISubscriptionManager _subscriptionManager;
   private readonly EditModelCommand _editModelCommand;
   private readonly IProviderInfo[] _providers;
+  private readonly IProfileCreator[] _profileCreators;
+  private readonly ILimitCreator[] _limitCreators;
   private readonly ISubscription _selectionSubscription;
   private ViewModelBase? _content;
 
   public PropertiesViewModel(ISubscriptionManager subscriptionManager, IObservableItem<Selection> selectionObservable,
-    EditModelCommand editModelCommand, IProviderInfo[] providers) : base("properties")
+    EditModelCommand editModelCommand, IProviderInfo[] providers, IProfileCreator[] profileCreators, ILimitCreator[] limitCreators) : base("properties")
   {
     _subscriptionManager = subscriptionManager;
     _editModelCommand = editModelCommand;
     _providers = providers;
+    _profileCreators = profileCreators;
+    _limitCreators = limitCreators;
     _selectionSubscription = selectionObservable.Subscribe(UpdateContentViewModel);
     UpdateContentViewModel(null, selectionObservable.CurrentValue);
   }
@@ -36,7 +41,7 @@ public class PropertiesViewModel : ToolViewModel, IDisposable
     Content = selection.Model switch
     {
       ProjectModel projectModel => new ProjectPropertiesViewModel(_subscriptionManager, _editModelCommand, projectModel),
-      ScenarioModel profileModel => new ScenarioPropertiesViewModel(_subscriptionManager, _editModelCommand, profileModel, _providers),
+      ScenarioModel profileModel => new ScenarioPropertiesViewModel(_subscriptionManager, _editModelCommand, profileModel, _providers, _profileCreators, _limitCreators),
       _ => null
     };
   }

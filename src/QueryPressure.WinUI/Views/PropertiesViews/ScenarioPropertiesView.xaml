@@ -10,6 +10,11 @@
              d:DataContext="{d:DesignInstance d:Type=properties:ScenarioPropertiesViewModel}"
              d:DesignHeight="450" d:DesignWidth="300"
              MinWidth="150" MinHeight="50">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type properties:ArgumentViewModel}">
+            <local:ArgumentView DataContext="{Binding}"/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Margin="8" IsEnabled="{Binding CanEdit}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="70"/>
@@ -19,6 +24,12 @@
             <RowDefinition Height="Auto" MinHeight="24"/>
             <RowDefinition Height="Auto" MinHeight="24"/>
             <RowDefinition Height="Auto" MinHeight="24"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="24"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="24"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.name}"/>
@@ -34,6 +45,38 @@
             <Button DockPanel.Dock="Right" Padding="8 0" Margin="4 0 0 0" Content="{ex:Locale labels.properties.scenario.test}"/>
             <TextBox DockPanel.Dock="Left" Text="{Binding ConnectionString, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
+
+        <Separator Grid.Row="3" Grid.ColumnSpan="2"/>
+        
+        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.profile}"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" 
+                  ItemsSource="{Binding Profiles}"
+                  SelectedItem="{Binding Profile, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{ex:Locale Binding={Binding StringFormat='profiles.{0}.title'}}"
+                               ToolTip="{ex:Locale Binding={Binding StringFormat='profiles.{0}.description'}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ItemsControl Grid.Row="5" Grid.Column="1" ItemsSource="{Binding ProfileArguments}"/>
+
+        <Separator Grid.Row="6" Grid.ColumnSpan="2"/>
+        
+        <Label Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.limit}"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" 
+                  ItemsSource="{Binding Limits}"
+                  SelectedItem="{Binding Limit, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{ex:Locale Binding={Binding StringFormat='limits.{0}.title'}}" 
+                               ToolTip="{ex:Locale Binding={Binding StringFormat='limits.{0}.description'}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ItemsControl Grid.Row="8" Grid.Column="1" ItemsSource="{Binding LimitArguments}"/>
 
     </Grid>
 </UserControl>

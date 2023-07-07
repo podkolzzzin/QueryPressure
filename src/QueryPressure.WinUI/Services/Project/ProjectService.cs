@@ -1,6 +1,8 @@
 using System.IO;
 using System.IO.Compression;
 using System.Text.Json;
+using QueryPressure.App.Arguments;
+using QueryPressure.Core.Interfaces;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Language;
@@ -19,6 +21,7 @@ public class ProjectService : IProjectService
     _subject = subject;
     _subscriptionManager = subscriptionManager;
     _languageService = languageService;
+
     Project = null;
   }
 
@@ -95,15 +98,38 @@ public class ProjectService : IProjectService
 
     var newScenarioNamePrefix = strings["labels.scenario.new-name"];
 
-    var scenario1 = new ScenarioModel { Id = Guid.NewGuid(), Name = $"{newScenarioNamePrefix} 1" };
-    var scenario2 = new ScenarioModel { Id = Guid.NewGuid(), Name = $"{newScenarioNamePrefix} 2" };
+    var scenario1 = CreateDefaultScenario($"{newScenarioNamePrefix} 1");
 
     Project.Scenarios.Add(scenario1);
-    Project.Scenarios.Add(scenario2);
 
     _subject.Notify(this, Project);
   }
 
+  private static ScenarioModel CreateDefaultScenario(string scenarioName) => new ScenarioModel
+  {
+    Id = Guid.NewGuid(),
+    Name = scenarioName,
+    ConnectionString = string.Empty,
+    Provider = "Postgres",
+    Profile = new FlatArgumentsSection
+    {
+      Type = "sequential",
+      Arguments = new List<ArgumentFlat>()
+    },
+    Limit = new FlatArgumentsSection
+    {
+      Type = "queryCount",
+      Arguments = new List<ArgumentFlat>()
+        {
+          new ArgumentFlat()
+          {
+            Name = "limit",
+            Value = "1",
+            Type = "int"
+          }
+        }
+    }
+  };
 
   public void Close()
   {
