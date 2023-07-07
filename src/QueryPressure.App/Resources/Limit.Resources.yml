@@ -4,7 +4,7 @@
       title: Query Count
       description: Execute limited query count and then stop execution.
       arguments:
-        queryCount: Integer number of queries that should be executed.
+        limit: Integer number of queries that should be executed
     tillFirstError:
       title: Till First Error
       description: Stop execution on first error.
@@ -24,7 +24,7 @@ uk-UA:
       title: Кількість запитів
       description: Зупинити після виконання певної кількості запитів.
       arguments:
-        queryCount: Число запитів
+        limit: Число запитів
     tillFirstError:
       title: До першої помилки
       description: Зупинити виконання після першої помилки.

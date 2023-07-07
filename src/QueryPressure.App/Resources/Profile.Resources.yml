@@ -4,12 +4,12 @@
       title: Multi-threaded
       description: Execute queries in parallel with the specified level of parallelism.
       arguments:
-        limit: Integer number of threads.
+        limit: Integer number of threads
     limitedConcurrencyWithDelay:
       title: Multi-threaded with delay
       description: Execute queries in parallel with the specified level of parallelism with delay between queries in each thread.     
       arguments:
-        limit: Integer number of threads.
+        limit: Integer number of threads
         delay: TimeSpan delay value
     sequential:
       title: Single-threaded sequential
@@ -22,13 +22,15 @@
     targetThroughput:
       title: Target throughput
       description: Execute queries with the target throughput.
+      arguments:
+        rps: Requests per second
 uk-UA:
   profiles:
     limitedConcurrency:
       title: Багатопотокове виконання
       description: Виконувати запити на декількох потоках.
       arguments:
-        limit: Кількість потоків.
+        limit: Кількість потоків
     limitedConcurrencyWithDelay:
       title: Багатопотокове виконання із затримкою 
       description: Виконувати запити на декількох потоках, але після завершення робити певну затримку.
@@ -45,4 +47,6 @@ uk-UA:
         delay: Час затримки
     targetThroughput:
       title: Цільове навантаження
-      description: Виконувати з цільовим рівнем запитів у секунду.
+      description: Виконувати з цільовим рівнем запитів за секунду.
+      arguments:
+        rps: Запитів за секунду
