@@ -7,6 +7,7 @@ using QueryPressure.WinUI.Common.Converters;
 using QueryPressure.WinUI.Extensions;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services;
+using QueryPressure.WinUI.Services.Core;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Project;
 using QueryPressure.WinUI.Services.Selection;
@@ -46,6 +47,8 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<SubscriptionManager>().As<ISubscriptionManager>().SingleInstance();
     builder.RegisterType<SelectionService>().As<ISelectionService>().SingleInstance();
     builder.RegisterType<DispatcherService>().As<IDispatcherService>().SingleInstance();
+    builder.RegisterType<Provider>().As<IProvider>();
+    builder.RegisterType<ProviderManager>().As<IProviderManager>();
 
     builder.RegisterType<LocaleViewModel>().SingleInstance();
     builder.RegisterType<LocaleStringValueConverter>().SingleInstance();

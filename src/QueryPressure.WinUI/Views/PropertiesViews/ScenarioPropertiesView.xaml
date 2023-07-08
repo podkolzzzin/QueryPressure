@@ -5,31 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views.PropertiesViews"
              xmlns:properties="clr-namespace:QueryPressure.WinUI.ViewModels.Properties"
+             xmlns:scenario="clr-namespace:QueryPressure.WinUI.Commands.Scenario"
              xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
+             xmlns:converters="clr-namespace:QueryPressure.WinUI.Converters"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=properties:ScenarioPropertiesViewModel}"
              d:DesignHeight="450" d:DesignWidth="300"
              MinWidth="150" MinHeight="50">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type properties:ArgumentsPropertiesViewModel}">
-            <StackPanel Orientation="Vertical" Margin="0 2">
-                <ComboBox VerticalAlignment="Center" 
-                          ItemsSource="{Binding Types}"
-                          SelectedItem="{Binding CurrentType, UpdateSourceTrigger=PropertyChanged}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{ex:Locale Binding={Binding Value, StringFormat='{}{0}.title'}}"
-                               ToolTip="{ex:Locale Binding={Binding Value, StringFormat='{}{0}.description'}}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                
-                <ItemsControl ItemsSource="{Binding Arguments}"/>
-            </StackPanel>
-        </DataTemplate>
+        <converters:ProviderConnectionStringConverter x:Key="ProviderConnectionStringConverter"/>
 
-        <DataTemplate DataType="{x:Type properties:ArgumentViewModel}">
-            <local:ArgumentView DataContext="{Binding}"/>
+        <DataTemplate DataType="{x:Type properties:ArgumentsPropertiesViewModel}">
+            <local:ArgumentsPropertiesView DataContext="{Binding}"/>
         </DataTemplate>
     </UserControl.Resources>
     <Grid Margin="8" IsEnabled="{Binding CanEdit}">
@@ -57,7 +44,16 @@
 
         <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.connection-string}"/>
         <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" VerticalAlignment="Center">
-            <Button DockPanel.Dock="Right" Padding="8 0" Margin="4 0 0 0" Content="{ex:Locale labels.properties.scenario.test}"/>
+            <Button DockPanel.Dock="Right" Padding="8 0" Margin="4 0 0 0"
+                    Content="{ex:Locale labels.properties.scenario.test}"
+                    Command="{ex:CommandImport scenario:TestConnectionStringCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ProviderConnectionStringConverter}">
+                        <Binding Path="Provider"/>
+                        <Binding Path="ConnectionString"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
             <TextBox DockPanel.Dock="Left" Text="{Binding ConnectionString, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
 
@@ -65,7 +61,6 @@
         
         <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Content="{ex:Locale labels.properties.scenario.profile}"/>
         <ContentControl Grid.Row="4" Grid.Column="1" Content="{Binding Profile}"/>
-
 
         <Separator Grid.Row="5" Grid.ColumnSpan="2"/>
         

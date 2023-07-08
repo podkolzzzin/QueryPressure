@@ -25,6 +25,12 @@
         confirm-close-project:
             title: Close Project
             message: Are you sure that you want to close current project?
+        failed-test-connectionString:
+            title: Test Failed
+            message: Failed to Test Connection String.\r\n{0}
+        succeed-test-connectionString:
+            title: Test Succeed
+            message: "Connection Succeed.\r\nServer Version: {0}"
     project:
         new-name: New Project
     scenario:
@@ -74,6 +80,12 @@ uk-UA:
         confirm-close-project:
             title: Закрити проєкт
             message: Ви дійсно бажаєте закрити поточний проєкт?
+        failed-test-connectionString:
+            title: Тест Неуспішний
+            message: "З'єднання не вдалося.\r\n{0}"
+        succeed-test-connectionString:
+            title: Тест Успішний
+            message: "З'єднання вдалося.\r\nВерсія серверу: {0}"
     project:
         new-name: Новий Проект
     scenario:
