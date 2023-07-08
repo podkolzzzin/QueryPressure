@@ -1,9 +1,7 @@
 .file-upload {
   display: flex;
   align-items: center;
-
-  width: 250px;
-  max-width: 450px;
+  width: 100%;
 }
 
 .file-upload input[type="file"] {
@@ -11,12 +9,11 @@
 }
 
 label.file-upload-label {
-  padding: 8px 12px;
+  font-size: 0.875rem;
   background-color: transparent;
   color: var(--bs-card-color);
   border-radius: 4px;
   cursor: pointer;
-  min-width: 250px;
   text-align: center;
   border-top-left-radius: 0.375rem !important;
   border-bottom-left-radius: 0.375rem !important;
@@ -26,12 +23,20 @@ label.file-upload-label {
   text-overflow: ellipsis;
 }
 
+label.file-upload-label p {
+  margin-bottom: 0px;
+  position: relative;
+  top: 1px;
+}
+
 .file-upload-label.disabled {
   color: #6c757d; /* Adjust the color to match your desired disabled style */
   cursor: not-allowed;
 }
 
 .file-upload-button svg {
+  position: relative;
+  bottom: 1px;
   height: 20px;
 }
 

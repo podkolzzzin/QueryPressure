@@ -34,11 +34,13 @@ export function FileUpload({ onFileUpload, allowedFileTypes }: FileUploadProps) 
   const isUploadDisabled = !selectedFile;
 
   return (
-    <div className="file-upload m-0">
+    <div className="file-upload">
       <div className="input-group">
         <input type="file" id="file" onChange={handleFileChange} accept={fileTypes} required/>
         <label htmlFor="file" className={`file-upload-label form-control${!isUploadDisabled ? ' disabled' : ''}`}>
+          <p>
           {selectedFile ? selectedFile.name : t('labels.selectFile')}
+          </p>
         </label>
         <button className="file-upload-button btn btn-outline-secondary" onClick={handleUpload} disabled={isUploadDisabled}>
           <UploadIcon />
