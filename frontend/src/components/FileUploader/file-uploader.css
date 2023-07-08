@@ -29,7 +29,6 @@ label.file-upload-label {
 .file-upload-label.disabled {
   color: #6c757d; /* Adjust the color to match your desired disabled style */
   cursor: not-allowed;
-  pointer-events: none;
 }
 
 .file-upload-button svg {
