@@ -6,10 +6,10 @@ namespace QueryPressure.WinUI.Views.PropertiesViews
   /// Interaction logic for ArgumentsPropertiesView.xaml
   /// </summary>
   public partial class ArgumentsPropertiesView : UserControl
+  {
+    public ArgumentsPropertiesView()
     {
-        public ArgumentsPropertiesView()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
     }
+  }
 }

@@ -75,7 +75,7 @@ public class Provider : IProvider
 
     var executionId = Guid.NewGuid();
     var task = executor.ExecuteAsync(default);
-   
+
     throw new NotImplementedException("Add Task to ExecutionWatcher");
 
     var executionModel = new ExecutionModel(executionId);

@@ -4,7 +4,7 @@ using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.WinUI.Services.Core;
 
-public class ProviderManager: IProviderManager
+public class ProviderManager : IProviderManager
 {
   private readonly Dictionary<string, IProvider> _providers;
 

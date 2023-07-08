@@ -29,9 +29,9 @@ public class TestConnectionStringCommand : CommandBase<TestConnectionStringDto>
   private void CheckTestResult(Task<IServerInfo> task)
   {
     var strings = _languageService.GetStrings();
-    try 
+    try
     {
-      
+
       var result = task.Result;
 
       if (result is null)
@@ -48,8 +48,8 @@ public class TestConnectionStringCommand : CommandBase<TestConnectionStringDto>
         strings["labels.dialogs.succeed-test-connectionString.title"],
         MessageBoxButton.OK, MessageBoxImage.Information);
       }
-    } 
-    catch(Exception ex) 
+    }
+    catch (Exception ex)
     {
       var message = ex.InnerException?.Message ?? ex.Message;
       MessageBox.Show(
