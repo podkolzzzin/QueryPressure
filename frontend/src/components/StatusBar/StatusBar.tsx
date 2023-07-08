@@ -9,7 +9,7 @@ export function StatusBar({status, selectProvider, providers, selectedProvider, 
   const { t } = useTranslation();
   return (
     <div className="row status-bar px-2 align-items-center">
-      <div className="col-sm-6 mt-1">
+      <div className="col-sm-5 mt-1">
         <span>{status}</span>
       </div>
 
@@ -17,7 +17,7 @@ export function StatusBar({status, selectProvider, providers, selectedProvider, 
         <FileUpload onFileUpload={handleFileUpload} allowedFileTypes={allowedFileTypes} />
       </div>
 
-      <div className="col-sm-2 mt-1">
+      <div className="col-sm-3 mt-1">
         <select className="form-select form-select-sm select-provider" title="Provider"
           onChange={(event) => selectProvider(event.target.value)} value={selectedProvider ?? ''}>
           <option className="d-none" value="" disabled>{t('labels.selectProvider')}</option>
