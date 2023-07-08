@@ -4,10 +4,17 @@ using QueryPressure.WinUI.Models;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using YamlDotNet.Core.Tokens;
 
 namespace QueryPressure.WinUI.ViewModels.Properties;
 
 public delegate TModel UpdateModel<in T, TModel>(TModel model, T value);
+
+public enum SetModelType
+{
+  Direct,
+  Debounced
+}
 
 public abstract class BaseModelPropertiesViewModel<TModel> : ViewModelBase where TModel : IModel
 {
@@ -20,23 +27,41 @@ public abstract class BaseModelPropertiesViewModel<TModel> : ViewModelBase where
     _model = model;
   }
 
-  protected bool SetModelField<T>(ref T field, T value, UpdateModel<T, TModel> getUpdatedModel, [CallerMemberName] string? propertyName = null)
+  protected bool SetModelField<T>(ref T field, T value, UpdateModel<T, TModel> getUpdatedModel,
+    SetModelType setModelType = SetModelType.Debounced, [CallerMemberName] string? propertyName = null)
   {
     if (EqualityComparer<T>.Default.Equals(field, value)) return false;
     field = value;
     OnPropertyChanged(propertyName);
-    _editModelCommand.DeBounce(new EditModelCommandParameter(this, getUpdatedModel.Invoke(_model, value)));
+    NotifyEditModel(setModelType, getUpdatedModel, value);
+
     return true;
   }
 
-  protected bool SetModelField<T>(ref T field, T value, Expression<Func<TModel, T>> modelPropertySelector, [CallerMemberName] string? propertyName = null)
+  protected void NotifyEditModel<T>(SetModelType setModelType, UpdateModel<T, TModel> getUpdatedModel, T value)
   {
-    return SetModelField(ref field, value, (m, v) => SetModelProperty(m, modelPropertySelector, v), propertyName);
+    var updatedModel = getUpdatedModel.Invoke(_model, value);
+
+    switch (setModelType)
+    {
+      case SetModelType.Direct:
+        _editModelCommand.Execute(new EditModelCommandParameter(this, updatedModel));
+        break;
+      case SetModelType.Debounced:
+        _editModelCommand.DeBounce(new EditModelCommandParameter(this, updatedModel));
+        break;
+    }
   }
 
-  protected bool SetModelField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+  protected bool SetModelField<T>(ref T field, T value, Expression<Func<TModel, T>> modelPropertySelector,
+    SetModelType setModelType = SetModelType.Debounced, [CallerMemberName] string? propertyName = null)
   {
-    return SetModelField(ref field, value, (m, v) => SetModelProperty(m, propertyName, v), propertyName);
+    return SetModelField(ref field, value, (m, v) => SetModelProperty(m, modelPropertySelector, v), setModelType, propertyName);
+  }
+
+  protected bool SetModelField<T>(ref T field, T value, SetModelType setModelType = SetModelType.Debounced, [CallerMemberName] string? propertyName = null)
+  {
+    return SetModelField(ref field, value, (m, v) => SetModelProperty(m, propertyName, v), setModelType, propertyName);
   }
 
   private TModel SetModelProperty<T>(TModel model, Expression<Func<TModel, T>> modelPropertySelector, T? value)

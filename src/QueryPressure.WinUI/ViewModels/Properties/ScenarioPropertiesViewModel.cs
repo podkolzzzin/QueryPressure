@@ -10,19 +10,12 @@ namespace QueryPressure.WinUI.ViewModels.Properties;
 
 public class ScenarioPropertiesViewModel : BaseModelPropertiesViewModel<ScenarioModel>, IDisposable
 {
-  private readonly Dictionary<string, ArgumentDescriptor[]> _profileArgumentsMapper;
-  private readonly Dictionary<string, ArgumentDescriptor[]> _limitArgumentsMapper;
-
   private readonly ISubscription _subscription;
   private readonly ISubscription _scenarioExecutedSubscription;
   private string? _name;
   private bool _canEdit;
   private string? _connectionString;
   private string? _provider;
-  private string? _profile;
-  private string? _limit;
-  private ArgumentViewModel[]? _profileArguments;
-  private ArgumentViewModel[]? _limitArguments;
 
   public ScenarioPropertiesViewModel(ISubscriptionManager subscriptionManager, EditModelCommand editModelCommand,
     ScenarioModel scenarioModel, IProviderInfo[] providers, IProfileCreator[] profileCreators, ILimitCreator[] limitCreators)
@@ -30,11 +23,11 @@ public class ScenarioPropertiesViewModel : BaseModelPropertiesViewModel<Scenario
   {
     Providers = providers.Select(x => x.Name).ToArray();
 
-    _profileArgumentsMapper = profileCreators.ToDictionary(x => x.Type, x => x.Arguments);
-    Profiles = profileCreators.Select(x => x.Type).ToArray();
+    Profile = new ArgumentsPropertiesViewModel(profileCreators.Select(x => x.Type).ToArray(),
+      profileCreators.ToDictionary(x => x.Type, x => x.Arguments), "profiles", UpdateProfile);
 
-    _limitArgumentsMapper = limitCreators.ToDictionary(x => x.Type, x => x.Arguments);
-    Limits = limitCreators.Select(x => x.Type).ToArray();
+    Limit = new ArgumentsPropertiesViewModel(limitCreators.Select(x => x.Type).ToArray(),
+      limitCreators.ToDictionary(x => x.Type, x => x.Arguments), "limits", UpdateLimit);
 
     _subscription = subscriptionManager
       .On(ModelAction.Edit, scenarioModel)
@@ -48,27 +41,25 @@ public class ScenarioPropertiesViewModel : BaseModelPropertiesViewModel<Scenario
     OnScenarioExecuted(null, scenarioModel);
   }
 
-  public string[] Providers { get; set; }
-  public string[] Profiles { get; set; }
-  public string[] Limits { get; set; }
-
-  private void OnScenarioExecuted(object? sender, IModel value)
+  private void UpdateLimit(SetModelType type)
   {
-    var model = (ScenarioModel)value;
-    CanEdit = !model.IsReadOnly;
+    NotifyEditModel(type, (model, value) =>
+    {
+      model.Limit = value;
+      return model;
+    }, Limit.GetArguments());
   }
 
-  private void OnModelEdit(object? sender, IModel value)
+  private void UpdateProfile(SetModelType type)
   {
-    var model = (ScenarioModel)value;
-    Name = model.Name;
-    ConnectionString = model.ConnectionString;
-    Provider = model.Provider;
-    Profile = model.Profile.Type!;
-    ProfileArguments = BuildArguments($"profiles.{Profile}", _profileArgumentsMapper[Profile], model.Profile.Arguments).ToArray();
-    Limit = model.Limit.Type!;
-    LimitArguments = BuildArguments($"limits.{Limit}", _limitArgumentsMapper[Limit], model.Limit.Arguments).ToArray();
+    NotifyEditModel(type, (model, value) =>
+    {
+      model.Profile = value;
+      return model;
+    }, Profile.GetArguments());
   }
+
+  public string[] Providers { get; }
 
   public bool CanEdit
   {
@@ -94,75 +85,29 @@ public class ScenarioPropertiesViewModel : BaseModelPropertiesViewModel<Scenario
     set => SetModelField(ref _connectionString, value);
   }
 
-  public string? Profile
+  public ArgumentsPropertiesViewModel Profile { get; }
+  public ArgumentsPropertiesViewModel Limit { get; }
+
+  private void OnScenarioExecuted(object? sender, IModel value)
   {
-    get => _profile;
-    set => SetModelField(ref _profile, value, UpdateProfile);
+    var model = (ScenarioModel)value;
+    CanEdit = !model.IsReadOnly;
   }
 
-  public ArgumentViewModel[]? ProfileArguments
+  private void OnModelEdit(object? sender, IModel value)
   {
-    get => _profileArguments;
-    set => SetField(ref _profileArguments, value);
-  }
-
-  public string? Limit
-  {
-    get => _limit;
-    set => SetModelField(ref _limit, value, UpdateLimit);
-  }
-
-  public ArgumentViewModel[]? LimitArguments
-  {
-    get => _limitArguments;
-    set => SetField(ref _limitArguments, value);
-  }
-
-  private ScenarioModel UpdateProfile(ScenarioModel model, string? value)
-  {
-    if (_profileArguments != null)
+    if (sender == this)
     {
-      model.Profile = GetArguments(_profile, _profileArguments);
+      return;
     }
 
-    return model;
+    var model = (ScenarioModel)value;
+    Name = model.Name;
+    ConnectionString = model.ConnectionString;
+    Provider = model.Provider;
+    Profile.SetValue(model.Profile);
+    Limit.SetValue(model.Limit);
   }
-
-  private ScenarioModel UpdateLimit(ScenarioModel model, string? value)
-  {
-    if (_limitArguments != null)
-    {
-      model.Limit = GetArguments(_limit, _limitArguments);
-    }
-
-    return model;
-  }
-
-  private IEnumerable<ArgumentViewModel> BuildArguments(string localizationPrefix,
-    ArgumentDescriptor[] argumentDescriptors, List<ArgumentFlat>? arguments)
-  {
-    var argumentsMapper = arguments?.ToDictionary(x => x.Name, x => x.Value) ?? new Dictionary<string, string>();
-
-    foreach (var argumentDescriptor in argumentDescriptors)
-    {
-      var localizationKey = $"{localizationPrefix}.arguments.{argumentDescriptor.Name}";
-      var currentValue = argumentsMapper.TryGetValue(argumentDescriptor.Name, out var val) ? val : "";
-      yield return new ArgumentViewModel(localizationKey, argumentDescriptor.Name, argumentDescriptor.Type, currentValue);
-    }
-  }
-
-  private FlatArgumentsSection GetArguments(string? profile, ArgumentViewModel[] profileArguments)
-  => new()
-  {
-    Type = profile,
-    Arguments = profileArguments
-      .Select(x => new ArgumentFlat()
-      {
-        Name = x.Name,
-        Type = x.Type,
-        Value = x.Value,
-      }).ToList()
-  };
 
   public void Dispose()
   {
