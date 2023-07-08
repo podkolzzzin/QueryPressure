@@ -1,23 +1,38 @@
 .file-upload {
   display: flex;
   align-items: center;
+
+  width: 250px;
+  max-width: 450px;
 }
 
 .file-upload input[type="file"] {
   display: none;
 }
 
-.file-upload-label {
-  margin: 0 10px;
+label.file-upload-label {
   padding: 8px 12px;
   background-color: transparent;
-  color: #333;
+  color: var(--bs-card-color);
   border-radius: 4px;
   cursor: pointer;
   min-width: 250px;
   text-align: center;
+  border-top-left-radius: 0.375rem !important;
+  border-bottom-left-radius: 0.375rem !important;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.file-upload-button {
-  min-width: 150px;
+.file-upload-label.disabled {
+  color: #6c757d; /* Adjust the color to match your desired disabled style */
+  cursor: not-allowed;
+  pointer-events: none;
 }
+
+.file-upload-button svg {
+  height: 20px;
+}
+
