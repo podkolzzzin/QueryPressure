@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
+using QueryPressure.WinUI.Commands.App;
 using QueryPressure.WinUI.Commands.Scenario;
 using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Models;
@@ -14,28 +15,50 @@ public class ScriptViewModel : PaneViewModel, IDisposable
 {
   private readonly IDisposable _subscription;
   private readonly ILanguageService _languageService;
-
+  private readonly EditModelCommand _editModelCommand;
   private ScenarioModel? _model;
-  private TextDocument? _document;
+  private TextDocument _document;
   private bool _isDirty;
   private IHighlightingDefinition? _highlightingDefinition;
 
 
-  public ScriptViewModel(ISubscriptionManager subscriptionManager, ILanguageService languageService, CloseScenarioScriptCommand closeScenarioScriptCommand, ScenarioModel scenarioModel)
+  public ScriptViewModel(ISubscriptionManager subscriptionManager, ILanguageService languageService,
+    EditModelCommand editModelCommand,
+    CloseScenarioScriptCommand closeScenarioScriptCommand, ScenarioModel scenarioModel)
   {
     _languageService = languageService;
+    _editModelCommand = editModelCommand;
+    _document = new TextDocument();
+    _document.Changed += _document_Changed;
+
+    ContentId = scenarioModel.Id.ToString();
+    OnScenarioChanged(null, scenarioModel);
 
     _subscription = subscriptionManager
       .On(ModelAction.Edit, scenarioModel)
       .Subscribe(OnScenarioChanged);
 
-    ContentId = scenarioModel.Id.ToString();
-    OnScenarioChanged(null, scenarioModel);
     CloseCommand = new DelegateCommand(() => closeScenarioScriptCommand.Execute(_model));
+  }
+
+  private void _document_Changed(object? sender, DocumentChangeEventArgs e)
+  {
+    if (_model == null)
+    {
+      return;
+    }
+
+    _model.Script = _document.Text;
+    _editModelCommand.DeBounce(new EditModelCommandParameter(this, _model));
   }
 
   private void OnScenarioChanged(object? sender, IModel value)
   {
+    if (sender == this)
+    {
+      return;
+    }
+
     _model = (ScenarioModel)value;
 
     if (!ContentId.Equals(_model.Id.ToString()))
@@ -44,10 +67,15 @@ public class ScriptViewModel : PaneViewModel, IDisposable
     }
 
     HighlightingDefinition = GetHighlightingDefinition(_model);
-    Document = new TextDocument(_model.Script ?? string.Empty);
+
+    var modelText = _model.Script ?? string.Empty;
+
+    if (!modelText.Equals(Document.Text))
+    {
+      Document.Text = modelText;
+    }
 
     var strings = _languageService.GetStrings();
-
     Title = $"{_model.Name} - {strings["labels.scenario.script"]}";
   }
 
@@ -59,7 +87,9 @@ public class ScriptViewModel : PaneViewModel, IDisposable
 
   public ICommand CloseCommand { get; }
 
-  public TextDocument? Document
+  public string FilePath => Title;
+
+  public TextDocument Document
   {
     get => _document;
     set => SetField(ref _document, value);

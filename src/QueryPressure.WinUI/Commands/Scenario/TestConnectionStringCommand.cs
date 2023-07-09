@@ -36,10 +36,7 @@ public class TestConnectionStringCommand : CommandBase<TestConnectionStringDto>
 
       if (result is null)
       {
-        MessageBox.Show(
-        string.Format(strings["labels.dialogs.failed-test-connectionString.message"], "NULL Result"),
-        strings["labels.dialogs.failed-test-connectionString.title"],
-        MessageBoxButton.OK, MessageBoxImage.Error);
+        ShowError(strings, "NULL Result");
       }
       else
       {
@@ -52,10 +49,15 @@ public class TestConnectionStringCommand : CommandBase<TestConnectionStringDto>
     catch (Exception ex)
     {
       var message = ex.InnerException?.Message ?? ex.Message;
-      MessageBox.Show(
-        string.Format(strings["labels.dialogs.failed-test-connectionString.message"], message),
-        strings["labels.dialogs.failed-test-connectionString.title"],
-        MessageBoxButton.OK, MessageBoxImage.Error);
+      ShowError(strings, message);
     }
+  }
+
+  private static void ShowError(IDictionary<string, string> strings, string error)
+  {
+    MessageBox.Show(
+      string.Format(strings["labels.dialogs.failed-test-connectionString.message"], error),
+      strings["labels.dialogs.failed-test-connectionString.title"],
+      MessageBoxButton.OK, MessageBoxImage.Error);
   }
 }

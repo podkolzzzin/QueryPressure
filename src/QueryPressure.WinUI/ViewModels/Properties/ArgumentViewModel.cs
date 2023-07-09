@@ -29,5 +29,11 @@ namespace QueryPressure.WinUI.ViewModels.Properties
         _valueArgumentValueEdited.Invoke(Name, _value);
       }
     }
+
+    public void SetArgumentValue(string value)
+    {
+      _value = value;
+      OnOtherPropertyChanged(nameof(Value));
+    }
   }
 }

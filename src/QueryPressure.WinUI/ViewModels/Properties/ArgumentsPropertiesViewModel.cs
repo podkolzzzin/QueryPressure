@@ -45,17 +45,20 @@ public class ArgumentsPropertiesViewModel : ViewModelBase
 
   public void SetValue(FlatArgumentsSection argumentsSection)
   {
-    CurrentType = GetType(argumentsSection.Type!);
+    _currentType = GetType(argumentsSection.Type!);
 
     if (_currentType.Key != _currentArgumentsForType || _arguments is null)
     {
-      Arguments = BuildArguments(_currentType.Key, argumentsSection.Arguments).ToArray();
+      _arguments = BuildArguments(_currentType.Key, argumentsSection.Arguments).ToArray();
       _currentArgumentsForType = _currentType.Key;
     }
     else
     {
       SetArguments(argumentsSection.Arguments!);
     }
+
+    OnOtherPropertyChanged(nameof(CurrentType));
+    OnOtherPropertyChanged(nameof(Arguments));
   }
 
   private void SetArguments(List<ArgumentFlat> arguments)
@@ -68,7 +71,7 @@ public class ArgumentsPropertiesViewModel : ViewModelBase
         ? argValue
         : throw new InvalidOperationException();
 
-      viewModel.Value = argument.Value;
+      viewModel.SetArgumentValue(argument.Value);
     }
   }
 
