@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Dtos;
-using QueryPressure.WinUI.Services.Core;
+using QueryPressure.WinUI.Services;
 using QueryPressure.WinUI.Services.Language;
 using System.Windows;
 
@@ -10,20 +10,20 @@ namespace QueryPressure.WinUI.Commands.Scenario;
 
 public class TestConnectionStringCommand : CommandBase<TestConnectionStringDto>
 {
-  private readonly IProviderManager _providerManager;
+  private readonly ITestConnectionStringService _testConnectionStringService;
   private readonly ILanguageService _languageService;
 
-  public TestConnectionStringCommand(ILogger<TestConnectionStringCommand> logger, IProviderManager providerManager,
+  public TestConnectionStringCommand(ILogger<TestConnectionStringCommand> logger,
+    ITestConnectionStringService testConnectionStringService,
     ILanguageService languageService) : base(logger)
   {
-    _providerManager = providerManager;
+    _testConnectionStringService = testConnectionStringService;
     _languageService = languageService;
   }
 
   protected override void ExecuteInternal(TestConnectionStringDto parameter)
   {
-    _providerManager.GetProvider(parameter.Provider)
-      .TestConnectionAsync(parameter.ConnectionString).ContinueWith(CheckTestResult);
+    _testConnectionStringService.TestConnectionAsync(parameter.Provider, parameter.ConnectionString, default).ContinueWith(CheckTestResult);
   }
 
   private void CheckTestResult(Task<IServerInfo> task)
