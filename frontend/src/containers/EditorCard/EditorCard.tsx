@@ -96,14 +96,12 @@ export function EditorCard({providers, selectedProvider, selectProvider, setScri
               theme={theme === 'dark' ? 'vs-dark' : 'light'}/>
         </div>
 
-        <div className="m-2">
-          <FileUpload onFileUpload={handleFileUpload} allowedFileTypes={supportedFileTypes}/>
-        </div>
-
         <StatusBar status="Ready"
                    providers={providers}
                    selectedProvider={selectedProvider}
-                   selectProvider={(provider) => selectProvider(provider)}/>
+                   selectProvider={(provider) => selectProvider(provider)}
+                   handleFileUpload={handleFileUpload}
+                   allowedFileTypes={supportedFileTypes}/>
       </div>
     </div>
   );
