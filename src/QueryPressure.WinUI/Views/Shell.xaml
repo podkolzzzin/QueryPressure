@@ -48,6 +48,11 @@
                             <local:ScriptView DataContext="{Binding}"/>
                         </DataTemplate>
                     </dockElements:PanesTemplateSelector.ScriptViewTemplate>
+                    <dockElements:PanesTemplateSelector.ExecutionResultsViewTemplate>
+                        <DataTemplate>
+                            <local:ExecutionResultsView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.ExecutionResultsViewTemplate>
                 </dockElements:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 

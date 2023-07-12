@@ -38,7 +38,7 @@ public class OpenScenarioScriptCommand : CommandBase<ScenarioModel>
 
   private ScriptViewModel Open(ScenarioModel scenario)
   {
-    var fileViewModel = _dockToolsViewModel.Files.FirstOrDefault(fm => fm.IsEqualTo(scenario));
+    var fileViewModel = _dockToolsViewModel.Files.OfType<ScriptViewModel>().FirstOrDefault(fm => fm.IsEqualTo(scenario));
 
     if (fileViewModel != null)
     {

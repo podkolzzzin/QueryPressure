@@ -10,6 +10,7 @@ public class PanesTemplateSelector : DataTemplateSelector
   public DataTemplate? ProjectTreeViewTemplate { get; set; }
   public DataTemplate? PropertiesViewTemplate { get; set; }
   public DataTemplate? ScriptViewTemplate { get; set; }
+  public DataTemplate? ExecutionResultsViewTemplate { get; set; }
 
   public override DataTemplate? SelectTemplate(object item, DependencyObject container)
   {
@@ -18,6 +19,7 @@ public class PanesTemplateSelector : DataTemplateSelector
       ProjectTreeViewModel => ProjectTreeViewTemplate,
       PropertiesViewModel => PropertiesViewTemplate,
       ScriptViewModel => ScriptViewTemplate,
+      ExecutionViewModel => ExecutionResultsViewTemplate,
       _ => base.SelectTemplate(item, container)
     };
   }

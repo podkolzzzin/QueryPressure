@@ -1,6 +1,9 @@
 using QueryPressure.WinUI.Common;
+using QueryPressure.WinUI.Models;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
+using QueryPressure.WinUI.Common.Commands;
 
 namespace QueryPressure.WinUI.ViewModels.DockElements;
 
@@ -21,6 +24,7 @@ public class PaneViewModel : ViewModelBase
     _isSelected = false;
     _isActive = false;
     IconSource = new BitmapImage();
+    CloseCommand = new DelegateCommand(() => { });
   }
   #endregion constructors
 
@@ -50,5 +54,13 @@ public class PaneViewModel : ViewModelBase
     get => _isActive;
     set => SetField(ref _isActive, value);
   }
+
+  public ICommand CloseCommand { get; protected set; }
+
   #endregion Properties
+
+  public virtual bool IsEqualTo(IModel model)
+  {
+    return model.Id.ToString() == ContentId;
+  }
 }

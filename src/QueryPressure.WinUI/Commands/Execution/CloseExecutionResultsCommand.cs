@@ -2,13 +2,13 @@ using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.ViewModels;
 
-namespace QueryPressure.WinUI.Commands.Scenario;
+namespace QueryPressure.WinUI.Commands.Execution;
 
-public class CloseScenarioScriptCommand : CommandBase
+public class CloseExecutionResultsCommand : CommandBase
 {
   private readonly DockToolsViewModel _dockToolsViewModel;
 
-  public CloseScenarioScriptCommand(DockToolsViewModel dockToolsViewModel)
+  public CloseExecutionResultsCommand(DockToolsViewModel dockToolsViewModel)
   {
     _dockToolsViewModel = dockToolsViewModel;
   }
@@ -17,16 +17,16 @@ public class CloseScenarioScriptCommand : CommandBase
 
   protected override void ExecuteInternal(object? parameter)
   {
-    if (parameter is not ScenarioModel scenario)
+    if (parameter is not ExecutionModel execution)
     {
-      throw new ArgumentNullException(nameof(scenario));
+      throw new ArgumentNullException(nameof(execution));
     }
 
-    var fileViewModel = _dockToolsViewModel.Files.OfType<ScriptViewModel>().FirstOrDefault(fm => fm.IsEqualTo(scenario));
+    var fileViewModel = _dockToolsViewModel.Files.OfType<ExecutionViewModel>().FirstOrDefault(fm => fm.IsEqualTo(execution));
 
     if (fileViewModel == null)
     {
-      throw new ArgumentNullException(nameof(scenario));
+      throw new ArgumentNullException(nameof(execution));
     }
 
     _dockToolsViewModel.Files.Remove(fileViewModel);

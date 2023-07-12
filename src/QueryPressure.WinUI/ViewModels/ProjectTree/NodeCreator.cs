@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using QueryPressure.WinUI.Commands.Execution;
 using QueryPressure.WinUI.Commands.Scenario;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Subscriptions;
@@ -19,6 +20,7 @@ public class NodeCreator : INodeCreator
     {
       ProjectModel project => CreateProject(project),
       ScenarioModel scenario => CreateScenario(scenario),
+      ExecutionModel execution => CreateExecution(execution),
       _ => throw new ArgumentOutOfRangeException(nameof(model), model, null)
     };
 
@@ -29,5 +31,10 @@ public class NodeCreator : INodeCreator
   private ScenarioNodeViewModel CreateScenario(ScenarioModel project)
     => new(_serviceProvider.GetRequiredService<ISubscriptionManager>(),
       _serviceProvider.GetRequiredService<OpenScenarioScriptCommand>(),
+      _serviceProvider.GetRequiredService<INodeCreator>(),
       project);
+
+  private ExecutionNodeViewModel CreateExecution(ExecutionModel execution)
+  => new(_serviceProvider.GetRequiredService<ISubscriptionManager>(),
+    _serviceProvider.GetRequiredService<OpenExecutionResultsCommand>(), execution);
 }

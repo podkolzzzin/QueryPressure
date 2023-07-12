@@ -1,0 +1,48 @@
+using Microsoft.Extensions.Logging;
+using QueryPressure.WinUI.Common.Commands;
+using QueryPressure.WinUI.Models;
+using QueryPressure.WinUI.Services.Language;
+using QueryPressure.WinUI.Services.Subscriptions;
+using QueryPressure.WinUI.ViewModels;
+
+namespace QueryPressure.WinUI.Commands.Execution;
+
+public class OpenExecutionResultsCommand : CommandBase<ExecutionModel>
+{
+  private readonly ISubscriptionManager _subscriptionManager;
+  private readonly ILanguageService _languageService;
+  private readonly DockToolsViewModel _dockToolsViewModel;
+  private readonly CloseExecutionResultsCommand _closeExecutionResultsCommand;
+
+  public OpenExecutionResultsCommand(ILogger<OpenExecutionResultsCommand> logger,
+    ISubscriptionManager subscriptionManager,
+    ILanguageService languageService,
+    DockToolsViewModel dockToolsViewModel,
+    CloseExecutionResultsCommand closeExecutionResultsCommand) : base(logger)
+  {
+    _subscriptionManager = subscriptionManager;
+    _languageService = languageService;
+    _dockToolsViewModel = dockToolsViewModel;
+    _closeExecutionResultsCommand = closeExecutionResultsCommand;
+  }
+
+  protected override void ExecuteInternal(ExecutionModel execution)
+  {
+    var executionViewModel = Open(execution);
+    _dockToolsViewModel.ActiveDocument = executionViewModel;
+  }
+
+  private ExecutionViewModel Open(ExecutionModel execution)
+  {
+    var fileViewModel = _dockToolsViewModel.Files.OfType<ExecutionViewModel>().FirstOrDefault(fm => fm.IsEqualTo(execution));
+
+    if (fileViewModel != null)
+    {
+      return fileViewModel;
+    }
+
+    fileViewModel = new ExecutionViewModel(_subscriptionManager, _languageService, _closeExecutionResultsCommand, execution);
+    _dockToolsViewModel.Files.Add(fileViewModel);
+    return fileViewModel;
+  }
+}

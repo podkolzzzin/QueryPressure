@@ -3,20 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
+             xmlns:scenario="clr-namespace:QueryPressure.WinUI.Commands.Scenario"
              xmlns:projectTree="clr-namespace:QueryPressure.WinUI.ViewModels.ProjectTree"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=projectTree:ProjectTreeViewModel}"
              d:DesignHeight="450" d:DesignWidth="300">
     <UserControl.Resources>
 
-        <HierarchicalDataTemplate DataType="{x:Type projectTree:ProjectNodeViewModel}" ItemsSource="{Binding Nodes}">
-            <TextBlock Text="{Binding Title}" />
+        <HierarchicalDataTemplate DataType="{x:Type projectTree:ExecutionNodeViewModel}" ItemsSource="{Binding Nodes}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Status}"/>
+                <TextBlock Text="{Binding Title}"/>
+            </StackPanel>
         </HierarchicalDataTemplate>
 
         <HierarchicalDataTemplate DataType="{x:Type projectTree:ScenarioNodeViewModel}" ItemsSource="{Binding Nodes}">
-            <TextBlock Text="{Binding Title}"/>
+            <TextBlock Text="{Binding Title}">
+                <TextBlock.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem FontWeight="Bold" 
+                                  Header="{ex:Locale labels.scenario.context-menu.open-script}"
+                                  Command="{ex:CommandImport scenario:OpenScenarioScriptCommand}"
+                                  CommandParameter="{Binding ScenarioModel}"/>
+                        <MenuItem Header="{ex:Locale labels.scenario.context-menu.execute}" 
+                                  Command="{ex:CommandImport scenario:ExecuteScenarioCommand}"
+                                  CommandParameter="{Binding ScenarioModel}"/>
+                        <Separator />
+                        <MenuItem Header="{ex:Locale labels.scenario.context-menu.properties}"/>
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+            </TextBlock>
         </HierarchicalDataTemplate>
 
+        <HierarchicalDataTemplate DataType="{x:Type projectTree:ProjectNodeViewModel}" ItemsSource="{Binding Nodes}">
+            <TextBlock Text="{Binding Title}">
+                <TextBlock.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{ex:Locale labels.project.context-menu.properties}"/>
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+            </TextBlock>
+        </HierarchicalDataTemplate>
+        
     </UserControl.Resources>
 
     <TreeView ItemsSource="{Binding Nodes}" SelectedItemChanged="TreeView_OnSelectedItemChanged">

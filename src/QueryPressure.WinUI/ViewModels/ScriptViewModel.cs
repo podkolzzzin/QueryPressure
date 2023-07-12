@@ -85,8 +85,6 @@ public class ScriptViewModel : PaneViewModel, IDisposable
       _ => HighlightingManager.Instance.GetDefinition("TSQL")
     };
 
-  public ICommand CloseCommand { get; }
-
   public string FilePath => Title;
 
   public TextDocument Document

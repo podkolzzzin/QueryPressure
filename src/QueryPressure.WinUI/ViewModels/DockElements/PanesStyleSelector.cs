@@ -14,7 +14,7 @@ public class PanesStyleSelector : StyleSelector
     return item switch
     {
       ToolViewModel => ToolStyle,
-      ScriptViewModel => FileStyle,
+      PaneViewModel => FileStyle,
       _ => base.SelectStyle(item, container)
     };
   }

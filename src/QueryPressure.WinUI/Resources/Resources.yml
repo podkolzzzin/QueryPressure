@@ -33,9 +33,17 @@
             message: "Connection Succeed.\r\nServer Version: {0}"
     project:
         new-name: New Project
+        context-menu:
+            properties: Properties
     scenario:
         new-name: New Scenario
         script: Script
+        context-menu:
+            open-script: Open script
+            execute: Execute scenario
+            properties: Properties
+    execution:
+        results: Results
     properties:
         project:
             name: "Name:"
@@ -88,9 +96,17 @@ uk-UA:
             message: "З'єднання вдалося.\r\nВерсія серверу: {0}"
     project:
         new-name: Новий Проект
+        context-menu:
+            properties: Властивості
     scenario:
         new-name: Новий Сценарій
         script: Скрипт
+        context-menu:
+            open-script: Відкрити скрипт
+            execute: Запустити сценарій
+            properties: Властивості
+    execution:
+        results: Результати
     properties:
         project:
             name: "Ім'я:"

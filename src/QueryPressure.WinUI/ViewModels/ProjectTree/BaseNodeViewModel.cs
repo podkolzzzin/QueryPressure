@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Models;
@@ -17,11 +18,11 @@ public class BaseNodeViewModel : ViewModelBase
 
     if (isSupportSubNodes)
     {
-      Nodes = new List<BaseNodeViewModel>();
+      Nodes = new ObservableCollection<BaseNodeViewModel>();
     }
   }
 
-  public List<BaseNodeViewModel>? Nodes { get; }
+  public ObservableCollection<BaseNodeViewModel>? Nodes { get; }
 
   public bool IsExpanded
   {

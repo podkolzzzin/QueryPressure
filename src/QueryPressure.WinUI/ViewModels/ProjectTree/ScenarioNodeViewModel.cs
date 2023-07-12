@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Input;
 using QueryPressure.WinUI.Commands.Scenario;
 using QueryPressure.WinUI.Common.Observer;
@@ -9,14 +10,50 @@ namespace QueryPressure.WinUI.ViewModels.ProjectTree;
 public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
 {
   private readonly OpenScenarioScriptCommand _openScenarioScriptCommand;
+  private readonly INodeCreator _nodeCreator;
   private readonly ISubscription _subscription;
+  private readonly ISubscription _scenarioExecutedSubscription;
 
-  public ScenarioNodeViewModel(ISubscriptionManager subscriptionManager, OpenScenarioScriptCommand openScenarioScriptCommand, ScenarioModel scenarioModel) : base(scenarioModel, true)
+  public ScenarioNodeViewModel(ISubscriptionManager subscriptionManager,
+    OpenScenarioScriptCommand openScenarioScriptCommand, INodeCreator nodeCreator, ScenarioModel scenarioModel) : base(scenarioModel, true)
   {
+    if (Nodes is null)
+    {
+      throw new ArgumentNullException(nameof(Nodes));
+    }
+
+    foreach (var executionNode in scenarioModel.Executions.Select(nodeCreator.Create))
+    {
+      Nodes.Add(executionNode);
+    }
+
     _openScenarioScriptCommand = openScenarioScriptCommand;
+    _nodeCreator = nodeCreator;
     _subscription = subscriptionManager
       .On(ModelAction.Edit, scenarioModel)
       .Subscribe(OnModelEdit);
+
+    _scenarioExecutedSubscription = subscriptionManager
+      .On(ModelAction.ChildrenChanged, scenarioModel)
+      .Subscribe(OnScenarioExecuted);
+  }
+
+  private void OnScenarioExecuted(object? sender, IModel value)
+  {
+    var scenarioModel = value as ScenarioModel;
+    var newExecutionModel = scenarioModel?.Executions?
+      .SingleOrDefault(
+        x => !Nodes?.OfType<ExecutionNodeViewModel>()
+        .Select(node => node.Id).ToHashSet().Contains(x.Id) ?? false);
+
+    if (newExecutionModel == null)
+    {
+      throw new InvalidOperationException();
+    }
+
+    var newNode = _nodeCreator.Create(newExecutionModel);
+    Nodes?.Add(newNode);
+    OnOtherPropertyChanged(nameof(Nodes));
   }
 
   private void OnModelEdit(object? sender, IModel value)
@@ -27,11 +64,13 @@ public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
 
   public string Title => ScenarioModel.Name;
 
-  private ScenarioModel ScenarioModel => (ScenarioModel)Model;
+  public ScenarioModel ScenarioModel => (ScenarioModel)Model;
 
   public override void Click(MouseButtonEventArgs args, bool isDoubleClick = false)
   {
-    if (isDoubleClick)
+    var originalSource = (args.OriginalSource as FrameworkElement)?.DataContext;
+
+    if (originalSource == this && isDoubleClick)
     {
       _openScenarioScriptCommand.Execute(ScenarioModel);
     }
@@ -40,5 +79,6 @@ public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
   public void Dispose()
   {
     _subscription.Dispose();
+    _scenarioExecutedSubscription.Dispose();
   }
 }

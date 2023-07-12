@@ -37,7 +37,7 @@ public class SubscriptionManager : ISubscriptionManager, IDisposable
   {
     var what = GetWhat(action, model);
 
-    var keys = _subjects.Where(x => x.Key.What.Equals(what, StringComparison.Ordinal));
+    var keys = _subjects.Where(x => x.Key.What.Equals(what, StringComparison.Ordinal)).ToList();
 
     foreach (var key in keys)
     {
