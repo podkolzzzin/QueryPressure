@@ -18,6 +18,7 @@ using QueryPressure.WinUI.Services.Theme;
 using QueryPressure.WinUI.Services.WindowPosition;
 using QueryPressure.WinUI.ViewModels;
 using QueryPressure.WinUI.ViewModels.Helpers;
+using QueryPressure.WinUI.ViewModels.Helpers.Status;
 using QueryPressure.WinUI.ViewModels.ProjectTree;
 using QueryPressure.WinUI.ViewModels.Properties;
 using QueryPressure.WinUI.Views;
@@ -61,6 +62,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<MenuViewModel>().SingleInstance();
     builder.RegisterType<ShellViewModel>().SingleInstance();
     builder.RegisterType<Shell>().SingleInstance();
+    builder.RegisterType<ExecutionStatusProvider>().As<IExecutionStatusProvider>().SingleInstance();
 
     builder.RegisterType<ExecutionVisualizer>()
       .Keyed<IMetricsVisualizer>(ExecutionVisualizer.Key)

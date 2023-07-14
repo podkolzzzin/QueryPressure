@@ -4,11 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
+             xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=viewModels:ExecutionViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="{Binding Title}"/>
-    </Grid>
+    <UserControl.Resources>
+        <Style x:Key="GridRow" TargetType="{x:Type Grid}">
+            <Setter Property="Margin" Value="8px 2px"/>
+        </Style>
+
+        <Style x:Key="HeaderText" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="14px"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="8px"/>
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical" Margin="8px">
+            <Separator />
+            <TextBlock Text="{ex:Locale labels.execution.document.info-header}" Style="{StaticResource HeaderText}"/>
+            <Grid Style="{StaticResource GridRow}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200px"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.id}"/>
+                <TextBlock Grid.Column="1" Text="{Binding ContentId}"/>
+            </Grid>
+            <Grid Style="{StaticResource GridRow}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200px"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.status}"/>
+                <TextBlock Grid.Column="1" Text="{ex:Locale Binding={Binding Status.LabelLink}}"/>
+            </Grid>
+            <Grid Style="{StaticResource GridRow}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200px"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.start-time}"/>
+                <TextBlock Grid.Column="1" Text="{Binding StartTime}"/>
+            </Grid>
+            <Grid Style="{StaticResource GridRow}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200px"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.end-time}"/>
+                <TextBlock Grid.Column="1" Text="{Binding EndTime}"/>
+            </Grid>
+            <Grid Style="{StaticResource GridRow}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200px"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.duration}"/>
+                <TextBlock Grid.Column="1" Text="{Binding Duration}"/>
+            </Grid>
+            <Separator Margin="0px 8px 0px 0px"/>
+            <TextBlock Text="{ex:Locale labels.execution.document.real-time-header}" Style="{StaticResource HeaderText}"/>
+            <Separator Margin="0px 8px 0px 0px"/>
+            <TextBlock Text="{ex:Locale labels.execution.document.result-header}" Style="{StaticResource HeaderText}"/>
+            <Separator Margin="0px 8px 0px 0px"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

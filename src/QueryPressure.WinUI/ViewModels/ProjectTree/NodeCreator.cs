@@ -3,6 +3,7 @@ using QueryPressure.WinUI.Commands.Execution;
 using QueryPressure.WinUI.Commands.Scenario;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Subscriptions;
+using QueryPressure.WinUI.ViewModels.Helpers.Status;
 
 namespace QueryPressure.WinUI.ViewModels.ProjectTree;
 
@@ -36,5 +37,6 @@ public class NodeCreator : INodeCreator
 
   private ExecutionNodeViewModel CreateExecution(ExecutionModel execution)
   => new(_serviceProvider.GetRequiredService<ISubscriptionManager>(),
-    _serviceProvider.GetRequiredService<OpenExecutionResultsCommand>(), execution);
+    _serviceProvider.GetRequiredService<OpenExecutionResultsCommand>(),
+    _serviceProvider.GetRequiredService<IExecutionStatusProvider>(), execution);
 }

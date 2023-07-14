@@ -51,9 +51,13 @@ public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
       throw new InvalidOperationException();
     }
 
-    var newNode = _nodeCreator.Create(newExecutionModel);
-    Nodes?.Add(newNode);
+    var newNode = (ExecutionNodeViewModel)_nodeCreator.Create(newExecutionModel);
+    Nodes?.Insert(0, newNode);
     OnOtherPropertyChanged(nameof(Nodes));
+
+    IsExpanded = true;
+    newNode.IsSelected = true;
+    newNode.OpenExecution();
   }
 
   private void OnModelEdit(object? sender, IModel value)

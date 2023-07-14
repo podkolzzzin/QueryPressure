@@ -44,6 +44,19 @@
             properties: Properties
     execution:
         results: Results
+        document:
+            info-header: Execution information
+            id: ID
+            status: Status
+            start-time: Start Time
+            end-time: End Time
+            duration: Duration
+            real-time-header: Real-time metrics
+            result-header: Result metrics
+        status:
+            none: None
+            running: Running
+            finished: Finished
     properties:
         project:
             name: "Name:"
@@ -107,6 +120,19 @@ uk-UA:
             properties: Властивості
     execution:
         results: Результати
+        document:
+            info-header: Інформація виконання
+            id: ІН
+            status: Статус
+            start-time: Час початку
+            end-time: Час завершення
+            duration: Тривалість
+            real-time-header: Метрики реального часу
+            result-header: Результуючі метрики
+        status:
+            none: Немає
+            running: Виконується
+            finished: Завершено
     properties:
         project:
             name: "Ім'я:"

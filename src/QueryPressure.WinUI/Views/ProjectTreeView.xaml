@@ -13,8 +13,11 @@
 
         <HierarchicalDataTemplate DataType="{x:Type projectTree:ExecutionNodeViewModel}" ItemsSource="{Binding Nodes}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Status}"/>
-                <TextBlock Text="{Binding Title}"/>
+                <TextBlock>
+                    <Run Text="{ex:Locale Binding={Binding Status.LabelLink, Mode=OneWay}}"/>
+                    <Run Text=" - "/>
+                    <Run Text="{Binding Title, Mode=OneWay}"/>
+                </TextBlock>
             </StackPanel>
         </HierarchicalDataTemplate>
 
