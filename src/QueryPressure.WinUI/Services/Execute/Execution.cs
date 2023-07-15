@@ -73,7 +73,7 @@ public class Execution
 
   private void NotifyAsync(IVisualization liveVisualization)
   {
-    _model.LiveMetrics = (ExecutionVisualization)liveVisualization;
+    _model.RealtimeMetrics = (ExecutionVisualization)liveVisualization;
     _subscriptionManager.Notify(this, ModelAction.Edit, _model);
   }
 }

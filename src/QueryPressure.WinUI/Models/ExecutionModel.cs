@@ -16,7 +16,7 @@ public class ExecutionModel : IModel
   public ExecutionStatus Status { get; set; }
 
   [JsonIgnore]
-  public ExecutionVisualization? LiveMetrics { get; set; }
+  public ExecutionVisualization? RealtimeMetrics { get; set; }
 
   [JsonIgnore]
   public string Title => StartTime.ToLocalTime().ToString("G") ?? Id.ToString();

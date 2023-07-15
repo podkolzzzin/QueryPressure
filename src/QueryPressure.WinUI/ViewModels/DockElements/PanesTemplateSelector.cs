@@ -2,6 +2,7 @@ using System.Windows.Controls;
 using System.Windows;
 using QueryPressure.WinUI.ViewModels.ProjectTree;
 using QueryPressure.WinUI.ViewModels.Properties;
+using QueryPressure.WinUI.ViewModels.Execution;
 
 namespace QueryPressure.WinUI.ViewModels.DockElements;
 

@@ -4,6 +4,7 @@ using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Subscriptions;
 using QueryPressure.WinUI.ViewModels;
+using QueryPressure.WinUI.ViewModels.Execution;
 using QueryPressure.WinUI.ViewModels.Helpers.Status;
 
 namespace QueryPressure.WinUI.Commands.Execution;

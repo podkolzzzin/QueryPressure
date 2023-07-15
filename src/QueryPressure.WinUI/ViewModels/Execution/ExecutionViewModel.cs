@@ -6,7 +6,7 @@ using QueryPressure.WinUI.Services.Subscriptions;
 using QueryPressure.WinUI.ViewModels.DockElements;
 using QueryPressure.WinUI.ViewModels.Helpers.Status;
 
-namespace QueryPressure.WinUI.ViewModels;
+namespace QueryPressure.WinUI.ViewModels.Execution;
 
 public class ExecutionViewModel : PaneViewModel, IDisposable
 {
@@ -24,6 +24,8 @@ public class ExecutionViewModel : PaneViewModel, IDisposable
     CloseExecutionResultsCommand closeExecutionResultsCommand, ExecutionModel executionModel,
     IExecutionStatusProvider executionStatusProvider)
   {
+    DisplayMetrics = new MetricsViewModel();
+
     _languageService = languageService;
     _executionStatusProvider = executionStatusProvider;
     _status = _executionStatusProvider.GetStatus(ExecutionStatus.None);
@@ -70,12 +72,21 @@ public class ExecutionViewModel : PaneViewModel, IDisposable
     StartTime = _model.StartTime;
     EndTime = _model.EndTime == default ? null : _model.EndTime;
     Duration = GetDuration(StartTime, EndTime);
+
+
+    var displayResultMetrics = _model.ResultMetrics is not null;
+
+    DisplayMetrics.UpdateMetrics(displayResultMetrics ? _model.ResultMetrics : _model.RealtimeMetrics,
+      displayResultMetrics ? MetricType.Result : MetricType.Realtime);
   }
 
   private TimeSpan GetDuration(DateTime startTime, DateTime? endTime)
   {
     return endTime == null ? DateTime.UtcNow - startTime : endTime.Value - startTime;
   }
+
+  public MetricsViewModel DisplayMetrics { get; private set; }
+
 
   public ExecutionStatusViewModel Status
   {
