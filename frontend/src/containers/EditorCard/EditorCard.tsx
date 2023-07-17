@@ -4,8 +4,9 @@ import {StatusBar} from '@components';
 import {EditorCardProps} from '@containers/EditorCard/EditorCard.models';
 import Editor from '@monaco-editor/react';
 import { FileUpload } from '@/components/FileUploader/FileUploader';
+import { MonitoringScreen } from '@/components/MonitoringScreen';
 
-export function EditorCard({providers, selectedProvider, selectProvider, setScript, theme}: EditorCardProps) {
+export function EditorCard({providers, selectedProvider, selectProvider, setScript, theme, showMonitor, toggleMonitor}: EditorCardProps) {
   const { t } = useTranslation();
   const [editorContent, setEditorContent] = useState('');
   const supportedFileTypes = [ 'txt', 'sql', 'js', 'lua', 'json' ]
@@ -79,7 +80,7 @@ export function EditorCard({providers, selectedProvider, selectProvider, setScri
   
 
   return (
-    <div className="card h-100">
+    <div className="card h-100 position-relative">
       <div className="card-body d-flex flex-column">
         <h5 className="card-title">{t('labels.codeEditor')}</h5>
         <div className="mb-2 h-100" onDragOver={handleDragOver} onDrop={handleDrop}>
@@ -95,7 +96,7 @@ export function EditorCard({providers, selectedProvider, selectProvider, setScri
               defaultValue=''
               theme={theme === 'dark' ? 'vs-dark' : 'light'}/>
         </div>
-
+        <MonitoringScreen showMonitor={showMonitor} toggleMonitor={toggleMonitor}/>
         <StatusBar status="Ready"
                    providers={providers}
                    selectedProvider={selectedProvider}
