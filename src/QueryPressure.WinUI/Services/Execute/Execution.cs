@@ -53,7 +53,7 @@ public class Execution
     var metrics = await _metricsCalculator.CalculateAsync(_store, cancellationToken);
     var visualization = await _visualizer.VisualizeAsync(metrics, cancellationToken);
 
-    NotifyFinnished(visualization);
+    NotifyFinnished(_store, visualization);
   }
 
   private void NotifyStarted()
@@ -63,11 +63,12 @@ public class Execution
     _subscriptionManager.Notify(this, ModelAction.Edit, _model);
   }
 
-  private void NotifyFinnished(IVisualization liveVisualization)
+  private void NotifyFinnished(IExecutionResultStore store, IVisualization liveVisualization)
   {
     _model.Status = ExecutionStatus.Finished;
     _model.ResultMetrics = (ExecutionVisualization)liveVisualization;
     _model.EndTime = DateTime.UtcNow;
+    _model.RowResults = store;
     _subscriptionManager.Notify(this, ModelAction.Edit, _model);
   }
 

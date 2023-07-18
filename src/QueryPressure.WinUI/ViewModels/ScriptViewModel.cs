@@ -1,4 +1,3 @@
-using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using QueryPressure.WinUI.Commands.App;
@@ -11,7 +10,7 @@ using QueryPressure.WinUI.ViewModels.DockElements;
 
 namespace QueryPressure.WinUI.ViewModels;
 
-public class ScriptViewModel : PaneViewModel, IDisposable
+public class ScriptViewModel : DocumentViewModel
 {
   private readonly IDisposable _subscription;
   private readonly ILanguageService _languageService;
@@ -20,18 +19,16 @@ public class ScriptViewModel : PaneViewModel, IDisposable
   private TextDocument _document;
   private bool _isDirty;
   private IHighlightingDefinition? _highlightingDefinition;
-
+  private bool _isReadOnly;
 
   public ScriptViewModel(ISubscriptionManager subscriptionManager, ILanguageService languageService,
-    EditModelCommand editModelCommand,
-    CloseScenarioScriptCommand closeScenarioScriptCommand, ScenarioModel scenarioModel)
+    EditModelCommand editModelCommand, CloseScenarioScriptCommand closeScenarioScriptCommand, ScenarioModel scenarioModel) : base(scenarioModel)
   {
     _languageService = languageService;
     _editModelCommand = editModelCommand;
     _document = new TextDocument();
     _document.Changed += _document_Changed;
 
-    ContentId = scenarioModel.Id.ToString();
     OnScenarioChanged(null, scenarioModel);
 
     _subscription = subscriptionManager
@@ -61,10 +58,12 @@ public class ScriptViewModel : PaneViewModel, IDisposable
 
     _model = (ScenarioModel)value;
 
-    if (!ContentId.Equals(_model.Id.ToString()))
+    if (!IsEqualTo(_model))
     {
       throw new InvalidOperationException("Content ID has changed");
     }
+
+    IsReadOnly = _model.IsReadOnly;
 
     HighlightingDefinition = GetHighlightingDefinition(_model);
 
@@ -85,8 +84,6 @@ public class ScriptViewModel : PaneViewModel, IDisposable
       _ => HighlightingManager.Instance.GetDefinition("TSQL")
     };
 
-  public string FilePath => Title;
-
   public TextDocument Document
   {
     get => _document;
@@ -98,6 +95,11 @@ public class ScriptViewModel : PaneViewModel, IDisposable
     get => _isDirty;
     set => SetField(ref _isDirty, value);
   }
+  public bool IsReadOnly
+  {
+    get => _isReadOnly;
+    set => SetField(ref _isReadOnly, value);
+  }
 
   public IHighlightingDefinition? HighlightingDefinition
   {
@@ -105,13 +107,10 @@ public class ScriptViewModel : PaneViewModel, IDisposable
     set => SetField(ref _highlightingDefinition, value);
   }
 
-  public bool IsEqualTo(ScenarioModel scenarioModel)
-  {
-    return scenarioModel.Id.ToString() == ContentId;
-  }
-
-  public void Dispose()
+  public override void Dispose()
   {
     _subscription.Dispose();
+    _document.Changed -= _document_Changed;
+    base.Dispose();
   }
 }

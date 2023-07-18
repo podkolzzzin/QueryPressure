@@ -1,10 +1,12 @@
 using System.IO;
 using System.IO.Compression;
 using System.Text.Json;
+using Autofac.Features.AttributeFilters;
 using QueryPressure.App.Arguments;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
+using QueryPressure.WinUI.Services.Execute;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Subscriptions;
 
@@ -15,13 +17,17 @@ public class ProjectService : IProjectService
   private readonly ISubject<ProjectModel?> _subject;
   private readonly ISubscriptionManager _subscriptionManager;
   private readonly ILanguageService _languageService;
+  private readonly IMetricsCalculator _metricsCalculator;
+  private readonly IMetricsVisualizer _visualizer;
 
-  public ProjectService(ISubject<ProjectModel?> subject, ISubscriptionManager subscriptionManager, ILanguageService languageService)
+  public ProjectService(ISubject<ProjectModel?> subject, ISubscriptionManager subscriptionManager, ILanguageService languageService,
+    IMetricsCalculator metricsCalculator, [KeyFilter(ExecutionVisualizer.Key)] IMetricsVisualizer visualizer)
   {
     _subject = subject;
     _subscriptionManager = subscriptionManager;
     _languageService = languageService;
-
+    _metricsCalculator = metricsCalculator;
+    _visualizer = visualizer;
     Project = null;
   }
 
@@ -57,7 +63,25 @@ public class ProjectService : IProjectService
 
     Project.Path = fileInfo;
 
+    await LoadProjectExecutionResultsAsync(Project, token);
+
     _subject.Notify(this, Project);
+  }
+
+  private async Task LoadProjectExecutionResultsAsync(ProjectModel project, CancellationToken token)
+  {
+    foreach (var scenario in project.Scenarios)
+    {
+      foreach (var execution in scenario.Executions)
+      {
+        if (execution.RowResults is not null)
+        {
+          var metrics = await _metricsCalculator.CalculateAsync(execution.RowResults, token);
+          var visualization = await _visualizer.VisualizeAsync(metrics, token);
+          execution.ResultMetrics = (ExecutionVisualization)visualization;
+        }
+      }
+    }
   }
 
   public async Task SaveAsync(string path, CancellationToken token)

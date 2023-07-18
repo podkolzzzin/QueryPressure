@@ -8,7 +8,7 @@ using QueryPressure.WinUI.ViewModels.Helpers.Status;
 
 namespace QueryPressure.WinUI.ViewModels.Execution;
 
-public class ExecutionViewModel : PaneViewModel, IDisposable
+public class ExecutionViewModel : DocumentViewModel
 {
   private readonly IDisposable _subscription;
   private readonly ILanguageService _languageService;
@@ -20,9 +20,10 @@ public class ExecutionViewModel : PaneViewModel, IDisposable
   private TimeSpan _duration;
   private Timer _durationUpdateTimer;
 
+
   public ExecutionViewModel(ISubscriptionManager subscriptionManager, ILanguageService languageService,
-    CloseExecutionResultsCommand closeExecutionResultsCommand, ExecutionModel executionModel,
-    IExecutionStatusProvider executionStatusProvider)
+    IExecutionStatusProvider executionStatusProvider, CloseExecutionResultsCommand closeExecutionResultsCommand, ExecutionModel executionModel)
+    : base(executionModel)
   {
     DisplayMetrics = new MetricsViewModel();
 
@@ -30,7 +31,6 @@ public class ExecutionViewModel : PaneViewModel, IDisposable
     _executionStatusProvider = executionStatusProvider;
     _status = _executionStatusProvider.GetStatus(ExecutionStatus.None);
 
-    ContentId = executionModel.Id.ToString();
     OnExecutionChanged(null, executionModel);
 
     _subscription = subscriptionManager
@@ -61,7 +61,7 @@ public class ExecutionViewModel : PaneViewModel, IDisposable
 
     _model = (ExecutionModel)value;
 
-    if (!ContentId.Equals(_model.Id.ToString()))
+    if (!IsEqualTo(_model))
     {
       throw new InvalidOperationException("Content ID has changed");
     }
@@ -87,7 +87,6 @@ public class ExecutionViewModel : PaneViewModel, IDisposable
 
   public MetricsViewModel DisplayMetrics { get; private set; }
 
-
   public ExecutionStatusViewModel Status
   {
     get => _status;
@@ -112,11 +111,10 @@ public class ExecutionViewModel : PaneViewModel, IDisposable
     set => SetField(ref _duration, value);
   }
 
-  public string FilePath => Title;
-
-  public void Dispose()
+  public override void Dispose()
   {
     _subscription.Dispose();
     _durationUpdateTimer.Dispose();
+    base.Dispose();
   }
 }

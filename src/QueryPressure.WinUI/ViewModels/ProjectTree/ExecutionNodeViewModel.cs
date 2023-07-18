@@ -6,6 +6,8 @@ using System.Windows.Input;
 using System.Windows;
 using QueryPressure.WinUI.Commands.Execution;
 using QueryPressure.WinUI.ViewModels.Helpers.Status;
+using AvalonDock.Controls;
+using System.Windows.Documents;
 
 namespace QueryPressure.WinUI.ViewModels.ProjectTree;
 
@@ -24,7 +26,7 @@ public class ExecutionNodeViewModel : BaseNodeViewModel, IDisposable
     _openExecutionResultsCommand = openExecutionResultsCommand;
     _executionStatusProvider = executionStatusProvider;
 
-    Status = _executionStatusProvider.GetStatus(ExecutionStatus.None);
+    OnModelChanged(null, model);
   }
 
   private void OnModelChanged(object? sender, IModel value)
@@ -41,17 +43,25 @@ public class ExecutionNodeViewModel : BaseNodeViewModel, IDisposable
 
 
   public string? Title { get; private set; }
-  public ExecutionStatusViewModel Status { get; private set; }
+  public ExecutionStatusViewModel? Status { get; private set; }
 
   public ExecutionModel ExecutionModel => (ExecutionModel)Model;
 
   public override void Click(MouseButtonEventArgs args, bool isDoubleClick = false)
   {
-    var originalSource = (args.OriginalSource as FrameworkElement)?.DataContext;
+    var uiElement = args.OriginalSource as DependencyObject;
+
+    if (uiElement is Run run)
+    {
+      uiElement = run.Parent;
+    }
+
+    var originalSource = uiElement.FindVisualAncestor<FrameworkElement>().DataContext;
 
     if (originalSource == this && isDoubleClick)
     {
       OpenExecution();
+      args.Handled = true;
     }
   }
 

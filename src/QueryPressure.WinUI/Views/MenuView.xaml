@@ -82,10 +82,5 @@
         <MenuItem Header="{ex:Locale labels.menu.about.title}">
             <MenuItem Header="{ex:Locale labels.menu.about.version}"/>
         </MenuItem>
-        <MenuItem Header="{ex:Locale dev.test}">
-            <MenuItem Header="{ex:Locale labels.Rename}" 
-                      Command="{ex:CommandImport project:RenameProjectCommand}"
-                      CommandParameter="WORLD!"/>
-        </MenuItem>
     </Menu>
 </UserControl>

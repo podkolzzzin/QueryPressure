@@ -28,7 +28,7 @@ public class ScenarioModel : IModel
 
   public FlatArgumentsSection Limit { get; set; }
 
-  public List<ExecutionModel> Executions { get; }
+  public List<ExecutionModel> Executions { get; set; }
 
   [JsonIgnore]
   public bool IsReadOnly => Executions.Any();

@@ -22,11 +22,6 @@ public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
       throw new ArgumentNullException(nameof(Nodes));
     }
 
-    foreach (var executionNode in scenarioModel.Executions.Select(nodeCreator.Create))
-    {
-      Nodes.Add(executionNode);
-    }
-
     _openScenarioScriptCommand = openScenarioScriptCommand;
     _nodeCreator = nodeCreator;
     _subscription = subscriptionManager
@@ -36,6 +31,11 @@ public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
     _scenarioExecutedSubscription = subscriptionManager
       .On(ModelAction.ChildrenChanged, scenarioModel)
       .Subscribe(OnScenarioExecuted);
+
+    foreach (var executionNode in scenarioModel.Executions.Select(nodeCreator.Create))
+    {
+      Nodes.Add(executionNode);
+    }
   }
 
   private void OnScenarioExecuted(object? sender, IModel value)
@@ -77,6 +77,7 @@ public class ScenarioNodeViewModel : BaseNodeViewModel, IDisposable
     if (originalSource == this && isDoubleClick)
     {
       _openScenarioScriptCommand.Execute(ScenarioModel);
+      args.Handled = true;
     }
   }
 

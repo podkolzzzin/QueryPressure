@@ -38,6 +38,7 @@
     scenario:
         new-name: New Scenario
         script: Script
+        read-only: The scenario was already executed. It is read-only mode.
         context-menu:
             open-script: Open script
             execute: Execute scenario
@@ -114,6 +115,7 @@ uk-UA:
     scenario:
         new-name: Новий Сценарій
         script: Скрипт
+        read-only: Сценарій вже був запущений. Це режим лише для читання.
         context-menu:
             open-script: Відкрити скрипт
             execute: Запустити сценарій

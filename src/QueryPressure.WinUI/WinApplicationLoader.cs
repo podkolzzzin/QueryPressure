@@ -45,7 +45,7 @@ public class WinApplicationLoader : ApplicationLoader
     builder.RegisterType<WindowPositionService>().As<IWindowPositionService>().SingleInstance();
     builder.RegisterType<ThemeService>().As<IThemeService>().SingleInstance();
     builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
-    builder.RegisterType<ProjectService>().As<IProjectService>().SingleInstance();
+    builder.RegisterType<ProjectService>().As<IProjectService>().SingleInstance().WithAttributeFiltering();
     builder.RegisterType<SubscriptionManager>().As<ISubscriptionManager>().SingleInstance();
     builder.RegisterType<SelectionService>().As<ISelectionService>().SingleInstance();
     builder.RegisterType<DispatcherService>().As<IDispatcherService>().SingleInstance();

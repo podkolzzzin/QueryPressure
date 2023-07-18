@@ -1,36 +1,13 @@
-using QueryPressure.WinUI.Common.Commands;
+using QueryPressure.WinUI.Commands.App;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.ViewModels;
 using QueryPressure.WinUI.ViewModels.Execution;
 
 namespace QueryPressure.WinUI.Commands.Execution;
 
-public class CloseExecutionResultsCommand : CommandBase
+public class CloseExecutionResultsCommand : CloseDocumentCommand<ExecutionModel, ExecutionViewModel>
 {
-  private readonly DockToolsViewModel _dockToolsViewModel;
-
-  public CloseExecutionResultsCommand(DockToolsViewModel dockToolsViewModel)
+  public CloseExecutionResultsCommand(DockToolsViewModel dockToolsViewModel) : base(dockToolsViewModel)
   {
-    _dockToolsViewModel = dockToolsViewModel;
-  }
-
-  public override bool CanExecute(object? parameter) => true;
-
-  protected override void ExecuteInternal(object? parameter)
-  {
-    if (parameter is not ExecutionModel execution)
-    {
-      throw new ArgumentNullException(nameof(execution));
-    }
-
-    var fileViewModel = _dockToolsViewModel.Files.OfType<ExecutionViewModel>().FirstOrDefault(fm => fm.IsEqualTo(execution));
-
-    if (fileViewModel == null)
-    {
-      throw new ArgumentNullException(nameof(execution));
-    }
-
-    _dockToolsViewModel.Files.Remove(fileViewModel);
-    fileViewModel.Dispose();
   }
 }

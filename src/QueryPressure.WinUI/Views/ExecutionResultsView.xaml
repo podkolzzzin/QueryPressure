@@ -64,7 +64,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.duration}"/>
-                <TextBlock Grid.Column="1" Text="{Binding Duration}"/>
+                <TextBlock Grid.Column="1" Text="{Binding Duration, StringFormat={}{0:hh}:{0:mm}:{0:ss}}"/>
             </Grid>
 
             <Separator Margin="0px 8px 0px 0px"/>

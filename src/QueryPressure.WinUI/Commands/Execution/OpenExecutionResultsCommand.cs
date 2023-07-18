@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using QueryPressure.WinUI.Common.Commands;
+using QueryPressure.WinUI.Commands.App;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Language;
 using QueryPressure.WinUI.Services.Subscriptions;
@@ -9,45 +9,27 @@ using QueryPressure.WinUI.ViewModels.Helpers.Status;
 
 namespace QueryPressure.WinUI.Commands.Execution;
 
-public class OpenExecutionResultsCommand : CommandBase<ExecutionModel>
+public class OpenExecutionResultsCommand : OpenDocumentCommand<ExecutionModel, ExecutionViewModel>
 {
   private readonly ISubscriptionManager _subscriptionManager;
   private readonly ILanguageService _languageService;
-  private readonly DockToolsViewModel _dockToolsViewModel;
-  private readonly CloseExecutionResultsCommand _closeExecutionResultsCommand;
   private readonly IExecutionStatusProvider _executionStatusProvider;
+  private readonly CloseExecutionResultsCommand _closeExecutionResultsCommand;
 
   public OpenExecutionResultsCommand(ILogger<OpenExecutionResultsCommand> logger,
     ISubscriptionManager subscriptionManager,
     ILanguageService languageService,
+    IExecutionStatusProvider executionStatusProvider,
     DockToolsViewModel dockToolsViewModel,
-    CloseExecutionResultsCommand closeExecutionResultsCommand,
-    IExecutionStatusProvider executionStatusProvider) : base(logger)
+    CloseExecutionResultsCommand closeExecutionResultsCommand
+) : base(logger, dockToolsViewModel)
   {
     _subscriptionManager = subscriptionManager;
     _languageService = languageService;
-    _dockToolsViewModel = dockToolsViewModel;
     _closeExecutionResultsCommand = closeExecutionResultsCommand;
     _executionStatusProvider = executionStatusProvider;
   }
 
-  protected override void ExecuteInternal(ExecutionModel execution)
-  {
-    var executionViewModel = Open(execution);
-    _dockToolsViewModel.ActiveDocument = executionViewModel;
-  }
-
-  private ExecutionViewModel Open(ExecutionModel execution)
-  {
-    var fileViewModel = _dockToolsViewModel.Files.OfType<ExecutionViewModel>().FirstOrDefault(fm => fm.IsEqualTo(execution));
-
-    if (fileViewModel != null)
-    {
-      return fileViewModel;
-    }
-
-    fileViewModel = new ExecutionViewModel(_subscriptionManager, _languageService, _closeExecutionResultsCommand, execution, _executionStatusProvider);
-    _dockToolsViewModel.Files.Add(fileViewModel);
-    return fileViewModel;
-  }
+  protected override ExecutionViewModel CreateViewModel(ExecutionModel model)
+   => new ExecutionViewModel(_subscriptionManager, _languageService, _executionStatusProvider, _closeExecutionResultsCommand, model);
 }

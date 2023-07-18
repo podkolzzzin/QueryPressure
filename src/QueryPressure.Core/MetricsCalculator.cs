@@ -10,7 +10,7 @@ public class MetricsCalculator : IMetricsCalculator
   {
     _providers = providers;
   }
-  public async Task<IEnumerable<IMetric>> CalculateAsync(IExecutionResultStore store, CancellationToken cancellationToken)
+  public async Task<IEnumerable<IMetric>> CalculateAsync(IEnumerable<ExecutionResult> store, CancellationToken cancellationToken)
   {
     var result = ImmutableArray.CreateBuilder<IMetric>();
     foreach (var provider in _providers)

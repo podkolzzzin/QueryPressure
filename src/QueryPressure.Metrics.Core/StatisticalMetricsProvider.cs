@@ -9,7 +9,7 @@ namespace QueryPressure.Metrics.Core;
 public class StatisticalMetricsProvider : IMetricProvider
 {
 
-  public Task<IEnumerable<IMetric>> CalculateAsync(IExecutionResultStore store, CancellationToken cancellationToken)
+  public Task<IEnumerable<IMetric>> CalculateAsync(IEnumerable<ExecutionResult> store, CancellationToken cancellationToken)
   {
     var sorted = store.OrderBy(x => x.Duration)
       .Select(x => x.Duration.TotalNanoseconds)
