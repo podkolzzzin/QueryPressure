@@ -3,4 +3,6 @@ export interface StatusBarProps {
     providers: string[];
     selectedProvider: string | null;
     selectProvider: (provider: string) => void;
+    handleFileUpload: (file: any) => void;
+    allowedFileTypes: string[];
 }

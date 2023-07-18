@@ -6,7 +6,7 @@ import { useConnectionString, useLimit, useProfile, useResources } from '@hooks'
 
 import { ConfigurationCardProps } from './ConfigurationCardProps';
 
-export function ConfigurationCard({ selectedProvider, script, toggleTheme }: ConfigurationCardProps) {
+export function ConfigurationCard({ selectedProvider, script, toggleTheme, openMonitoring }: ConfigurationCardProps) {
   const { profiles, selectedProfile, selectProfile } = useProfile();
   const { limits, selectedLimit, selectLimit } = useLimit();
   const {
@@ -21,6 +21,8 @@ export function ConfigurationCard({ selectedProvider, script, toggleTheme }: Con
   function execute(event: BaseSyntheticEvent) {
     event.preventDefault();
 
+    openMonitoring();
+    
     ExecutionApi.run({
       provider: selectedProvider,
       connectionString: connectionString,

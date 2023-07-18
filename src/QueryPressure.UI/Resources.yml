@@ -13,7 +13,6 @@
     showConnectionString: Show Connection String
     selectProvider: Select Provider
     selectFile: Select File
-    upload: Upload
 uk-UA:
   labels:
     configuration: Конфігурація
@@ -29,4 +28,3 @@ uk-UA:
     showConnectionString: Показати Строку Підключення
     selectProvider: Обрати Provider
     selectFile: Обрати файл
-    upload: Завантажити
