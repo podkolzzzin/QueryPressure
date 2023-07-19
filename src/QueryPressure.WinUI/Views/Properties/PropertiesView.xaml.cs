@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace QueryPressure.WinUI.Views
+namespace QueryPressure.WinUI.Views.Properties
 {
   /// <summary>
   /// Interaction logic for PropertiesView.xaml

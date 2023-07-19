@@ -9,8 +9,6 @@ public class DocumentViewModel : PaneViewModel, IDisposable
     ContentId = model.Id.ToString();
   }
 
-  public string FilePath => Title;
-
   public virtual void Dispose()
   {
   }
