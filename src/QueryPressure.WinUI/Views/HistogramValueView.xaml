@@ -8,6 +8,6 @@
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
              d:DataContext="{d:DesignInstance d:Type=metrics:HistogramMetricViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="400">
-    <ScottPlot:WpfPlot MinHeight="250px" x:Name="HistogramPlot" Margin="8px" />
+             d:DesignHeight="450" d:DesignWidth="400">
+    <ScottPlot:WpfPlot MinHeight="450px" x:Name="HistogramPlot" Margin="8px" />
 </UserControl>

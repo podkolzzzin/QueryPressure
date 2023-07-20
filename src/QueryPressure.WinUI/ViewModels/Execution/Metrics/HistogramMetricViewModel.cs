@@ -2,6 +2,7 @@ using Perfolizer.Horology;
 using Perfolizer.Mathematics.Histograms;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Services.Language;
+using QueryPressure.WinUI.Services.Theme;
 using ScottPlot;
 using System.Globalization;
 
@@ -12,17 +13,38 @@ public class HistogramMetricViewModel : MetricViewModel, IDisposable
   private record HistogramDataItem(double Position, double Value, string Label);
 
   private readonly ISubscription? _languageSubscription;
+  private readonly ISubscription? _themeSubscription;
 
   private WpfPlot? _histogramPlot;
   private Histogram? _currentData;
   private LanguageItem _language;
 
-  public HistogramMetricViewModel(IObservableItem<LanguageItem>? languageObserver, string contentId, string metricName, string nameLabelKey) : base(nameLabelKey)
+  private ApplicationTheme _currentTheme;
+
+  public HistogramMetricViewModel(IObservableItem<LanguageItem>? languageObserver, IObservableItem<ApplicationTheme>? themeObserver,
+    string contentId, string metricName, string nameLabelKey) : base(nameLabelKey)
   {
     if (languageObserver != null)
     {
       _languageSubscription = languageObserver.SubscribeWithKey(OnLanguageValueChanged, $"{contentId} - {metricName} - {nameof(HistogramMetricViewModel)}");
       _language = languageObserver.CurrentValue;
+    }
+
+    if (themeObserver != null)
+    {
+      _themeSubscription = themeObserver.SubscribeWithKey(OnThemeValueChanged, $"{contentId} - {metricName} - {nameof(HistogramMetricViewModel)}");
+      _currentTheme = themeObserver.CurrentValue;
+    }
+  }
+
+  private void OnThemeValueChanged(object? sender, ApplicationTheme value)
+  {
+    _currentTheme = value;
+
+    if (_histogramPlot != null && _currentData != null)
+    {
+      var data = GetHistogramData(_currentData, _language.Locale).ToList();
+      UpdatePlot(_histogramPlot, data, _language.Strings[NameLabelKey], _currentTheme);
     }
   }
 
@@ -33,7 +55,7 @@ public class HistogramMetricViewModel : MetricViewModel, IDisposable
     if (_histogramPlot != null && _currentData != null)
     {
       var data = GetHistogramData(_currentData, _language.Locale).ToList();
-      UpdatePlot(_histogramPlot, data, _language.Strings[NameLabelKey]);
+      UpdatePlot(_histogramPlot, data, _language.Strings[NameLabelKey], _currentTheme);
     }
   }
 
@@ -44,7 +66,7 @@ public class HistogramMetricViewModel : MetricViewModel, IDisposable
     if (_currentData != null)
     {
       var data = GetHistogramData(_currentData, _language.Locale).ToList();
-      UpdatePlot(_histogramPlot, data, _language.Strings[NameLabelKey]);
+      UpdatePlot(_histogramPlot, data, _language.Strings[NameLabelKey], _currentTheme);
     }
   }
 
@@ -66,19 +88,32 @@ public class HistogramMetricViewModel : MetricViewModel, IDisposable
       return;
     }
 
-    UpdatePlot(_histogramPlot, data, _language.Strings[NameLabelKey]);
+    UpdatePlot(_histogramPlot, data, _language.Strings[NameLabelKey], _currentTheme);
   }
 
-  private static void UpdatePlot(WpfPlot histogramPlot, IReadOnlyList<HistogramDataItem> histogram, string title)
+  private static void UpdatePlot(WpfPlot histogramPlot, IReadOnlyList<HistogramDataItem> histogram, string title, ApplicationTheme theme)
   {
     double[] values = histogram.Select(x => x.Value).ToArray();
     double[] positions = histogram.Select(x => x.Position).ToArray();
     string[] labels = histogram.Select(x => x.Label).ToArray();
 
     histogramPlot.Configuration.ScrollWheelZoom = false;
+
+    switch (theme)
+    {
+      case ApplicationTheme.Dark:
+        histogramPlot.Plot.Style(Style.Gray2);
+        break;
+      case ApplicationTheme.Light:
+      default:
+        histogramPlot.Plot.Style(Style.Default);
+        break;
+    }
+
     histogramPlot.Plot.Title(title);
     histogramPlot.Plot.AddBar(values, positions);
     histogramPlot.Plot.XTicks(positions, labels);
+    histogramPlot.Plot.XAxis.TickLabelStyle(rotation: 60);
     histogramPlot.Plot.SetAxisLimits(yMin: 0);
     histogramPlot.Refresh();
   }
@@ -115,6 +150,7 @@ public class HistogramMetricViewModel : MetricViewModel, IDisposable
 
   public void Dispose()
   {
+    _themeSubscription?.Dispose();
     _languageSubscription?.Dispose();
   }
 }
