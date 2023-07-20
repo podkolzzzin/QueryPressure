@@ -1,15 +1,21 @@
 using QueryPressure.WinUI.Common;
 using QueryPressure.WinUI.Services.Execute;
+using QueryPressure.WinUI.Services.Metric;
+using QueryPressure.WinUI.ViewModels.Execution.Metrics;
 
 namespace QueryPressure.WinUI.ViewModels.Execution;
 
 public class MetricsViewModel : ViewModelBase
 {
   private readonly Dictionary<string, MetricViewModel> _metrics;
+  private readonly string _contentId;
+  private readonly IMetricViewModelFactory _metricValueViewModelFactory;
 
-  public MetricsViewModel()
+  public MetricsViewModel(string contentId, IMetricViewModelFactory metricValueViewModelFactory)
   {
     _metrics = new Dictionary<string, MetricViewModel>();
+    _contentId = contentId;
+    _metricValueViewModelFactory = metricValueViewModelFactory;
   }
 
   public MetricType Type { get; private set; }
@@ -34,13 +40,11 @@ public class MetricsViewModel : ViewModelBase
       if (_metrics.ContainsKey(metric.Name))
       {
         var viewModel = _metrics[metric.Name];
-        viewModel.NameLabelKey = $"metrics.{metric.Name}.title";
-        viewModel.Value = metric.Value.ToString() ?? string.Empty; // TODO: better formating
+        viewModel.SetValue(metric.Value);
       }
       else
       {
-        var viewModel = new MetricViewModel($"metrics.{metric.Name}.title", metric.Value.ToString() ?? string.Empty);
-        _metrics[metric.Name] = viewModel;
+        _metrics[metric.Name] = _metricValueViewModelFactory.CreateAndSetValue(_contentId, metric.Name, $"metrics.{metric.Name}.title", metric.Value);
       }
     }
 

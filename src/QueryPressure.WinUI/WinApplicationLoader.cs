@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Autofac;
 using Autofac.Features.AttributeFilters;
 using QueryPressure.App;
+using QueryPressure.App.Console;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.WinUI.Common.Converters;
 using QueryPressure.WinUI.Extensions;
@@ -10,6 +11,7 @@ using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services;
 using QueryPressure.WinUI.Services.Execute;
 using QueryPressure.WinUI.Services.Language;
+using QueryPressure.WinUI.Services.Metric;
 using QueryPressure.WinUI.Services.Project;
 using QueryPressure.WinUI.Services.Selection;
 using QueryPressure.WinUI.Services.Settings;
@@ -81,6 +83,13 @@ public class WinApplicationLoader : ApplicationLoader
     _subjects.Add(builder.RegisterSubject<ApplicationTheme>());
     _subjects.Add(builder.RegisterSubject<ProjectModel?>());
     _subjects.Add(builder.RegisterSubject<Selection>());
+
+    builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+      .Where(t => typeof(IMetricValueViewModelCreator).IsAssignableFrom(t))
+      .As<IMetricValueViewModelCreator>();
+
+    builder.RegisterType<MetricValueViewModelFactory>().As<IMetricViewModelFactory>();
+    builder.RegisterType<DefaultMetricValueViewModelCreator>();
 
     return base.Load(builder);
   }

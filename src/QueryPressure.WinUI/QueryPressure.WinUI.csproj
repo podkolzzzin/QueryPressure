@@ -46,6 +46,7 @@
         <PackageReference Include="Dirkster.AvalonDock" />
         <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" />
         <PackageReference Include="Microsoft.Extensions.Hosting" />
+        <PackageReference Include="ScottPlot.WPF" />
     </ItemGroup>
 
     <ItemGroup>

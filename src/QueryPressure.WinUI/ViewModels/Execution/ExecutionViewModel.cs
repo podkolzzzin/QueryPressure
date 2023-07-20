@@ -2,6 +2,7 @@ using QueryPressure.WinUI.Commands.Execution;
 using QueryPressure.WinUI.Common.Commands;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Language;
+using QueryPressure.WinUI.Services.Metric;
 using QueryPressure.WinUI.Services.Subscriptions;
 using QueryPressure.WinUI.ViewModels.DockElements;
 using QueryPressure.WinUI.ViewModels.Helpers.Status;
@@ -22,10 +23,11 @@ public class ExecutionViewModel : DocumentViewModel
 
 
   public ExecutionViewModel(ISubscriptionManager subscriptionManager, ILanguageService languageService,
-    IExecutionStatusProvider executionStatusProvider, CloseExecutionResultsCommand closeExecutionResultsCommand, ExecutionModel executionModel)
+    IExecutionStatusProvider executionStatusProvider, IMetricViewModelFactory metricValueViewModelFactory,
+    CloseExecutionResultsCommand closeExecutionResultsCommand, ExecutionModel executionModel)
     : base(executionModel)
   {
-    DisplayMetrics = new MetricsViewModel();
+    DisplayMetrics = new MetricsViewModel(ContentId, metricValueViewModelFactory);
 
     _languageService = languageService;
     _executionStatusProvider = executionStatusProvider;
