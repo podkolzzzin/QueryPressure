@@ -5,7 +5,7 @@ using QueryPressure.WinUI.ViewModels.Execution.Metrics;
 
 namespace QueryPressure.WinUI.ViewModels.Execution;
 
-public class MetricsViewModel : ViewModelBase
+public class MetricsViewModel : ViewModelBase, IDisposable
 {
   private readonly Dictionary<string, MetricViewModel> _metrics;
   private readonly string _contentId;
@@ -57,9 +57,16 @@ public class MetricsViewModel : ViewModelBase
       _metrics.Remove(metric);
     }
 
-
     OnOtherPropertyChanged(nameof(Type));
     OnOtherPropertyChanged(nameof(HeaderLabelKey));
     OnOtherPropertyChanged(nameof(Metrics));
+  }
+
+  public void Dispose()
+  {
+    foreach (var metric in Metrics.OfType<IDisposable>())
+    {
+      metric.Dispose();
+    }
   }
 }

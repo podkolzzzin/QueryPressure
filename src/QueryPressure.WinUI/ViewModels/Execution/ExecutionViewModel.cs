@@ -74,12 +74,15 @@ public class ExecutionViewModel : DocumentViewModel
     StartTime = _model.StartTime;
     EndTime = _model.EndTime == default ? null : _model.EndTime;
     Duration = GetDuration(StartTime, EndTime);
-
+    ExceptionMessage = _model.Exception?.Message;
 
     var displayResultMetrics = _model.ResultMetrics is not null;
 
     DisplayMetrics.UpdateMetrics(displayResultMetrics ? _model.ResultMetrics : _model.RealtimeMetrics,
       displayResultMetrics ? MetricType.Result : MetricType.Realtime);
+
+    OnOtherPropertyChanged(nameof(ExceptionMessage));
+    OnOtherPropertyChanged(nameof(IsError));
   }
 
   private TimeSpan GetDuration(DateTime startTime, DateTime? endTime)
@@ -113,10 +116,16 @@ public class ExecutionViewModel : DocumentViewModel
     set => SetField(ref _duration, value);
   }
 
+  public bool IsError => !string.IsNullOrEmpty(ExceptionMessage);
+
+  public string? ExceptionMessage { get; private set; }
+
   public override void Dispose()
   {
     _subscription.Dispose();
     _durationUpdateTimer.Dispose();
+
+    DisplayMetrics.Dispose();
     base.Dispose();
   }
 }

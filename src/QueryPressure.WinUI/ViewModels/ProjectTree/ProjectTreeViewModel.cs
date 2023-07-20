@@ -1,8 +1,6 @@
-using QueryPressure.WinUI.Commands.Scenario;
 using QueryPressure.WinUI.Common.Observer;
 using QueryPressure.WinUI.Models;
 using QueryPressure.WinUI.Services.Selection;
-using QueryPressure.WinUI.Services.Subscriptions;
 using QueryPressure.WinUI.ViewModels.DockElements;
 using System.Collections.ObjectModel;
 
@@ -10,15 +8,12 @@ namespace QueryPressure.WinUI.ViewModels.ProjectTree;
 
 public class ProjectTreeViewModel : ToolViewModel, IDisposable
 {
-  private readonly ISubscriptionManager _subscriptionManager;
   private readonly ISelectionService _selectionService;
   private readonly INodeCreator _nodeCreator;
   private readonly ISubscription _subscription;
 
-  public ProjectTreeViewModel(IObservableItem<ProjectModel?> projectObserver, ISubscriptionManager subscriptionManager,
-    ISelectionService selectionService, INodeCreator nodeCreator) : base("project-tree")
+  public ProjectTreeViewModel(IObservableItem<ProjectModel?> projectObserver, ISelectionService selectionService, INodeCreator nodeCreator) : base("project-tree")
   {
-    _subscriptionManager = subscriptionManager;
     _selectionService = selectionService;
     _nodeCreator = nodeCreator;
     Nodes = new ObservableCollection<BaseNodeViewModel>();
@@ -40,7 +35,9 @@ public class ProjectTreeViewModel : ToolViewModel, IDisposable
       return;
     }
 
-    Nodes.Add(_nodeCreator.Create(project));
+    var projectNode = _nodeCreator.Create(project);
+    projectNode.IsExpanded = true;
+    Nodes.Add(projectNode);
     OnOtherPropertyChanged(nameof(Nodes));
   }
 

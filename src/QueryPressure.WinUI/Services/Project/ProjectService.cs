@@ -122,11 +122,27 @@ public class ProjectService : IProjectService
 
     var newScenarioNamePrefix = strings["labels.scenario.new-name"];
 
-    var scenario1 = CreateDefaultScenario($"{newScenarioNamePrefix} 1");
+    var scenario = CreateDefaultScenario(GenerateName(newScenarioNamePrefix));
 
-    Project.Scenarios.Add(scenario1);
+    Project.Scenarios.Add(scenario);
 
     _subject.Notify(this, Project);
+  }
+
+  private string GenerateName(string newScenarioNamePrefix)
+  {
+    var exisitingNames = Project!.Scenarios.Select(x => x.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+    var i = 0;
+    var name = $"{newScenarioNamePrefix}";
+
+    while (exisitingNames.Contains(name))
+    {
+      i++;
+      name = $"{newScenarioNamePrefix} {i}";
+    }
+
+    return name;
   }
 
   private static ScenarioModel CreateDefaultScenario(string scenarioName) => new ScenarioModel
@@ -159,5 +175,21 @@ public class ProjectService : IProjectService
   {
     Project = null;
     _subject.Notify(this, Project);
+  }
+
+  public void AddNewScenario()
+  {
+    if (Project == null)
+    {
+      throw new InvalidOperationException();
+    }
+
+    var strings = _languageService.GetStrings();
+    var newScenarioNamePrefix = strings["labels.scenario.new-name"];
+    var scenario = CreateDefaultScenario(GenerateName(newScenarioNamePrefix));
+
+    Project.Scenarios.Add(scenario);
+
+    _subscriptionManager.Notify(this, ModelAction.ChildrenChanged, Project);
   }
 }

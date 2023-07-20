@@ -4,7 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
+             xmlns:application="clr-namespace:QueryPressure.WinUI.Commands.App"
+             xmlns:execution="clr-namespace:QueryPressure.WinUI.Commands.Execution"
              xmlns:scenario="clr-namespace:QueryPressure.WinUI.Commands.Scenario"
+             xmlns:project="clr-namespace:QueryPressure.WinUI.Commands.Project"
              xmlns:projectTree="clr-namespace:QueryPressure.WinUI.ViewModels.ProjectTree"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=projectTree:ProjectTreeViewModel}"
@@ -17,6 +20,18 @@
                     <Run Text="{ex:Locale Binding={Binding Status.LabelLink, Mode=OneWay}}"/>
                     <Run Text=" - "/>
                     <Run Text="{Binding Title, Mode=OneWay}"/>
+                    <TextBlock.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem FontWeight="Bold" 
+                                  Header="{ex:Locale labels.execution.context-menu.open}"
+                                  Command="{ex:CommandImport execution:OpenExecutionResultsCommand}"
+                                  CommandParameter="{Binding ExecutionModel}"/>
+                            <Separator />
+                            <MenuItem Header="{ex:Locale labels.execution.context-menu.properties}"
+                                  Command="{ex:CommandImport application:OpenPropertiesCommand}"
+                                  CommandParameter="{Binding ExecutionModel}"/>
+                        </ContextMenu>
+                    </TextBlock.ContextMenu>
                 </TextBlock>
             </StackPanel>
         </HierarchicalDataTemplate>
@@ -33,7 +48,9 @@
                                   Command="{ex:CommandImport scenario:ExecuteScenarioCommand}"
                                   CommandParameter="{Binding ScenarioModel}"/>
                         <Separator />
-                        <MenuItem Header="{ex:Locale labels.scenario.context-menu.properties}"/>
+                        <MenuItem Header="{ex:Locale labels.scenario.context-menu.properties}"
+                                  Command="{ex:CommandImport application:OpenPropertiesCommand}"
+                                  CommandParameter="{Binding ScenarioModel}"/>
                     </ContextMenu>
                 </TextBlock.ContextMenu>
             </TextBlock>
@@ -43,7 +60,12 @@
             <TextBlock Text="{Binding Title}">
                 <TextBlock.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{ex:Locale labels.project.context-menu.properties}"/>
+                        <MenuItem Header="{ex:Locale labels.project.context-menu.add-scenario}"
+                                  Command="{ex:CommandImport project:AddScenarioCommand}"/>
+                        <Separator />
+                        <MenuItem Header="{ex:Locale labels.project.context-menu.properties}"
+                                  Command="{ex:CommandImport application:OpenPropertiesCommand}"
+                                  CommandParameter="{Binding ProjectModel}"/>
                     </ContextMenu>
                 </TextBlock.ContextMenu>
             </TextBlock>

@@ -38,22 +38,58 @@ public class Execution
 
   public async Task ExecuteAsync(CancellationToken cancellationToken)
   {
-    var executor = await _builder.BuildAsync(_args, _store, _liveMetricProviders, default);
-    var executeTask = executor.ExecuteAsync(cancellationToken);
-
     NotifyStarted();
 
-    while (!executeTask.IsCompleted)
+    try
     {
-      await Task.WhenAny(executeTask, Task.Delay(200, cancellationToken));
-      var liveVisualization = await _visualizer.VisualizeAsync(_liveMetricProviders.SelectMany(x => x.GetMetrics()), cancellationToken);
-      NotifyAsync(liveVisualization);
+      var executor = await _builder.BuildAsync(_args, _store, _liveMetricProviders, default);
+      var executeTask = executor.ExecuteAsync(cancellationToken);
+
+      while (!executeTask.IsCompleted)
+      {
+        await Task.WhenAny(executeTask, Task.Delay(200, cancellationToken));
+        var liveVisualization = await _visualizer.VisualizeAsync(_liveMetricProviders.SelectMany(x => x.GetMetrics()), cancellationToken);
+        NotifyAsync(liveVisualization);
+      }
+
+      if (!executeTask.IsCompletedSuccessfully)
+      {
+        NotifyError(executeTask.Exception);
+        return;
+      }
+
+      var errors = _store.Where(x => x.Exception != null).Select(x => x.Exception).ToArray();
+
+      if (errors.Length > 0)
+      {
+        var firstError = errors.First();
+
+        if (firstError is not null && firstError.InnerException is not null)
+        {
+          firstError = firstError.InnerException;
+        }
+
+        NotifyError(new Exception($"There was {errors.Length} erros during execution. For example: {firstError?.Message}"));
+        return;
+      }
+
+      var metrics = await _metricsCalculator.CalculateAsync(_store, cancellationToken);
+      var visualization = await _visualizer.VisualizeAsync(metrics, cancellationToken);
+
+      NotifyFinnished(_store, visualization);
     }
+    catch (Exception ex)
+    {
+      NotifyError(ex);
+    }
+  }
 
-    var metrics = await _metricsCalculator.CalculateAsync(_store, cancellationToken);
-    var visualization = await _visualizer.VisualizeAsync(metrics, cancellationToken);
-
-    NotifyFinnished(_store, visualization);
+  private void NotifyError(Exception? exception)
+  {
+    _model.Status = ExecutionStatus.Error;
+    _model.EndTime = DateTime.UtcNow;
+    _model.Exception = exception;
+    _subscriptionManager.Notify(this, ModelAction.Edit, _model);
   }
 
   private void NotifyStarted()

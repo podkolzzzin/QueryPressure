@@ -34,4 +34,6 @@ public class ExecutionModel : IModel
   public ExecutionVisualization? ResultMetrics { get; set; }
 
   public IEnumerable<ExecutionResult>? RowResults { get; set; }
+
+  public Exception? Exception { get; internal set; }
 }

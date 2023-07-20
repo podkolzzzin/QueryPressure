@@ -34,6 +34,7 @@
     project:
         new-name: New Project
         context-menu:
+            add-scenario: Add Scenario
             properties: Properties
     scenario:
         new-name: New Scenario
@@ -45,6 +46,9 @@
             properties: Properties
     execution:
         results: Results
+        context-menu:
+            open: Open
+            properties: Properties
         document:
             info-header: Execution information
             id: ID
@@ -52,12 +56,14 @@
             start-time: Start Time
             end-time: End Time
             duration: Duration
+            exeption: Error
             real-time-header: Real-time metrics
             result-header: Result metrics
         status:
             none: None
             running: Running
             finished: Finished
+            error: Error
     properties:
         project:
             name: "Name:"
@@ -111,6 +117,7 @@ uk-UA:
     project:
         new-name: Новий Проект
         context-menu:
+            add-scenario: Додати Сценарій
             properties: Властивості
     scenario:
         new-name: Новий Сценарій
@@ -122,6 +129,9 @@ uk-UA:
             properties: Властивості
     execution:
         results: Результати
+        context-menu:
+            open: Відкрити
+            properties: Властивості
         document:
             info-header: Інформація виконання
             id: ІН
@@ -129,12 +139,14 @@ uk-UA:
             start-time: Час початку
             end-time: Час завершення
             duration: Тривалість
+            exeption: Помилка
             real-time-header: Метрики реального часу
             result-header: Результуючі метрики
         status:
             none: Немає
             running: Виконується
             finished: Завершено
+            error: Помилка
     properties:
         project:
             name: "Ім'я:"

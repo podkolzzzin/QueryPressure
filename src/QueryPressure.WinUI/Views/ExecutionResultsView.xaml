@@ -7,11 +7,12 @@
              xmlns:metrics="clr-namespace:QueryPressure.WinUI.ViewModels.Execution.Metrics"
              xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
              xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
+             xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance d:Type=execution:ExecutionViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-
+        <converters:BoolToVisibilityColapsedConverter x:Key="BoolToVisibilityColapsedConverter"/>
         <Style x:Key="GridRow" TargetType="{x:Type Grid}">
             <Setter Property="Margin" Value="8px 2px"/>
         </Style>
@@ -82,10 +83,21 @@
                 <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.duration}"/>
                 <TextBlock Grid.Column="1" Text="{Binding Duration, StringFormat={}{0:hh}:{0:mm}:{0:ss}}"/>
             </Grid>
+            <Grid Style="{StaticResource GridRow}" Visibility="{Binding IsError, Converter={StaticResource BoolToVisibilityColapsedConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200px"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{ex:Locale labels.execution.document.exeption}"/>
+                <TextBlock Grid.Column="1" Text="{Binding ExceptionMessage}"/>
+            </Grid>
 
             <Separator Margin="0px 8px 0px 0px"/>
-            <TextBlock Text="{ex:Locale Binding={Binding DisplayMetrics.HeaderLabelKey}}" Style="{StaticResource HeaderText}"/>
-            <ItemsControl ItemsSource="{Binding DisplayMetrics.Metrics}"/>
+            <TextBlock Text="{ex:Locale Binding={Binding DisplayMetrics.HeaderLabelKey}}"
+                       Style="{StaticResource HeaderText}"
+                       Visibility="{Binding IsError, Converter={StaticResource BoolToVisibilityColapsedConverter}, ConverterParameter=true}"/>
+            <ItemsControl ItemsSource="{Binding DisplayMetrics.Metrics}"
+                          Visibility="{Binding IsError, Converter={StaticResource BoolToVisibilityColapsedConverter}, ConverterParameter=true}"/>
 
         </StackPanel>
     </ScrollViewer>

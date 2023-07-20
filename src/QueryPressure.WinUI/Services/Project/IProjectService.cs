@@ -15,4 +15,6 @@ public interface IProjectService
   void CreateNew();
 
   void Close();
+
+  void AddNewScenario();
 }

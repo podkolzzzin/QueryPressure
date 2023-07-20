@@ -13,6 +13,7 @@ public class ExecutionStatusProvider : IExecutionStatusProvider
       {ExecutionStatus.None, new  ExecutionStatusViewModel(ExecutionStatus.None, "labels.execution.status.none", new SimpleIcon("none"))},
       {ExecutionStatus.Running, new  ExecutionStatusViewModel(ExecutionStatus.Running, "labels.execution.status.running", new RunningStatusIcon())},
       {ExecutionStatus.Finished, new  ExecutionStatusViewModel(ExecutionStatus.Finished, "labels.execution.status.finished", new SimpleIcon("finished"))},
+      {ExecutionStatus.Error, new  ExecutionStatusViewModel(ExecutionStatus.Error, "labels.execution.status.error", new SimpleIcon("error"))},
     };
   }
 

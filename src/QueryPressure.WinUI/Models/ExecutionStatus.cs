@@ -4,5 +4,6 @@ public enum ExecutionStatus
 {
   None,
   Running,
-  Finished
+  Finished,
+  Error
 }
