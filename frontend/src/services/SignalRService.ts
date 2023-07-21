@@ -13,8 +13,13 @@ export const subsctibeToExecutionEvents = (executionId: string, handlers: EventH
 
     connection.on('live-average', (metric) => handlers.averageMetricReceived(metric.nanoseconds));
     connection.on('live-request-count', handlers.requestCountMetricReceived);
-    connection.on('execution-completed', ({ isSuccessful, message }) =>
-        handlers.notifyExecutionCompleted(isSuccessful, message));
+    connection.on('execution-completed', ({ isSuccessful, message }) => {
+        handlers.notifyExecutionCompleted(isSuccessful, message);
+        
+        // 'execution-completed' is the last event that user should receive from server 
+        connection?.stop();
+        connection = null;
+    });
 
     connection.start()
         .then(() => {
