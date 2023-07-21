@@ -6,7 +6,8 @@ import { useConnectionString, useLimit, useProfile, useResources } from '@hooks'
 
 import { ConfigurationCardProps } from './ConfigurationCardProps';
 
-export function ConfigurationCard({ selectedProvider, script, toggleTheme, openMonitoring }: ConfigurationCardProps) {
+export function ConfigurationCard(
+  { selectedProvider, script, executionId, cancelButtonEnabled, toggleTheme, openMonitoring, setExecutionId }: ConfigurationCardProps) {
   const { profiles, selectedProfile, selectProfile } = useProfile();
   const { limits, selectedLimit, selectLimit } = useLimit();
   const {
@@ -29,9 +30,13 @@ export function ConfigurationCard({ selectedProvider, script, toggleTheme, openM
       script: script,
       profile: selectedProfile,
       limit: selectedLimit
-    }).then(() => {
-      /* TODO: processing result */
-    });
+    }).then(executionId => setExecutionId(executionId));
+  }
+
+  function cancel(event: BaseSyntheticEvent) {
+    event.preventDefault();
+    
+    ExecutionApi.cancel(executionId);
   }
 
   return (
@@ -64,7 +69,10 @@ export function ConfigurationCard({ selectedProvider, script, toggleTheme, openM
               selectLimit={selectLimit} />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">{t('labels.execute')}</button>
+          <div className="d-grid gap-3">
+            <button onClick={cancel} disabled={!cancelButtonEnabled} className="btn btn-danger w-100">{t('labels.cancel')}</button>
+            <button type="submit" className="btn btn-primary w-100">{t('labels.execute')}</button>
+          </div>
         </form>
       </div>
     </div>
