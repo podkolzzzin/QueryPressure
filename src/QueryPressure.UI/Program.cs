@@ -4,6 +4,7 @@ using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.UI;
 using QueryPressure.UI.Hubs;
+using QueryPressure.UI.Inderfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

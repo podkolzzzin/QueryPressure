@@ -1,14 +1,17 @@
-namespace QueryPressure.UI;
+using QueryPressure.UI.Inderfaces;
+using QueryPressure.UI.Services;
+
+namespace QueryPressure.UI.HostedServices;
 
 public class ExecutionStatusWatcher : BackgroundInfiniteService
 {
   private readonly IExecutionStore _executionStore;
-  private readonly ExecutionEventPublished _eventPublished;
+  private readonly ExecutionEventPublisher _eventPublisher;
 
-  public ExecutionStatusWatcher(IExecutionStore executionStore, ExecutionEventPublished eventPublished)
+  public ExecutionStatusWatcher(IExecutionStore executionStore, ExecutionEventPublisher eventPublisher)
   {
     _executionStore = executionStore;
-    _eventPublished = eventPublished;
+    _eventPublisher = eventPublisher;
   }
 
   protected override Task ExecuteRepeatedJobAsync(CancellationToken stoppingToken)
@@ -21,7 +24,7 @@ public class ExecutionStatusWatcher : BackgroundInfiniteService
       await Task.WhenAny(execution.ExecutionTask, Task.Delay(100, token));
 
       var metrics = execution.MetricProviders.SelectMany(x => x.GetMetrics());
-      await _eventPublished.PublishMetricsAsync(execution.Id, metrics, stoppingToken);
+      await _eventPublisher.PublishMetricsAsync(execution.Id, metrics, stoppingToken);
     });
   }
 }

@@ -1,13 +1,14 @@
 using QueryPressure.Core.Interfaces;
 using QueryPressure.UI.Hubs;
+using QueryPressure.UI.Inderfaces;
 
-namespace QueryPressure.UI;
+namespace QueryPressure.UI.Services;
 
-public class ExecutionEventPublished 
+public class ExecutionEventPublisher 
 {
   private readonly IHubService<DashboardHub> _hubService;
  
-  public ExecutionEventPublished(IHubService<DashboardHub> hubService)
+  public ExecutionEventPublisher(IHubService<DashboardHub> hubService)
   {
     _hubService = hubService;
   }

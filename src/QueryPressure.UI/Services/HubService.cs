@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.SignalR;
 using QueryPressure.Core.Interfaces;
+using QueryPressure.UI.Inderfaces;
 
-namespace QueryPressure.UI;
+namespace QueryPressure.UI.Services;
 
 public class HubService<THub> : IHubService<THub> where THub : Hub
 {
@@ -32,11 +33,4 @@ public class HubService<THub> : IHubService<THub> where THub : Hub
         Message = message,
       }, cancellationToken);
   }
-}
-
-public interface IHubService<THub> where THub : Hub
-{
-  Task SendMessageToAllAsync<T>(string method, T data);
-  Task SendExecutionMetric(Guid executionId, IMetric metric, CancellationToken cancellationToken);
-  Task SendCompletionStatus(Guid executionId, bool IsCompletedSuccessfully, string? message, CancellationToken cancellationToken);
 }

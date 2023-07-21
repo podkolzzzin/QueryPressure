@@ -1,4 +1,4 @@
-namespace QueryPressure.UI;
+namespace QueryPressure.UI.HostedServices;
 
 public abstract class BackgroundInfiniteService : BackgroundService
 {

@@ -2,7 +2,9 @@ using Autofac;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
-using QueryPressure.UI;
+using QueryPressure.UI.Inderfaces;
+
+namespace QueryPressure.UI;
 
 public class Provider
 {

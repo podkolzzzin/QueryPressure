@@ -1,11 +1,14 @@
-namespace QueryPressure.UI;
+using QueryPressure.UI.Inderfaces;
+using QueryPressure.UI.Services;
+
+namespace QueryPressure.UI.HostedServices;
 
 public class ExecutionFinalizer : BackgroundInfiniteService
 {
   private readonly IExecutionStore _executionStore;
-  private readonly ExecutionEventPublished _eventPublisher;
+  private readonly ExecutionEventPublisher _eventPublisher;
 
-  public ExecutionFinalizer(IExecutionStore executionStore, ExecutionEventPublished eventPublisher)
+  public ExecutionFinalizer(IExecutionStore executionStore, ExecutionEventPublisher eventPublisher)
   {
     _executionStore = executionStore;
     _eventPublisher = eventPublisher;

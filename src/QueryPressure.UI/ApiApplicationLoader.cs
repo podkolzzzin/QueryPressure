@@ -1,6 +1,9 @@
 using Autofac;
 using QueryPressure.App;
-using QueryPressure.UI;
+using QueryPressure.UI.HostedServices;
+using QueryPressure.UI.Services;
+
+namespace QueryPressure.UI;
 
 public class ApiApplicationLoader : ApplicationLoader
 {
@@ -25,7 +28,7 @@ public class ApiApplicationLoader : ApplicationLoader
       .AsImplementedInterfaces()
       .SingleInstance();
 
-    builder.RegisterType<ExecutionEventPublished>()
+    builder.RegisterType<ExecutionEventPublisher>()
       .SingleInstance();
     
     builder.RegisterType<ExecutionStatusWatcher>()
