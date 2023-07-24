@@ -51,7 +51,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-          path: src/QueryPressure.UI/.out/linux/QueryPressure.UI
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
