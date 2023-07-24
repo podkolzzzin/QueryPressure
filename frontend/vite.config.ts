@@ -2,22 +2,9 @@ import react from '@vitejs/plugin-react';
 import * as path from 'path';
 import {defineConfig} from 'vite';
 
-// https://vitejs.dev/config/
-export default defineConfig({
+export const baseConfig = {
   plugins: [react()],
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5073',
-        changeOrigin: true,
-        secure: false
-      },
-      '/ws': {
-        target: 'ws://localhost:5073',
-        changeOrigin: true,
-        secure: false
-      },
-    },
     port: 5173
   },
   resolve: {
@@ -33,5 +20,24 @@ export default defineConfig({
       {find: '@hooks', replacement: path.resolve(__dirname, 'src', 'hooks')},
       {find: '~bootstrap', replacement: path.resolve(__dirname, 'node_modules/bootstrap')}
     ]
+  },
+};
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  ...baseConfig,
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5073',
+        changeOrigin: true,
+        secure: false
+      },
+      '/ws': {
+        target: 'ws://localhost:5073',
+        changeOrigin: true,
+        secure: false
+      },
+    }
   }
 });
