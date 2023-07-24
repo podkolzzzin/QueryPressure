@@ -6,10 +6,15 @@ WORKDIR /frontend
 
 RUN npm i && npm run build
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0
+FROM mcr.microsoft.com/dotnet/sdk:7.0 as build-env
 
 COPY ./src/ /src/
 COPY --from=fe-build /frontend/dist/ /src/QueryPressure.UI/dist/
 
 WORKDIR /
-ENTRYPOINT dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release -o .out -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:IncludeNativeLibrariesForSelfExtract=true
+RUN dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release -o .out
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /App
+COPY --from=build-env /.out .
+ENTRYPOINT ["dotnet", "QueryPressure.UI.dll"]

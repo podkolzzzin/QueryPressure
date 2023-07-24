@@ -23,12 +23,10 @@ builder.UseBuiltAssemblyPlugins();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-  app.UseSwagger();
-  app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
+app.UseDeveloperExceptionPage();
 app.UseFrontendStaticFiles();
 app.OpenBrowserWhenReady();
 
@@ -58,4 +56,3 @@ app.Run();
 static IEnumerable<CreatorMetadataResponse> GetCreatorMetadata<TCreator, TCreated>(IEnumerable<TCreator> creators)
   where TCreator : IArgumentProvider, ICreator<TCreated>
   => creators.Select(x => new CreatorMetadataResponse(x.Arguments, x.Type));
-

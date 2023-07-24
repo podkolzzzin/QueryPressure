@@ -36,8 +36,4 @@
     <ItemGroup>
         <EmbeddedResource Include="Resources.yml" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models\" />
-    </ItemGroup>
 </Project>
