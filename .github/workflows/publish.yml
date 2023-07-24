@@ -29,18 +29,14 @@ jobs:
     - name: Build and publish dotnet app
       shell: pwsh
       run: |
-        ${{ env.Scripts }}/DotnetPublish.ps1 -OutputSubfolder win -Runtime win-x64
         ${{ env.Scripts }}/DotnetPublish.ps1 -OutputSubfolder linux -Runtime linux-x64
-        ${{ env.Scripts }}/DotnetPublish.ps1 -OutputSubfolder osx -Runtime osx-x64
         
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
         name: build-artifacts
         path: |
-          src/QueryPressure.UI/.out/win/QueryPressure.UI.exe
           src/QueryPressure.UI/.out/linux/QueryPressure.UI
-          src/QueryPressure.UI/.out/osx/QueryPressure.UI
           
           
   deploy: # Azure AppService Deploy
@@ -52,10 +48,10 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-          path: src/QueryPressure.UI/.out/linux/
+          path: src/QueryPressure.UI/.out/linux/QueryPressure.UI
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -65,3 +61,6 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E14A3C1B94CC43ACB07F30DAE34A7CAC }}
           package: .
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: path/to/artifact
