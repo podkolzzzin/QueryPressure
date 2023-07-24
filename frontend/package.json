@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "azure": "vite --config azure-vite.config.js",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint ./src --ext .jsx,.js,.ts,.tsx --ignore-path ./.gitignore",
