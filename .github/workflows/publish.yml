@@ -59,4 +59,4 @@ jobs:
           app-name: 'QueryPressure'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E14A3C1B94CC43ACB07F30DAE34A7CAC }}
-          package: .
+          package: ./QueryPressure.UI
