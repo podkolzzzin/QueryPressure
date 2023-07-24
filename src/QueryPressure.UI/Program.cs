@@ -3,8 +3,9 @@ using Autofac.Extensions.DependencyInjection;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
 using QueryPressure.UI;
+using QueryPressure.UI.Extensions;
 using QueryPressure.UI.Hubs;
-using QueryPressure.UI.Inderfaces;
+using QueryPressure.UI.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,8 +46,7 @@ app.MapGet("/api/limits", GetCreatorMetadata<ILimitCreator, ILimit>);
 app.MapPost("/api/execution", (ExecutionRequest request, ProviderManager manager, CancellationToken cancellationToken) =>
   manager.GetProvider(request.Provider).StartExecutionAsync(request, cancellationToken));
 
-app.MapPost("/api/execution/{executionId:guid}/cancel", (Guid executionId, IExecutionStore store) =>
-  store.CancelAsync(executionId));
+app.MapPost("/api/execution/{executionId:guid}/cancel", (Guid executionId, ProviderManager manager) => manager.CancelExecution(executionId));
 
 app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) =>
   manager.GetResources(locale, ResourceFormat.Html));

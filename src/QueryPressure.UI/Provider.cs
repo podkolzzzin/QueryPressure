@@ -1,29 +1,26 @@
+using System.Collections.Concurrent;
 using Autofac;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
-using QueryPressure.UI.Inderfaces;
 
 namespace QueryPressure.UI;
 
-public class Provider
+internal class Provider
 {
-  private readonly ICreator<IConnectionProvider> _creator;
-  private readonly IScenarioBuilder _builder;
-  private readonly IExecutionStore _executionStore;
-  private readonly IComponentContext _container;
+  private record ExecutionData(Execution Execution, Task Task, CancellationTokenSource CancellationTokenSource);
 
-  public Provider(
-    ICreator<IConnectionProvider> creator,
-    IScenarioBuilder builder, 
-    IExecutionStore executionStore, 
-    IComponentContext container)
+  private readonly ILifetimeScope _scope;
+  private readonly ICreator<IConnectionProvider> _creator;
+  private readonly ConcurrentDictionary<Guid, ExecutionData> _executions = new();
+
+  public Provider(ILifetimeScope scope, ICreator<IConnectionProvider> creator)
   {
+    _scope = scope;
     _creator = creator;
-    _builder = builder;
-    _executionStore = executionStore;
-    _container = container;
   }
+
+  public Execution? GetExecution(Guid id) => _executions.TryGetValue(id, out var data) ? data.Execution : null;
 
   public async Task<IServerInfo> TestConnectionAsync(string connectionString)
   {
@@ -37,22 +34,33 @@ public class Provider
     return await provider.GetServerInfoAsync(default);
   }
 
-  public async Task<Guid> StartExecutionAsync(ExecutionRequest request, CancellationToken cancellationToken)
+  public Guid StartExecutionAsync(ExecutionRequest request, CancellationToken _)
   {
-    var appArgs = BuildArgs(request);
-    
-    var store = _container.Resolve<IExecutionResultStore>();
-    var liveMetricProviders = _container.Resolve<ILiveMetricProvider[]>();
-    
-    var executor = await _builder.BuildAsync(appArgs, store, liveMetricProviders, cancellationToken);
-    
-    var cts = new CancellationTokenSource();
-    var execution = executor.ExecuteAsync(cts.Token);
+    var appArgs = CreateArguments(request);
+    var id = Guid.NewGuid();
+    var executionScope = _scope.BeginLifetimeScope();
+    var execution = executionScope.Resolve<Execution>(
+      new NamedParameter("args", appArgs),
+      new NamedParameter("id", id)
+    );
+    var cancellationTokenSource = new CancellationTokenSource();
+    var task = ExecuteAsync(executionScope, execution, cancellationTokenSource.Token);
+    var data = new ExecutionData(execution, task, cancellationTokenSource);
+    _executions[id] = data;
 
-    return await _executionStore.SaveAsync(execution, store, liveMetricProviders, cts);
+    return id;
   }
 
-  private static ApplicationArguments BuildArgs(ExecutionRequest request)
+  private async Task ExecuteAsync(ILifetimeScope scope, Execution execution, CancellationToken cancellationToken)
+  {
+    await using (scope)
+    {
+      await execution.ExecuteAsync(cancellationToken);
+      _executions.TryRemove(execution.Id, out _);
+    }
+  }
+
+  private static ApplicationArguments CreateArguments(ExecutionRequest request)
   {
     var appArgs = new ApplicationArguments()
     {
@@ -84,5 +92,14 @@ public class Provider
       }
     };
     return appArgs;
+  }
+
+  public void CancelExecution(Guid executionId)
+  {
+    if (!_executions.TryGetValue(executionId, out var data))
+    {
+      return;
+    }
+    data.CancellationTokenSource.Cancel();
   }
 }

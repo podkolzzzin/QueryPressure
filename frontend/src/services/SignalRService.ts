@@ -1,4 +1,7 @@
-import { HubConnectionBuilder, HubConnection } from '@microsoft/signalr';
+import { HubConnection,HubConnectionBuilder } from '@microsoft/signalr';
+
+import { MetricNames } from '@/models/MetricModel';
+import { MetricsEvent } from '@/models/MetricsEvent';
 
 let connection: HubConnection | null = null;
 
@@ -11,8 +14,18 @@ export const subsctibeToExecutionEvents = (executionId: string, handlers: EventH
         .withAutomaticReconnect()
         .build();
 
-    connection.on('live-average', (metric) => handlers.averageMetricReceived(metric.nanoseconds));
-    connection.on('live-request-count', handlers.requestCountMetricReceived);
+    connection.on('live-metrics', (metricsEvent: MetricsEvent) => {
+        metricsEvent.metrics.forEach((metric) => {
+            switch (metric.name) {
+                case MetricNames.LiveAverage: 
+                    handlers.averageMetricReceived(metric.value.nanoseconds);
+                    break;
+                case MetricNames.LiveRequestCount:
+                    handlers.requestCountMetricReceived(metric.value);
+            }
+        });
+    });
+
     connection.on('execution-completed', ({ isSuccessful, message }) => {
         handlers.notifyExecutionCompleted(isSuccessful, message);
         
