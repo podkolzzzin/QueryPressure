@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import {StatusBar} from '@components';
 import {EditorCardProps} from '@containers/EditorCard/EditorCard.models';
 import Editor from '@monaco-editor/react';
-import { FileUpload } from '@/components/FileUploader/FileUploader';
 import { MonitoringScreen } from '@/components/MonitoringScreen';
 
-export function EditorCard({providers, selectedProvider, selectProvider, setScript, theme, showMonitor, toggleMonitor}: EditorCardProps) {
+export function EditorCard(
+  {providers, executionId, selectedProvider, selectProvider, setScript, theme, showMonitor, toggleMonitor, toggleCancelButton}: EditorCardProps) {
   const { t } = useTranslation();
   const [editorContent, setEditorContent] = useState('');
   const supportedFileTypes = [ 'txt', 'sql', 'js', 'lua', 'json' ]
@@ -96,7 +96,7 @@ export function EditorCard({providers, selectedProvider, selectProvider, setScri
               defaultValue=''
               theme={theme === 'dark' ? 'vs-dark' : 'light'}/>
         </div>
-        <MonitoringScreen showMonitor={showMonitor} toggleMonitor={toggleMonitor}/>
+        <MonitoringScreen executionId={executionId} showMonitor={showMonitor} toggleMonitor={toggleMonitor} toggleCancelButton={toggleCancelButton}/>
         <StatusBar status="Ready"
                    providers={providers}
                    selectedProvider={selectedProvider}

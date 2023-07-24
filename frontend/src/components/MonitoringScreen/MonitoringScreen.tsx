@@ -1,17 +1,44 @@
-import { useState } from "react";
-import { TMonitoringScreenProps } from "./MonitoringScreen.models"
+import { useEffect, useState } from 'react';
+import { TMonitoringScreenProps } from "./MonitoringScreen.models";
 import { Arrow } from "../Arrow";
+import { LineChart } from '../LineChart';
+import { EventHandlerSet, subsctibeToExecutionEvents } from '@/services';
 
-
-const Chart = ({ title, fullWidth, fullHeight }: { title: string, fullWidth?: boolean, fullHeight?: boolean }) => {
-    return (<div className={`card ${fullHeight && 'h-100'}`} style={{ width: fullWidth ? '100%' : '49%' }}>
-        <div className="card-header">{title}</div>
-        <div className="card-body"></div>
-    </div>)
-};
-
-export const MonitoringScreen = ({ showMonitor, toggleMonitor }: TMonitoringScreenProps) => {
+export const MonitoringScreen = ({ executionId, showMonitor, toggleMonitor, toggleCancelButton }: TMonitoringScreenProps) => {
     const [fullView, setFullView] = useState(false);
+    
+    const [requestCountMetric, setRequestCountMetric] = useState<number>(0); // Initial metric value
+    const [averageMetric, setAverageMetric] = useState<number>(0); // Initial metric value
+
+    const [requestCountChartData, setRequestCountChartData] = useState<{ x: number, y: number }[]>([]);
+    const [averageChartData, setAverageChartData] = useState<{ x: number, y: number }[]>([]);
+
+    const eventHandlers: EventHandlerSet = {
+        requestCountMetricReceived: setRequestCountMetric,
+        averageMetricReceived: setAverageMetric,
+        notifyExecutionCompleted: (isSuccessful: boolean, message: string | null) => { 
+            toggleCancelButton(false);
+        },
+        newConnectionEstablished: () => {
+            setRequestCountChartData([]);
+            setAverageChartData([]);
+            toggleCancelButton(true);
+        }
+    }
+
+    useEffect(() => {
+        if (!executionId) return;
+        subsctibeToExecutionEvents(executionId, eventHandlers);
+    }, [executionId]);
+
+
+    useEffect(() => {
+        setRequestCountChartData([...requestCountChartData, { y: requestCountMetric, x: requestCountChartData.length }])
+    }, [requestCountMetric]);
+
+    useEffect(() => {
+        setAverageChartData([...averageChartData, { y: averageMetric, x: averageChartData.length }])
+    }, [averageMetric]);
 
     const onTop = () => {
         if (!showMonitor) {
@@ -37,9 +64,9 @@ export const MonitoringScreen = ({ showMonitor, toggleMonitor }: TMonitoringScre
             </div>
             {showMonitor &&
                 <div className={`d-flex h-100 ${!fullView ? 'flex-wrap' : 'flex-column'}`} style={{ gap: '2%', margin: '0 10px 10px' }}>
-                    <Chart title='Average' fullWidth={fullView} fullHeight={fullView} />
-                    <Chart title='Q1 / Med / Q1' fullWidth={fullView} fullHeight={fullView} />
-                    <Chart title='RPS / Error rate' fullWidth fullHeight={fullView} />
+                    <LineChart title='Average' fullWidth={fullView} fullHeight={fullView} data={averageChartData} />
+                    <LineChart title='Request Count' fullWidth={fullView} fullHeight={fullView} data={requestCountChartData} />
+                    {/* <Chart title='RPS / Error rate' fullWidth fullHeight={fullView} /> */}
                 </div>
             }
         </div>);
