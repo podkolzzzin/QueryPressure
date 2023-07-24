@@ -21,9 +21,18 @@ jobs:
         with:
           dotnet-version: '7.x'
           include-prerelease: true
-
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '19.8'
+          
+      - name: npm install & build
+        run: |
+          npm install
+          npm run build
+          Xcopy /E /I dist ../src/QueryPressure.UI/dist
+        working-directory: ./frontend
 
       - name: dotnet publish
         run: dotnet publish src/QueryPressure.UI/QueryPressure.UI.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
