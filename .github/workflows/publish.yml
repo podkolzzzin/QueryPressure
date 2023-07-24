@@ -60,6 +60,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E14A3C1B94CC43ACB07F30DAE34A7CAC }}
           package: .
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: path/to/artifact
