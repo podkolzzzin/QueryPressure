@@ -1,25 +1,28 @@
+using Autofac;
 using QueryPressure.App.Arguments;
 using QueryPressure.App.Interfaces;
 using QueryPressure.Core.Interfaces;
-using QueryPressure.UI;
+using QueryPressure.UI.Inderfaces;
+
+namespace QueryPressure.UI;
 
 public class Provider
 {
   private readonly ICreator<IConnectionProvider> _creator;
-  private readonly IExecutionResultStore _store;
-  private readonly ILiveMetricProvider[] _liveMetricProviders;
   private readonly IScenarioBuilder _builder;
+  private readonly IExecutionStore _executionStore;
+  private readonly IComponentContext _container;
 
   public Provider(
     ICreator<IConnectionProvider> creator,
-    IExecutionResultStore store,
-    ILiveMetricProvider[] liveMetricProviders,
-    IScenarioBuilder builder)
+    IScenarioBuilder builder, 
+    IExecutionStore executionStore, 
+    IComponentContext container)
   {
     _creator = creator;
-    _store = store;
-    _liveMetricProviders = liveMetricProviders;
     _builder = builder;
+    _executionStore = executionStore;
+    _container = container;
   }
 
   public async Task<IServerInfo> TestConnectionAsync(string connectionString)
@@ -34,7 +37,22 @@ public class Provider
     return await provider.GetServerInfoAsync(default);
   }
 
-  public async Task<Guid> StartExecutionAsync(ExecutionRequest request)
+  public async Task<Guid> StartExecutionAsync(ExecutionRequest request, CancellationToken cancellationToken)
+  {
+    var appArgs = BuildArgs(request);
+    
+    var store = _container.Resolve<IExecutionResultStore>();
+    var liveMetricProviders = _container.Resolve<ILiveMetricProvider[]>();
+    
+    var executor = await _builder.BuildAsync(appArgs, store, liveMetricProviders, cancellationToken);
+    
+    var cts = new CancellationTokenSource();
+    var execution = executor.ExecuteAsync(cts.Token);
+
+    return await _executionStore.SaveAsync(execution, store, liveMetricProviders, cts);
+  }
+
+  private static ApplicationArguments BuildArgs(ExecutionRequest request)
   {
     var appArgs = new ApplicationArguments()
     {
@@ -65,13 +83,6 @@ public class Provider
         }
       }
     };
-    var executor = await _builder.BuildAsync(appArgs, _store, _liveMetricProviders, default);
-
-    return Store(executor.ExecuteAsync(default)); //TODO: put somewhere 
-  }
-
-  private Guid Store(Task executeAsync)
-  {
-    return Guid.NewGuid(); // TODO !!!!!
+    return appArgs;
   }
 }
