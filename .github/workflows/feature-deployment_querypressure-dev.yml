@@ -31,7 +31,7 @@ jobs:
         run: |
           npm install
           npm run build
-          Xcopy /E /I dist ../src/QueryPressure.UI/dist
+          xcopy dist "..\src\QueryPressure.UI\dist" /s/h/e/k/f/c
         working-directory: ./frontend
 
       - name: dotnet publish
