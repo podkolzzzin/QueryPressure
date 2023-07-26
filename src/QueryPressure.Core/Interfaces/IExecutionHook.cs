@@ -9,6 +9,6 @@ public record ExecutionResult(QueryInformation Information, TimeSpan Duration, E
 
 public interface IExecutionHook
 {
-  Task OnBeforeQueryExecutionAsync(Guid queryId, CancellationToken cancellationToken) => Task.CompletedTask;
+  Task OnBeforeQueryExecutionAsync(QueryInformation information, CancellationToken cancellationToken) => Task.CompletedTask;
   Task OnQueryExecutedAsync(ExecutionResult result, CancellationToken cancellationToken);
 }
