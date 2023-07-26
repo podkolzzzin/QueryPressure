@@ -1,11 +1,14 @@
 namespace QueryPressure.Core.Interfaces;
 
-public record ExecutionResult(DateTime QueryStartTime, TimeSpan Duration, Exception? Exception)
+public record QueryInformation(Guid Id, DateTime QueryStartTime);
+
+public record ExecutionResult(QueryInformation Information, TimeSpan Duration, Exception? Exception)
 {
-  public static ExecutionResult Empty { get; } = new(default, default, default);
+  public static ExecutionResult Empty { get; } = new(new(default, default), default, default);
 }
 
 public interface IExecutionHook
 {
+  Task OnBeforeQueryExecutionAsync(Guid queryId, CancellationToken cancellationToken) => Task.CompletedTask;
   Task OnQueryExecutedAsync(ExecutionResult result, CancellationToken cancellationToken);
 }
