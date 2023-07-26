@@ -16,7 +16,7 @@ public class ThroughputLiveMetricProvider : ILiveMetricProvider
     return Task.CompletedTask;
   }
 
-  public Task OnBeforeQueryExecutionAsync(Guid queryId, CancellationToken cancellationToken)
+  public Task OnBeforeQueryExecutionAsync(QueryInformation _, CancellationToken __)
   {
     _started.RegisterCall();
     return Task.CompletedTask;
