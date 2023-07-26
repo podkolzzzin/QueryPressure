@@ -2,7 +2,7 @@ using QueryPressure.Core;
 
 namespace QueryPressure.MySql.App;
 
-public record MySqlProviderInfo() 
+public record MySqlProviderInfo()
   : ProviderInfo("MySql", new[] { "mysql", "sql" }, Script)
 {
   // source: https://github.com/microsoft/monaco-editor/blob/main/website/src/website/data/home-samples/sample.mysql.txt

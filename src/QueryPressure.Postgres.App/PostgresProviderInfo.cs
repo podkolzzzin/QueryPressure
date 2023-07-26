@@ -2,7 +2,7 @@ using QueryPressure.Core;
 
 namespace QueryPressure.Postgres.App;
 
-public record PostgresProviderInfo() 
+public record PostgresProviderInfo()
   : ProviderInfo("Postgres", new[] { "pgsql", "sql" }, Script)
 {
   private const string Script = @"-- Sample
