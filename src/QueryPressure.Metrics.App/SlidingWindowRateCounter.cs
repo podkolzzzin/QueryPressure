@@ -4,7 +4,7 @@ namespace QueryPressure.Metrics.App;
 
 public class SlidingWindowRateCounter
 {
-  private readonly ConcurrentQueue<DateTime> _callTimes = new ();
+  private readonly ConcurrentQueue<DateTime> _callTimes = new();
   private readonly TimeSpan _windowSize;
 
   public SlidingWindowRateCounter(TimeSpan windowSize)
@@ -17,7 +17,7 @@ public class SlidingWindowRateCounter
     CleanUpQueue();
     _callTimes.Enqueue(DateTime.UtcNow);
   }
-  
+
   public int GetCallsPerTimeWindow() => CleanUpQueue();
 
   private int CleanUpQueue()

@@ -15,13 +15,13 @@ public class ThroughputLiveMetricProvider : ILiveMetricProvider
     _finished.RegisterCall();
     return Task.CompletedTask;
   }
-  
+
   public Task OnBeforeQueryExecutionAsync(Guid queryId, CancellationToken cancellationToken)
   {
     _started.RegisterCall();
     return Task.CompletedTask;
   }
-  
+
   public IEnumerable<IMetric> GetMetrics()
   {
     yield return new SimpleMetric("live-throughput-handled", _finished.GetCallsPerTimeWindow());
