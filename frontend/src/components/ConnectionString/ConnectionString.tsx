@@ -4,7 +4,7 @@ import {EyeIcon, EyeSlashIcon} from '@assets/Icons';
 
 import {ConnectionStringProps} from './ConnectionString.models';
 
-export function ConnectionString({validationMessage, changed, test}: ConnectionStringProps) {
+export function ConnectionString({validationMessage, initialValue, changed, test}: ConnectionStringProps) {
   const [connectionStringShown, setConnectionStringState] = useState<boolean>(false);
   const { t } = useTranslation();
   const inputType = connectionStringShown ? 'text' : 'password';
@@ -17,6 +17,7 @@ export function ConnectionString({validationMessage, changed, test}: ConnectionS
       </div>
       <div className="input-group is-invalid is-valid">
         <input type={inputType} className="form-control" id="connectionString"
+               value={initialValue}
                onChange={(event) => changed(event.target.value)}
                required/>
         <button className="btn btn-outline-secondary" type="button"

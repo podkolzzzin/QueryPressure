@@ -1,9 +1,11 @@
-import {useState} from 'react';
+import {SetStateAction, useState} from 'react';
 import {ValidationMessage} from '@models';
 import {ConnectionService} from '@services';
 
+import { ConnectionStringService } from '@/services/ConnectionStringService';
+
 export function useConnectionString(selectedProvider: string | null) {
-  const [connectionString, setConnectionString] = useState<string | null>(null);
+  const [connectionString, setConnectionString] = useState<string>(ConnectionStringService.load());
   const [connectionStringValidationMessage, setConnectionStringValidationMessage] = useState<ValidationMessage | null>(null);
 
   function testConnectionString() {
@@ -11,9 +13,14 @@ export function useConnectionString(selectedProvider: string | null) {
       .then(message => setConnectionStringValidationMessage(message));
   }
 
+  function setConnectionStringToUrl(connectionString: string) {
+    ConnectionStringService.store(<string>connectionString);
+    setConnectionString(connectionString);
+  } 
+
   return {
     connectionString,
-    setConnectionString,
+    setConnectionString: setConnectionStringToUrl,
     connectionStringValidationMessage,
     testConnectionString
   };
