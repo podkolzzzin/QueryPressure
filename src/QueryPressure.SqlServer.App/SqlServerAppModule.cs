@@ -1,5 +1,4 @@
 using Autofac;
-using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.SqlServer.App
@@ -11,7 +10,7 @@ namespace QueryPressure.SqlServer.App
       builder.RegisterType<SqlServerConnectionProviderCreator>()
         .AsImplementedInterfaces();
 
-      builder.RegisterInstance(new ProviderInfo("SqlServer"))
+      builder.RegisterInstance(new SqlServerProviderInfo())
         .As<IProviderInfo>();
     }
   }

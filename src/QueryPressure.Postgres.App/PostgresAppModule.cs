@@ -1,5 +1,4 @@
 using Autofac;
-using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Postgres.App;
@@ -11,7 +10,7 @@ public class PostgresAppModule : Module
     builder.RegisterType<PostgresConnectionProviderCreator>()
       .AsImplementedInterfaces();
 
-    builder.RegisterInstance(new ProviderInfo("Postgres"))
+    builder.RegisterInstance(new PostgresProviderInfo())
       .As<IProviderInfo>();
   }
 }

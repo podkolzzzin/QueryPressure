@@ -32,7 +32,7 @@ app.OpenBrowserWhenReady();
 
 app.MapHub<DashboardHub>("/ws/dashboard");
 
-app.MapGet("/api/providers", (IProviderInfo[] providers) => providers.Select(x => x.Name));
+app.MapGet("/api/providers", (IProviderInfo[] providers) => providers);
 
 app.MapPost("/api/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
   await manager.GetProvider(request.Provider).TestConnectionAsync(request.ConnectionString));

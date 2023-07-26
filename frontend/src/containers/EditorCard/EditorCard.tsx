@@ -1,47 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {StatusBar} from '@components';
 import {EditorCardProps} from '@containers/EditorCard/EditorCard.models';
-import Editor from '@monaco-editor/react';
+import Editor, { Monaco } from '@monaco-editor/react';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { MonitoringScreen } from '@/components/MonitoringScreen';
 
 export function EditorCard(
-  {providers, executionId, selectedProvider, selectProvider, setScript, theme, showMonitor, toggleMonitor, toggleCancelButton}: EditorCardProps) {
+  {providers, executionId, selectedProvider, selectedProviderInfo, selectProvider, setScript, theme, showMonitor, toggleMonitor, toggleCancelButton}: EditorCardProps) {
   const { t } = useTranslation();
-  const [editorContent, setEditorContent] = useState('');
-  const supportedFileTypes = [ 'txt', 'sql', 'js', 'lua', 'json' ]
+  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const [editorContent, setEditorContent] = useState<string | undefined>(undefined);
+  const [editorLanguage, setEditorLanguage] = useState<string>('');
+  const [registeredLanguages, setRegisteredLanguages] = useState<monaco.languages.ILanguageExtensionPoint[]>([]);
+  const supportedFileTypes = [ 'txt', 'sql', 'js', 'lua', 'json' ];
+
+  useEffect(() => {
+    if (!selectedProviderInfo || !editor) return;
+
+    const value = editor.getValue() || selectedProviderInfo?.initialScript || '';    
+    const language = getScriptLanguageId(selectedProviderInfo?.syntaxAliases, 'sql');
+
+    editor.setValue(value);
+    setEditorLanguage(language);
+
+    handleEditorChange(value);
+  }, [selectedProviderInfo, editor]);
   
   function handleEditorChange(value: string | undefined) {
     value && setEditorContent(value);
     value && setScript(value);
   }
 
-  function handleEditorMount(editor: any) {
-    const value = `
-    SELECT
-    t.relname AS table_name,
-    a.attname AS column_name,
-    CASE
-      WHEN a.attnotnull THEN 'NOT NULL'
-      ELSE ''
-    END AS constraints,
-    i.relname AS index_name
-  FROM
-    pg_class t
-  JOIN
-    pg_attribute a ON t.oid = a.attrelid
-  LEFT JOIN
-    pg_index ix ON t.oid = ix.indrelid AND a.attnum = ANY(ix.indkey)
-  LEFT JOIN
-    pg_class i ON ix.indexrelid = i.oid
-  WHERE
-    t.relkind = 'r'  -- Only regular tables
-    AND t.relname NOT LIKE 'pg_%'  -- Exclude system tables
-    AND t.relname NOT LIKE 'sql_%'  -- Exclude SQL-standard tables
-  ORDER BY
-    t.relname, a.attnum;`;
-    editor.setValue(value);
-    handleEditorChange(value);
+  function handleEditorMount(editor: monaco.editor.IStandaloneCodeEditor, e: Monaco) {
+    setEditor(editor);
+    setRegisteredLanguages(e.languages.getLanguages())
   }
 
   function handleDragOver(event: any) {
@@ -77,17 +70,29 @@ export function EditorCard(
 
     reader.readAsText(file);
   };
-  
+
+  function getScriptLanguageId(syntaxAliases: string[] | null, fallbackLanguage: string): string {
+    if (!syntaxAliases) return fallbackLanguage;
+
+    for (const language of syntaxAliases) {
+      for (const lang of registeredLanguages) {
+        if (lang.id === language || lang.aliases?.map(x => x.toLocaleLowerCase())?.includes(language.toLocaleLowerCase()))
+          return lang.id;
+      }
+    }
+
+    return fallbackLanguage;
+  }
 
   return (
     <div className="card h-100 position-relative">
       <div className="card-body d-flex flex-column">
         <h5 className="card-title">{t('labels.codeEditor')}</h5>
         <div className="mb-2 h-100" onDragOver={handleDragOver} onDrop={handleDrop}>
-          {/*TODO: get default value based on selected provider (from backend)*/}
           <Editor
               value={editorContent}
               defaultLanguage='sql'
+              language={editorLanguage}
               options={{
                 minimap: { enabled: false }
               }}
