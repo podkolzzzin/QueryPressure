@@ -47,6 +47,9 @@ public class QueryExecutor
 
         var info = new QueryInformation(Guid.NewGuid(), DateTime.UtcNow);
         var stopwatch = Stopwatch.StartNew();
+
+        // Don't await this task, we want to start the execution as soon as possible
+        var __ = Task.WhenAll(_hooks.Select(x => x.OnBeforeQueryExecutionAsync(info, token)));
         var _ = _executable.ExecuteAsync(token).ContinueWith(async executionTask =>
         {
           if (token.IsCancellationRequested)
