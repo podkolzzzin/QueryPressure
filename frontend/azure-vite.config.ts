@@ -12,9 +12,10 @@ export default defineConfig({
         secure: true
       },
       '/ws': {
-        target: 'ws://querypressure-dev.azurewebsites.net',
+        target: 'https://querypressure-dev.azurewebsites.net',
         changeOrigin: true,
-        secure: true
+        secure: true,
+        ws: true,
       }
     }
   },
