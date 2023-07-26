@@ -34,7 +34,7 @@ public class StatisticalMetricsProviderTests
     var result = new ExecutionResultStore();
 
     var executions = random.Next(count)
-      .Select(x => new ExecutionResult(DateTime.MinValue, TimeSpan.FromMicroseconds(x), null));
+      .Select(x => new ExecutionResult(new(Guid.NewGuid(), DateTime.MinValue), TimeSpan.FromMicroseconds(x), null));
 
     foreach (var execution in executions)
     {

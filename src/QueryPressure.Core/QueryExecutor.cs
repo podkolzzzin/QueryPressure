@@ -45,7 +45,7 @@ public class QueryExecutor
           break;
         }
 
-        var queryStartTime = DateTime.UtcNow;
+        var info = new QueryInformation(Guid.NewGuid(), DateTime.UtcNow);
         var stopwatch = Stopwatch.StartNew();
         var _ = _executable.ExecuteAsync(token).ContinueWith(async executionTask =>
         {
@@ -53,7 +53,7 @@ public class QueryExecutor
             return;
 
           stopwatch.Stop();
-          var result = new ExecutionResult(queryStartTime, stopwatch.Elapsed, executionTask.Exception);
+          var result = new ExecutionResult(info, stopwatch.Elapsed, executionTask.Exception);
           await Task.WhenAll(_hooks.Select(x => x.OnQueryExecutedAsync(result, token)));
         }, token);
       }
