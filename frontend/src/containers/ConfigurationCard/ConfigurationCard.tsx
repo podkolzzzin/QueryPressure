@@ -56,7 +56,9 @@ export function ConfigurationCard(
                 {languages.map(lngName => <option value={lngName} key={lngName}>{lngName}</option>)}
               </select>
             </div>
-            <ConnectionString changed={setConnectionString}
+            <ConnectionString 
+              initialValue={connectionString}
+              changed={setConnectionString}
               test={testConnectionString}
               validationMessage={connectionStringValidationMessage} />
 
