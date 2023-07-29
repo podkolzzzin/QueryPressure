@@ -10,7 +10,8 @@ public class MongoDBAppModule : Module
     builder.RegisterType<MongoDBConnectionProviderCreator>()
         .AsImplementedInterfaces();
 
-    builder.RegisterInstance(new MongoProviderInfo())
-      .As<IProviderInfo>();
+    builder.RegisterType<MongoProviderInfo>()
+      .As<IProviderInfo>()
+      .SingleInstance();
   }
 }

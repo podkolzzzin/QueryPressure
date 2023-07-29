@@ -10,7 +10,8 @@ public class MySqlAppModule : Module
     builder.RegisterType<MySqlConnectionProviderCreator>()
       .AsImplementedInterfaces();
 
-    builder.RegisterInstance(new MySqlProviderInfo())
-      .As<IProviderInfo>();
+    builder.RegisterType<MySqlProviderInfo>()
+      .As<IProviderInfo>()
+      .SingleInstance();
   }
 }

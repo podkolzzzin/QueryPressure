@@ -10,7 +10,8 @@ public sealed class RedisAppModule : Module
     builder.RegisterType<RedisConnectionProviderCreator>()
       .AsImplementedInterfaces();
 
-    builder.RegisterInstance(new RedisProviderInfo())
-      .As<IProviderInfo>();
+    builder.RegisterType<RedisProviderInfo>()
+      .As<IProviderInfo>()
+      .SingleInstance();
   }
 }
