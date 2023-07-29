@@ -6,7 +6,8 @@ public record SqlServerProviderInfo()
   : ProviderInfo("SqlServer", new[] { "tsql", "sql" }, Script)
 {
   // source: https://github.com/microsoft/monaco-editor/blob/main/website/src/website/data/home-samples/sample.sql.txt
-  private const string Script = @"-- Sample
+  private const string Script = """
+-- Sample
 CREATE TABLE dbo.EmployeePhoto
 (
     EmployeeId INT NOT NULL PRIMARY KEY,
@@ -59,5 +60,5 @@ WHERE UnitPrice < $5.00
 GROUP BY ProductID, OrderQty
 ORDER BY ProductID, OrderQty
 OPTION (HASH GROUP, FAST 10);
-";
+""";
 }

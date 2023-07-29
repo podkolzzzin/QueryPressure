@@ -5,7 +5,8 @@ namespace QueryPressure.Postgres.App;
 public record PostgresProviderInfo()
   : ProviderInfo("Postgres", new[] { "pgsql", "sql" }, Script)
 {
-  private const string Script = @"-- Sample
+  private const string Script = """
+-- Sample
  SELECT
     t.relname AS table_name,
     a.attname AS column_name,
@@ -28,5 +29,5 @@ public record PostgresProviderInfo()
     AND t.relname NOT LIKE 'sql_%'  -- Exclude SQL-standard tables
   ORDER BY
     t.relname, a.attnum;
-";
+""";
 }
