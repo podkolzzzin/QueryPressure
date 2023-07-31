@@ -37,7 +37,7 @@ export const ConnectionStringService = {
 
     store(connectionString: string) : void {
         const encrypted = encryptData(this.key(), connectionString);
-        document.location.hash = encrypted;
+        UrlService.set('connection-string', encrypted);
     },
 
     key() : string {
