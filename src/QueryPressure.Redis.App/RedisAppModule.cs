@@ -1,5 +1,4 @@
 using Autofac;
-using QueryPressure.Core;
 using QueryPressure.Core.Interfaces;
 
 namespace QueryPressure.Redis.App;
@@ -11,7 +10,8 @@ public sealed class RedisAppModule : Module
     builder.RegisterType<RedisConnectionProviderCreator>()
       .AsImplementedInterfaces();
 
-    builder.RegisterInstance(new ProviderInfo("Redis"))
-      .As<IProviderInfo>();
+    builder.RegisterType<RedisProviderInfo>()
+      .As<IProviderInfo>()
+      .SingleInstance();
   }
 }
