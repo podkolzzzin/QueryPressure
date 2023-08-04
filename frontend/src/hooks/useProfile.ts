@@ -29,7 +29,7 @@ export function useProfile() {
         });
     }
     loadProfiles();
-  });
+  }, [setProfiles]);
 
   return {
     profiles,

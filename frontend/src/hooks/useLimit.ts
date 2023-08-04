@@ -18,8 +18,8 @@ export function useLimit() {
     LimitsApi
       .getAll()
       .then(limits => {
-         setLimits(limits);
-        // After the limits have been loaded, check if a 'limit' parameter exists in the URL
+        setLimits(limits);
+        //After the limits have been loaded, check if a 'limit' parameter exists in the URL
         const urlLimitType = UrlService.get('limit');
         // If it does exist, select the limit with that type
         if (urlLimitType) {
@@ -30,7 +30,7 @@ export function useLimit() {
 
   useEffect(() => {
     loadLimits();
-  });
+  }, [setLimits]);
 
   return {
     limits,
