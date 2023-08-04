@@ -28,7 +28,7 @@ export function ConfigurationCard(
       provider: selectedProvider,
       connectionString: connectionString,
       script: script,
-      profile: selectedProfile,
+      profile: selectedProfile!,
       limit: selectedLimit
     }).then(executionId => setExecutionId(executionId));
   }
@@ -63,7 +63,7 @@ export function ConfigurationCard(
               validationMessage={connectionStringValidationMessage} />
 
             <Profile profiles={profiles}
-              selectedProfile={selectedProfile}
+              selectedProfile={selectedProfile!}
               selectProfile={selectProfile} />
 
             <Limit limits={limits}

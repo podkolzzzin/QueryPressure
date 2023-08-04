@@ -14,13 +14,20 @@ export function useProfile() {
     UrlService.set('profile', profileType);
   }
 
-  function loadProfiles(): void {
-    ProfilesApi
-      .getAll()
-      .then(profiles => setProfiles(profiles));
-  }
-
   useEffect(() => {
+    function loadProfiles(): void {
+      ProfilesApi
+        .getAll()
+        .then(profiles => {
+          setProfiles(profiles);
+          // After the profiles have been loaded, check if a 'profile' parameter exists in the URL
+          const urlProfileType = UrlService.get('profile');
+          // If it does exist, select the profile with that type
+          if (urlProfileType) {
+            selectProfile(urlProfileType);
+          }
+        });
+    }
     loadProfiles();
   }, [setProfiles]);
 
