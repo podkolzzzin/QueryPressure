@@ -1,6 +1,8 @@
-import {useEffect, useState} from 'react';
-import {ProfilesApi} from '@api';
-import {ProfileModel} from '@models';
+import { useEffect, useState } from 'react';
+import { ProfilesApi } from '@api';
+import { ProfileModel } from '@models';
+
+import { UrlService } from '@/services/UrlService';
 
 export function useProfile() {
   const [selectedProfile, setSelectedProfile] = useState<ProfileModel | null>(null);
@@ -9,6 +11,7 @@ export function useProfile() {
   function selectProfile(profileType: string) {
     const profile: ProfileModel = profiles.find(p => p.type === profileType)!;
     setSelectedProfile(profile);
+    UrlService.set('profile', profileType);
   }
 
   function loadProfiles(): void {
@@ -20,7 +23,6 @@ export function useProfile() {
   useEffect(() => {
     loadProfiles();
   }, [setProfiles]);
-
 
   return {
     profiles,
