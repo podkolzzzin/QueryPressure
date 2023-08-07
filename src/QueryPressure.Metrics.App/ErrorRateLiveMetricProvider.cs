@@ -29,7 +29,7 @@ public class ErrorRateLiveMetricProvider : ILiveMetricProvider, IMetricProvider
 
   public Task<IEnumerable<IMetric>> CalculateAsync(IExecutionResultStore store, CancellationToken cancellationToken)
   {
-    var result = new[] { new SimpleMetric("live-error-count", _errorCount) };
+    var result = new[] { new SimpleMetric("error-count", _errorCount) };
     return Task.FromResult<IEnumerable<IMetric>>(result);
   }
 }
