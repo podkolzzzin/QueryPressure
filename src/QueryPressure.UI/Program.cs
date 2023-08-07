@@ -32,24 +32,28 @@ app.OpenBrowserWhenReady();
 
 app.MapHub<DashboardHub>("/ws/dashboard");
 
-app.MapGet("/api/providers", (IProviderInfo[] providers) => providers);
+var api = app.MapGroup("/api");
 
-app.MapPost("/api/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
+api.MapGet("/providers", (IProviderInfo[] providers) => providers);
+
+api.MapPost("/connection/test", async (ConnectionRequest request, ProviderManager manager) =>
   await manager.GetProvider(request.Provider).TestConnectionAsync(request.ConnectionString));
 
-app.MapGet("/api/profiles", GetCreatorMetadata<IProfileCreator, IProfile>);
+api.MapGet("/profiles", GetCreatorMetadata<IProfileCreator, IProfile>);
 
-app.MapGet("/api/limits", GetCreatorMetadata<ILimitCreator, ILimit>);
+api.MapGet("/limits", GetCreatorMetadata<ILimitCreator, ILimit>);
 
-app.MapPost("/api/execution", (ExecutionRequest request, ProviderManager manager, CancellationToken cancellationToken) =>
+api.MapPost("/execution", (ExecutionRequest request, ProviderManager manager, CancellationToken cancellationToken) =>
   manager.GetProvider(request.Provider).StartExecutionAsync(request, cancellationToken));
 
-app.MapPost("/api/execution/{executionId:guid}/cancel", (Guid executionId, ProviderManager manager) => manager.CancelExecution(executionId));
+api.MapGet("/execution", (ProviderManager manager, CancellationToken cancellationToken) => manager.GetExecutions());
 
-app.MapGet("/api/resources/{locale}", (IResourceManager manager, string locale) =>
+api.MapPost("/execution/{executionId:guid}/cancel", (Guid executionId, ProviderManager manager) => manager.CancelExecution(executionId));
+
+api.MapGet("/resources/{locale}", (IResourceManager manager, string locale) =>
   manager.GetResources(locale, ResourceFormat.Html));
 
-app.MapGet("/api/locales", () => new[] { "en-US", "uk-UA" });
+api.MapGet("/locales", () => new[] { "en-US", "uk-UA" });
 
 app.Run();
 
