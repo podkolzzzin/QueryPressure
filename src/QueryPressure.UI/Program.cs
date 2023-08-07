@@ -46,8 +46,6 @@ api.MapGet("/limits", GetCreatorMetadata<ILimitCreator, ILimit>);
 api.MapPost("/execution", (ExecutionRequest request, ProviderManager manager, CancellationToken cancellationToken) =>
   manager.GetProvider(request.Provider).StartExecutionAsync(request, cancellationToken));
 
-api.MapGet("/execution", (ProviderManager manager, CancellationToken cancellationToken) => manager.GetExecutions());
-
 api.MapPost("/execution/{executionId:guid}/cancel", (Guid executionId, ProviderManager manager) => manager.CancelExecution(executionId));
 
 api.MapGet("/resources/{locale}", (IResourceManager manager, string locale) =>
