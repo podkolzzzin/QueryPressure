@@ -30,5 +30,14 @@ public class MetricsModule : Module
     builder.RegisterType<LiveAverageMetricProvider>()
       .As<ILiveMetricProvider>()
       .InstancePerDependency();
+
+    builder.RegisterType<ThroughputLiveMetricProvider>()
+      .As<ILiveMetricProvider>()
+      .InstancePerDependency();
+
+    builder.RegisterType<ErrorRateLiveMetricProvider>()
+      .As<ILiveMetricProvider>()
+      .As<IMetricProvider>()
+      .InstancePerDependency();
   }
 }

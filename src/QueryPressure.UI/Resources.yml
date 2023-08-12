@@ -8,6 +8,7 @@
     limit: Limit
     selectLimit: Select Limit...
     execute: Execute
+    cancel: Cancel
     ready: Ready
     codeEditor: Code Editor
     showConnectionString: Show Connection String
@@ -23,6 +24,7 @@ uk-UA:
     limit: Обмеження
     selectLimit: Оберіть обмеження...
     execute: Виконати
+    cancel: Перервати
     ready: Готово
     codeEditor: Редактор Коду
     showConnectionString: Показати Строку Підключення

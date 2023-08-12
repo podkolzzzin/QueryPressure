@@ -1,7 +1,10 @@
 using Autofac;
+using Autofac.Features.AttributeFilters;
 using QueryPressure.App;
 using QueryPressure.Core.Interfaces;
-using QueryPressure.UI;
+using QueryPressure.UI.Services;
+
+namespace QueryPressure.UI;
 
 public class ApiApplicationLoader : ApplicationLoader
 {
@@ -25,6 +28,11 @@ public class ApiApplicationLoader : ApplicationLoader
     builder.RegisterType<DashboardVisualizer>()
       .Keyed<IMetricsVisualizer>(DashboardVisualizer.Key)
       .SingleInstance();
+
+    builder.RegisterType<Execution>()
+      .AsSelf()
+      .InstancePerLifetimeScope()
+      .WithAttributeFiltering();
 
     return base.Load(builder);
   }

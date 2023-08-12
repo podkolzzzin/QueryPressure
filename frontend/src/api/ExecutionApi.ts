@@ -9,7 +9,7 @@ export interface ExecutionRequestModel {
 }
 
 export const ExecutionApi = {
-  run(model: Required<ExecutionRequestModel>): Promise<void> {
+  run(model: Required<ExecutionRequestModel>): Promise<string> {
     const options = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -18,5 +18,12 @@ export const ExecutionApi = {
 
     return fetch('/api/execution', options)
       .then(r => r.json());
+  },
+  cancel(executionId: string) {
+    const options = {
+      method: 'POST',
+    };
+
+    return fetch(`/api/execution/${executionId}/cancel`, options);
   }
 };

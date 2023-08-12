@@ -22,6 +22,7 @@ i18n
 
 const router = createBrowserRouter([
   { path: '/', element: <IndexPage /> },
+  { path: '/ui', element: <IndexPage /> },
   { path: '/execution/:id', element: <ExecutionPage /> },
 ]);
   
