@@ -1,0 +1,166 @@
+﻿en-US:
+  labels:
+    title: Query Pressure - Databases Preformance Testing
+    menu:
+        file:
+            title: File
+            create-new: New
+            open: Open
+            save: Save
+            save-as: Save As...
+            close: Close
+            exit: Exit
+        view:
+            title: View
+            theme: Theme
+            language: Language
+            tools: Tools
+        about:
+            title: About
+            version: Version
+    panels:
+        project-tree: Project Tree
+        properties: Properties
+    dialogs:
+        confirm-close-project:
+            title: Close Project
+            message: Are you sure that you want to close current project?
+        failed-test-connectionString:
+            title: Test Failed
+            message: Failed to Test Connection String.\r\n{0}
+        succeed-test-connectionString:
+            title: Test Succeed
+            message: "Connection Succeed.\r\nServer Version: {0}"
+    project:
+        new-name: New Project
+        context-menu:
+            add-scenario: Add Scenario
+            properties: Properties
+    scenario:
+        new-name: New Scenario
+        script: Script
+        read-only: The scenario was already executed. It is read-only mode.
+        context-menu:
+            open-script: Open script
+            execute: Execute scenario
+            properties: Properties
+    execution:
+        results: Results
+        context-menu:
+            open: Open
+            properties: Properties
+        document:
+            info-header: Execution information
+            id: ID
+            status: Status
+            start-time: Start Time
+            end-time: End Time
+            duration: Duration
+            exeption: Error
+            real-time-header: Real-time metrics
+            result-header: Result metrics
+        status:
+            none: None
+            running: Running
+            finished: Finished
+            error: Error
+    properties:
+        project:
+            name: "Name:"
+            path: "Path:"
+        scenario:
+            name: "Name:"
+            provider: "Provider:"
+            connection-string: "Connection String:"
+            test: Test
+            profile: Profile
+            limit: Limit
+  languages:
+    en-US: English (USA)
+    uk-UA: Ukrainian
+  themes:
+    dark: Dark
+    light: Light
+uk-UA:
+  labels:
+    title: Query Pressure - Навантажувальне Тестування Баз Даних
+    menu:
+        file:
+            title: Файл
+            create-new: Створити
+            open: Відкрити
+            save: Зберегти
+            save-as: Зберегти як...
+            close: Закрити
+            exit: Вихід
+        view:
+            title: Вид
+            theme: Тема
+            language: Мова
+            tools: Інструменти
+        about:
+            title: Про програму
+            version: Версія
+    panels:
+        project-tree: Дерево Проєкту
+        properties: Властивості
+    dialogs:
+        confirm-close-project:
+            title: Закрити проєкт
+            message: Ви дійсно бажаєте закрити поточний проєкт?
+        failed-test-connectionString:
+            title: Тест Неуспішний
+            message: "З'єднання не вдалося.\r\n{0}"
+        succeed-test-connectionString:
+            title: Тест Успішний
+            message: "З'єднання вдалося.\r\nВерсія серверу: {0}"
+    project:
+        new-name: Новий Проект
+        context-menu:
+            add-scenario: Додати Сценарій
+            properties: Властивості
+    scenario:
+        new-name: Новий Сценарій
+        script: Скрипт
+        read-only: Сценарій вже був запущений. Це режим лише для читання.
+        context-menu:
+            open-script: Відкрити скрипт
+            execute: Запустити сценарій
+            properties: Властивості
+    execution:
+        results: Результати
+        context-menu:
+            open: Відкрити
+            properties: Властивості
+        document:
+            info-header: Інформація виконання
+            id: ІН
+            status: Статус
+            start-time: Час початку
+            end-time: Час завершення
+            duration: Тривалість
+            exeption: Помилка
+            real-time-header: Метрики реального часу
+            result-header: Результуючі метрики
+        status:
+            none: Немає
+            running: Виконується
+            finished: Завершено
+            error: Помилка
+    properties:
+        project:
+            name: "Ім'я:"
+            path: "Шлях:"
+        scenario:
+            name: "Ім'я:"
+            provider: "Провайдер:"
+            connection-string: "Рядок з'єднання:"
+            test: Тест
+            profile: Профайл
+            limit: Ліміт
+  languages:
+    en-US: Англійська (США)
+    uk-UA: Українська
+  themes:
+    dark: Темна
+    light: Світла

@@ -3,6 +3,7 @@
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.4" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageVersion Include="Autofac" Version="6.4.0" />
     <PackageVersion Include="Mono.Cecil" Version="0.11.4" />
@@ -25,5 +26,11 @@
     <PackageVersion Include="Npgsql" Version="6.0.7" />
     <PackageVersion Include="StackExchange.Redis" Version="2.6.70" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="AvalonEdit" Version="6.3.0.90" />
+    <PackageVersion Include="Dirkster.AvalonDock" Version="4.72.0" />
+    <PackageVersion Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.72.0" />
+    <PackageVersion Include="ScottPlot.WPF" Version="4.1.65" />
   </ItemGroup>
 </Project>

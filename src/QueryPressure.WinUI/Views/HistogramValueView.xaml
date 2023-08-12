@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="QueryPressure.WinUI.Views.HistogramValueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
+             xmlns:metrics="clr-namespace:QueryPressure.WinUI.ViewModels.Execution.Metrics"
+             xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
+             d:DataContext="{d:DesignInstance d:Type=metrics:HistogramMetricViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400">
+    <ScottPlot:WpfPlot MinHeight="450px" x:Name="HistogramPlot" Margin="8px" />
+</UserControl>

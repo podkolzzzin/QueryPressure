@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/AvalonDock.Themes.VS2013;component/DarkTheme.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#2B2B2B" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#3C3C3C" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkBrushKey}" Color="#2B2B2B" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlLightBrushKey}" Color="#4C4C4C" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#3E3E3E" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#404040" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuBrushKey}" Color="#2B2B2B" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuBarBrushKey}" Color="#2B2B2B" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrushKey}" Color="#3E3E3E" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="#DDDDDD" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ScrollBarBrushKey}" Color="#2B2B2B" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowFrameBrushKey}" Color="#1C1C1C" />
+
+    <SolidColorBrush x:Key="Menu.Dynamic.Border" Color="#FF999999"/>
+    <SolidColorBrush x:Key="Menu.Dynamic.Separator" Color="#FFD7D7D7"/>
+    <SolidColorBrush x:Key="Menu.Dynamic.Disabled.Foreground" Color="#FF707070"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Selected.Background}" Color="#3D26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Selected.Border}" Color="#FF26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Background" Color="#3D26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Border" Color="#FF26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Disabled.Background" Color="#0A000000"/>
+    <SolidColorBrush x:Key="MenuItem.Dynamic.Highlight.Disabled.Border" Color="#21000000"/>
+
+    <!-- Accent Color Brush Definition
+       - Look for references on ControlAccentBrushKey to find where this is being set in code -->
+    <Color x:Key="Editor.ControlAccentColorKey">#1ba1e2</Color>
+    <SolidColorBrush x:Key="Editor.EditorBackground" Color="#FF181818"/>
+    <SolidColorBrush x:Key="Editor.EditorForeground" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="Editor.EditorLineNumbersForeground" Color="#ff929292"/>
+    <SolidColorBrush x:Key="Editor.EditorNonPrintableCharacterBrush" Color="#2FFFFFFF"/>
+    <!-- Style hyperlink displayed within text in text editor -->
+    <SolidColorBrush x:Key="Editor.EditorLinkTextForegroundBrush" Color="#FFAAAAFF"/>
+    <SolidColorBrush x:Key="Editor.EditorLinkTextBackgroundBrush" Color="#18FFFFFF"/>
+
+</ResourceDictionary>

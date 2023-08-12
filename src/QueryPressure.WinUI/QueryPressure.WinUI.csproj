@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <FileVersion>0.0.1</FileVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.Development.json" />
+      <None Remove="appsettings.json" />
+      <None Remove="appsettings.Production.json" />
+      <None Remove="Resources\default.dock.layout.config" />
+      <None Remove="Resources\Resources.yml" />
+      <None Remove="Themes\Common\Syntax\TSQL-Mode.xshd" />
+      <None Remove="Themes\Dark\DarkSyntax.xshtd" />
+      <None Remove="Themes\Light\LightSyntax.xshtd" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="appsettings.Production.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="appsettings.Development.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\default.dock.layout.config" />
+      <EmbeddedResource Include="Resources\Resources.yml" />
+      <EmbeddedResource Include="Themes\Common\Syntax\TSQL-Mode.xshd" />
+      <EmbeddedResource Include="Themes\Dark\DarkSyntax.xshtd" />
+      <EmbeddedResource Include="Themes\Light\LightSyntax.xshtd" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+        <PackageReference Include="AvalonEdit" />
+        <PackageReference Include="Dirkster.AvalonDock" />
+        <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
+        <PackageReference Include="ScottPlot.WPF" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\QueryPressure.App\QueryPressure.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Metrics.App\QueryPressure.Metrics.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.MongoDB.App\QueryPressure.MongoDB.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.MySql.App\QueryPressure.MySql.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Postgres.App\QueryPressure.Postgres.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.Redis.App\QueryPressure.Redis.App.csproj" />
+      <ProjectReference Include="..\QueryPressure.SqlServer.App\QueryPressure.SqlServer.App.csproj" />
+    </ItemGroup>
+
+</Project>

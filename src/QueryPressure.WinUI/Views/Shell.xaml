@@ -1,0 +1,89 @@
+﻿<Window x:Class="QueryPressure.WinUI.Views.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:ex="clr-namespace:QueryPressure.WinUI.Common.Extensions"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:QueryPressure.WinUI.Views"
+        xmlns:viewModels="clr-namespace:QueryPressure.WinUI.ViewModels"
+        xmlns:converters="clr-namespace:QueryPressure.WinUI.Common.Converters"
+        xmlns:properties="clr-namespace:QueryPressure.WinUI.Views.Properties"
+        xmlns:dockElements="clr-namespace:QueryPressure.WinUI.ViewModels.DockElements"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance d:Type=viewModels:ShellViewModel}"
+        Title="{ex:Locale labels.title}"
+        WindowStartupLocation="CenterScreen"
+        Width="600" Height="400"
+        MinWidth="300" MinHeight="300">
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <local:MenuView DataContext="{Binding Menu}"></local:MenuView>
+
+        <DockingManager Grid.Row="1" x:Name="DockManager" 
+                        ActiveContent="{Binding DockTools.ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}"
+                        AnchorablesSource="{Binding DockTools.Tools}"
+                        DocumentsSource="{Binding DockTools.Files}">
+            <DockingManager.LayoutItemTemplateSelector>
+                <dockElements:PanesTemplateSelector>
+                    <dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>
+                        <DataTemplate>
+                            <local:ProjectTreeView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.ProjectTreeViewTemplate>
+                    <dockElements:PanesTemplateSelector.PropertiesViewTemplate>
+                        <DataTemplate>
+                            <properties:PropertiesView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.PropertiesViewTemplate>
+                    <dockElements:PanesTemplateSelector.ScriptViewTemplate>
+                        <DataTemplate>
+                            <local:ScriptView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.ScriptViewTemplate>
+                    <dockElements:PanesTemplateSelector.ExecutionResultsViewTemplate>
+                        <DataTemplate>
+                            <local:ExecutionResultsView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </dockElements:PanesTemplateSelector.ExecutionResultsViewTemplate>
+                </dockElements:PanesTemplateSelector>
+            </DockingManager.LayoutItemTemplateSelector>
+
+            <DockingManager.LayoutItemContainerStyleSelector>
+                <dockElements:PanesStyleSelector>
+                    <dockElements:PanesStyleSelector.ToolStyle>
+                        <Style TargetType="{x:Type LayoutAnchorableItem}">
+                            <Setter Property="Title" Value="{ex:Locale Binding={Binding Model.Title, StringFormat='labels.panels.{0}'}}" />
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
+                            <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}" />
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
+                            <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
+                            <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
+                        </Style>
+                    </dockElements:PanesStyleSelector.ToolStyle>
+                    <dockElements:PanesStyleSelector.FileStyle>
+                        <Style TargetType="{x:Type LayoutItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="ToolTip" Value="{Binding Model.Title}" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
+                        </Style>
+                    </dockElements:PanesStyleSelector.FileStyle>
+                </dockElements:PanesStyleSelector>
+            </DockingManager.LayoutItemContainerStyleSelector>
+
+            <DockingManager.LayoutUpdateStrategy>
+                <dockElements:LayoutInitializer />
+            </DockingManager.LayoutUpdateStrategy>
+
+        </DockingManager>
+    </Grid>
+</Window>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ThemeSyntaxDefinition name="Light" xmlns="http://icsharpcode.net/sharpdevelop/themesyntaxdefinition/2019">
+
+  <SyntaxDefinition name="TSQL" extensions=".sql">
+    <Color name="Comment"     foreground="Green" exampleText="-- comment" />
+    <Color name="Char"        foreground="Red" exampleText="name = 'abc'"/>
+    <Color name="Keywords"    fontWeight="bold" foreground="Blue" exampleText="SELECT FROM"/>
+
+    <Color name="CommentMarkerSetTodo"       foreground="Red" fontWeight="bold" />
+    <Color name="CommentMarkerSetHackUndone" foreground="#E0E000" fontWeight="bold" />
+  </SyntaxDefinition>
+
+</ThemeSyntaxDefinition>
